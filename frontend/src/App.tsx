@@ -1,25 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Customer from './components/Customer';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import NavBar from './components/NavBar';
+import CustomerForm from './components/CustomerForm';
 
 function App() {
+  const navItems = [
+    { name: "Customers", to: "/" },
+    { name: "Create", to: "/customers" }
+  ]
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App mx-auto w-5/6">
+        <NavBar navItems={navItems}></NavBar>
+        <Routes>
+          <Route path="/" element={<Customer></Customer>}></Route>
+          <Route path='/customers' element={<CustomerForm></CustomerForm>}></Route>
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

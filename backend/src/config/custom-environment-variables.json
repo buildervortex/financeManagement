@@ -1,0 +1,7 @@
+{
+    "port": "FMEXPRESSPORT",
+    "jwtSymerticKey": "FMJWTSYMETRICKEY",
+    "database":{
+        "connectionString":"FMDBCONNECTIONSTRING"
+    }
+}
