@@ -6,7 +6,7 @@ class AccountDto {
     id: string = ""
 }
 
-export function validateRegisterDto(accountDto: AccountDto): Joi.ValidationResult {
+export function validateAccountDto(accountDto: AccountDto): Joi.ValidationResult {
     const schema = Joi.object({
         userName: Joi.string().min(5).max(50).required(),
         email: Joi.string().required().email(),

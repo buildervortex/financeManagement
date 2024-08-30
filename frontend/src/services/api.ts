@@ -1,7 +1,7 @@
 import axios from "axios";
 import config from "../config/backend.json";
 
-const api = axios.create({
+const Api = axios.create({
     baseURL: config.apiBaseUrl,
     timeout: config.timeout,
     headers: {
@@ -9,4 +9,4 @@ const api = axios.create({
     }
 });
 
-export default api;
+export default Api;

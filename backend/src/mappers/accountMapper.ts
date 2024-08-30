@@ -16,6 +16,7 @@ export default class AccountMapper {
         const userDto = new AccountDto();
         userDto.email = user.email;
         userDto.userName = user.userName;
+        userDto.id = user.id;
 
         return userDto;
     }
