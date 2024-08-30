@@ -1,23 +1,18 @@
 import Joi from "joi";
 
 
-export class Error {
-    error: string
+export default class ErrorMessage {
 
-    constructor(message: string) {
-        this.error = message;
+    static errorMessageFromJoiError(error: Joi.ValidationError): ErrorMessage {
+        let errorMessage: string = error.details.map(detail => detail.message.replace(/\"/g, "'")).join(" , ").toString();
+        return { error: errorMessage };
     }
 
-    getError() {
+    static errorMessageFromString(error: string) {
         return {
-            error: this.error
-        };
+            error
+        }
     }
-}
 
-function errorMessage(error: Joi.ValidationError): Error {
-    let errorMessage: string = error.details.map(detail => detail.message.replace(/\"/g, "'")).join(" , ").toString();
-    return new Error(errorMessage);
+    static ServerError = { error: "Internal Server Error" };
 }
-
-export default errorMessage

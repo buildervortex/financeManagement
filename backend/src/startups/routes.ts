@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import cors from 'cors'
 
 
-import customerRouter from '../routes/customer';
+import accountRouter from '../routes/account';
 
 // uses dependency injection to get the express object to add the route handling middlewares
 export default function configRoute(app: Application) {
@@ -23,5 +23,5 @@ export default function configRoute(app: Application) {
 
 
     // config the routers
-    app.use("/api/v1/customers", customerRouter);
+    app.use("/api/v1/accounts", accountRouter);
 }
