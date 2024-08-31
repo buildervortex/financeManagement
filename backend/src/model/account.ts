@@ -4,6 +4,7 @@ import config from "config";
 
 interface Account extends mongoose.Document {
     _id: mongoose.Types.ObjectId,
+    fullName:string,
     userName: string,
     email: string,
     password: string,
@@ -15,11 +16,17 @@ const userSchema = new mongoose.Schema<Account>({
         type: mongoose.Schema.Types.ObjectId,
         default: () => new mongoose.Types.ObjectId(),
     },
-    userName: {
+    fullName: {
         type: String,
         required: true,
         minLength: 5,
         maxLength: 50
+    },
+    userName: {
+        type: String,
+        required: true,
+        minLength: 5,
+        maxLength: 20
     },
     email: {
         type: String,
