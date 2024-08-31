@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from 'react';
 import RegisterDto from '../dtos/account/registerDto';
 import AccountViewModel from '../viewModels/AccountViewModel';
-import InputForm from '../features/inputForm';
+import InputForm from '../components/inputForm';
 
 interface AccountRegisterPageProps {
 }
