@@ -18,9 +18,6 @@ export default class AccountRepository implements IAccountRepository {
         if (!existingUser) {
             throw new Error("Account with this email address already exists");
         }
-        if(existingUser.password !== account.password){
-            throw new Error("Password is wrong");
-        } 
         return existingUser;
     }
 }

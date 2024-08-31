@@ -5,11 +5,14 @@ import ErrorMessage from "../model/error";
 import AccountRepository from "../repositories/accountRepository";
 import AccountMapper from "../mappers/accountMapper";
 import Account from "../model/account";
+import Cryptography from "../util/hashing";
+import jwtAuth from "../middleware/jwtAuth";
 
 const accountRouter = express.Router();
 const accountRespository = new AccountRepository();
 
 accountRouter.post("/register", async (request: express.Request, response: express.Response) => {
+
     const { error } = validateRegisterDto(request.body);
 
     if (error) {
@@ -19,7 +22,11 @@ accountRouter.post("/register", async (request: express.Request, response: expre
     let user: Account;
 
     try {
-        user = await accountRespository.createAccount(AccountMapper.ToUserFromRegisterDto(request.body));
+
+        user = AccountMapper.ToAccountFromRegisterDto(request.body)
+        // hash the password
+        user.password = await Cryptography.hasPassword(user.password);
+        user = await accountRespository.createAccount(user);
     }
     catch (error) {
         if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
@@ -35,8 +42,8 @@ accountRouter.post("/register", async (request: express.Request, response: expre
 
     response.header("x-auth-token", token);
 
-    response.send(AccountMapper.ToUserDto(user));
-}),
+    response.send(AccountMapper.ToAccountDto(user));
+});
 
 accountRouter.post("/login", async (request: express.Request, response: express.Response) => {
     const { error } = validateLoginDto(request.body);
@@ -48,7 +55,7 @@ accountRouter.post("/login", async (request: express.Request, response: express.
     let user: Account;
 
     try {
-        user = await accountRespository.loginAccount(AccountMapper.ToUserFromloginDto(request.body));
+        user = await accountRespository.loginAccount(AccountMapper.ToAccountFromloginDto(request.body));
     }
     catch (error) {
         if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
@@ -59,12 +66,15 @@ accountRouter.post("/login", async (request: express.Request, response: express.
         return response.status(500).send(ErrorMessage.ServerError);
     }
 
+    const valid = await Cryptography.isValidPassword(user.password, request.body.password);
+    if (!valid) return response.status(400).send(ErrorMessage.errorMessageFromString("Invalid email or password"));
+
     // create the jwt token
     const token = user.generateAuthToken()
 
     response.header("x-auth-token", token);
 
-    response.send(AccountMapper.ToUserDto(user));
+    response.send(AccountMapper.ToAccountDto(user));
 })
 
 

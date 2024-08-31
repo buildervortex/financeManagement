@@ -1,5 +1,6 @@
 {
     "port": "4040",
     "name": "Finance Management Application",
-    "jwtSymerticKey":"aksdjflkasjdfkajsdkfjaskdjfkasdjf"
+    "jwtSymerticKey": "aksdjflkasjdfkajsdkfjaskdjfkasdjf",
+    "jwtEnable": true
 }
