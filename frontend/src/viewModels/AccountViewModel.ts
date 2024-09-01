@@ -14,17 +14,11 @@ export default class AccountViewModel {
             return ErrorMessage.errorMessageFromJoiError(error);
         const registerAccount: RegisterAccount = AccountMapper.ToRegisterAccountFromRegisterDto(registerDto);
 
-        try {
-
             const response = await AccountService.registerAccount(registerAccount);
             if (response && typeof response === 'object' && 'error' in response) {
                 return ErrorMessage.errorMessageFromString(response.error);
             }
             return response
-        }
-        catch (error) {
-            return ErrorMessage.errorMessageFromString("Failed to Register User");
-        }
     }
 
     async loginAccount(loginDto: LoginDto): Promise<AccountDto | ErrorMessage> {
@@ -33,16 +27,12 @@ export default class AccountViewModel {
             return ErrorMessage.errorMessageFromJoiError(error);
         const loginAccount: LoginAccount = AccountMapper.ToLoginAccountFromloginDto(loginDto);
 
-        try {
+
 
             const response = await AccountService.loginAccount(loginAccount);
             if (response && typeof response === 'object' && 'error' in response) {
                 return ErrorMessage.errorMessageFromString(response.error);
             }
             return response
-        }
-        catch (error) {
-            return ErrorMessage.errorMessageFromString("Failed to login");
-        }
     }
 }
