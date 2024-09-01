@@ -14,9 +14,7 @@ const Api = axios.create({
 
 Api.interceptors.response.use(
     response => {
-        console.log(response.headers);
         const token = response.headers["x-auth-token"];
-        console.log("response", token);
         if (token) {
             localStorage.setItem("jwtToken", token);
         }
@@ -29,7 +27,6 @@ Api.interceptors.response.use(
 
 Api.interceptors.request.use(
     config => {
-        console.log("request");
         const token = localStorage.getItem("jwtToken");
         if (token) {
             if (!config.headers) {
