@@ -12,6 +12,13 @@ export default function configRoute(app: Application) {
     /* add the middlewares */
     // use the cors middlware to add cros origin request
     app.use(cors());
+    // configure the headers
+    app.use((req, res, next) => {
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-auth-token");
+        res.header("Access-Control-Expose-Headers", "x-auth-token");
+        next();
+    })
+
     // used to add security headers to protect against well known vulnerabilities
     app.use(helmet());
     // add the json middlware to parse the body to json and replace the body with parsed json content

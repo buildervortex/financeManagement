@@ -3,9 +3,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import AccountRegisterPage from './pages/AccountRegister';
 import LoginPage from './pages/login';
+<<<<<<< HEAD
 import NavBar from './components/Navbar';
 import Footer from './components/Footer';
 
+=======
+>>>>>>> 09422bc (add the jwt token storing functionalities to the api.ts file)
 
 
 function App() {

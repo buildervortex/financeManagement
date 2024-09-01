@@ -77,5 +77,8 @@ accountRouter.post("/login", async (request: express.Request, response: express.
     response.send(AccountMapper.ToAccountDto(user));
 })
 
+accountRouter.post("/test", jwtAuth, async (request: express.Request, response: express.Response) => {
+    response.send("Hello world");
+})
 
 export default accountRouter;
