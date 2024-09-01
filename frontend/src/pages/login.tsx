@@ -25,7 +25,7 @@ const LoginPage: FunctionComponent<AccountLoginPageProps> = () => {
             type: "email",
             name: "email",
             id: "email",
-            className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-400 dark:border-gray-400 dark:placeholder-gray-700 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-400",
+            className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
             placeholder: "name@company.com"
         },
         {
@@ -34,7 +34,7 @@ const LoginPage: FunctionComponent<AccountLoginPageProps> = () => {
             type: "password",
             name: "password",
             id: "password",
-            className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-400 dark:border-gray-400 dark:placeholder-gray-700 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-400",
+            className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
             placeholder: "••••••••"
         }
     ]
