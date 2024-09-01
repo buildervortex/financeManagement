@@ -11,18 +11,18 @@ import Footer from './components/Footer';
 function App() {
   return (
     <Router>
-      <div className="App mx-auto w-5/6">
       <NavBar />
+      <div className="App mx-auto w-5/6">
+      
       <ToastContainer />
         <Routes>
           <Route path="/" element={<AccountRegisterPage></AccountRegisterPage>}></Route>
         </Routes>
         <Routes>
           <Route path="/Login" element={<LoginPage></LoginPage>}></Route>
-        </Routes>
-        <Footer/>
-        
+        </Routes>        
       </div>
+      <Footer/>
     </Router>
   );
 }
