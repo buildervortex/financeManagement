@@ -8,6 +8,7 @@ interface AccountRegisterPageProps {
 
 const AccountRegisterPage: FunctionComponent<AccountRegisterPageProps> = () => {
     const [userName, setUserName] = useState("");
+    const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -15,6 +16,7 @@ const AccountRegisterPage: FunctionComponent<AccountRegisterPageProps> = () => {
         e.preventDefault();
         const registerDto: RegisterDto = new RegisterDto();
         registerDto.email = email;
+        registerDto.fullName=fullName;
         registerDto.password = password;
         registerDto.userName = userName;
         await new AccountViewModel().registerAccount(registerDto);
@@ -22,14 +24,15 @@ const AccountRegisterPage: FunctionComponent<AccountRegisterPageProps> = () => {
 
     let inputElements = [
         {
-            labelContent: 'Email',
-            onChange: (e: any) => setEmail(e.target.value),
-            type: "email",
-            name: "email",
-            id: "email",
+            labelContent: 'Fullname',
+            onChange: (e: any) => setFullName(e.target.value),
+            type: "text",
+            name: "fullName",
+            id: "fullName",
             className: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-            placeholder: "name@company.com"
+            placeholder: "Full Name"
         },
+
         {
             labelContent: 'Username',
             onChange: (e: any) => setUserName(e.target.value),
@@ -38,6 +41,16 @@ const AccountRegisterPage: FunctionComponent<AccountRegisterPageProps> = () => {
             id: "username",
             className: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
             placeholder: "username"
+        },
+
+        {
+            labelContent: 'Email',
+            onChange: (e: any) => setEmail(e.target.value),
+            type: "email",
+            name: "email",
+            id: "email",
+            className: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+            placeholder: "name@company.com"
         },
         {
             labelContent: 'Password',
