@@ -2,6 +2,8 @@ import { FunctionComponent, useState } from 'react';
 import LoginDto from '../dtos/account/loginDto';
 import AccountViewModel from '../viewModels/AccountViewModel';
 import InputForm from '../components/inputForm';
+import ErrorMessage from '../viewModels/error';
+import { handleLoginResult } from '../utils/errorMessage';
 
 interface AccountLoginPageProps {
 }
@@ -15,7 +17,11 @@ const LoginPage: FunctionComponent<AccountLoginPageProps> = () => {
         const loginDto: LoginDto = new LoginDto();
         loginDto.email = email;
         loginDto.password = password;
-        await new AccountViewModel().loginAccount(loginDto);
+        const result = await new AccountViewModel().loginAccount(loginDto);
+        if (result instanceof ErrorMessage) {
+            handleLoginResult(result);
+        } 
+
     }
 
     let inputElements = [
@@ -25,7 +31,7 @@ const LoginPage: FunctionComponent<AccountLoginPageProps> = () => {
             type: "email",
             name: "email",
             id: "email",
-            className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-400 dark:border-gray-400 dark:placeholder-gray-700 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-400",
+            className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
             placeholder: "name@company.com"
         },
         {
@@ -34,7 +40,7 @@ const LoginPage: FunctionComponent<AccountLoginPageProps> = () => {
             type: "password",
             name: "password",
             id: "password",
-            className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-400 dark:border-gray-400 dark:placeholder-gray-700 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-400",
+            className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
             placeholder: "••••••••"
         }
     ]

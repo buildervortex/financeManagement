@@ -6,6 +6,9 @@ const Api = axios.create({
     timeout: config.timeout,
     headers: {
         "Content-Type": "application/json"
+    },
+    validateStatus: function () {
+        return true;
     }
 });
 

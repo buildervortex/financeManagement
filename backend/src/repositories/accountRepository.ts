@@ -16,7 +16,7 @@ export default class AccountRepository implements IAccountRepository {
     async loginAccount(account: Account): Promise<Account> {
         let existingUser = await Account.findOne({ email: account.email });
         if (!existingUser) {
-            throw new Error("Account with this email address already exists");
+            throw new Error("invalid Email address or Password");
         }
         return existingUser;
     }
