@@ -2,6 +2,8 @@ import { FunctionComponent, useState } from 'react';
 import RegisterDto from '../dtos/account/registerDto';
 import AccountViewModel from '../viewModels/AccountViewModel';
 import InputForm from '../components/inputForm';
+import { handleLoginResult } from '../utils/errorMessage';
+import ErrorMessage from '../viewModels/error';
 
 interface AccountRegisterPageProps {
 }
@@ -19,7 +21,10 @@ const AccountRegisterPage: FunctionComponent<AccountRegisterPageProps> = () => {
         registerDto.fullName=fullName;
         registerDto.password = password;
         registerDto.userName = userName;
-        await new AccountViewModel().registerAccount(registerDto);
+        const result = await new AccountViewModel().registerAccount(registerDto);
+        if (result instanceof ErrorMessage) {
+            handleLoginResult(result);
+        } 
     }
 
     let inputElements = [
