@@ -1,0 +1,29 @@
+### Register a new user
+POST http://localhost:4040/api/v1/accounts/register
+Content-Type: application/json
+
+{
+  "userName": "john_doe",
+  "fullName": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "securePassword123"
+}
+
+### Login with the registered user
+POST http://localhost:4040/api/v1/accounts/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "securePassword123"
+}
+
+
+### Login with incorrect credentials (expected to fail)
+POST http://localhost:4040/api/v1/accounts/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "wrongPassword"
+}
