@@ -1,5 +1,6 @@
 import Joi from "joi";
 
+
 class loginDto {
     email: string  = "";
     password: string  = "";
