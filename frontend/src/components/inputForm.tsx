@@ -30,7 +30,7 @@ const InputForm: FunctionComponent<InputFormProps> = ({ formName, submitButton =
                             );
                         })}
 
-                        <button type="submit" className="w-full text-white bg-[#FF8343] bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center ">{submitButton}</button>
+                        <button type="submit" className="w-full text-white bg-[#FF8343] bg-primary-600 hover:bg-[#fd8b53] focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center ">{submitButton}</button>
                     </form>
                 </div>
             </div>
