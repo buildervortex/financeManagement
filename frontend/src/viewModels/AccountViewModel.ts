@@ -18,7 +18,8 @@ export default class AccountViewModel {
             return await AccountService.registerAccount(registerAccount);
         }
         catch (error) {
-            return ErrorMessage.errorMessageFromString("Failed to register user");
+            const errorMessage = error instanceof Error && error.message? error.message : "Failed to Register User";
+            return ErrorMessage.errorMessageFromString(errorMessage);
         }
     }
 
@@ -32,7 +33,8 @@ export default class AccountViewModel {
             return await AccountService.loginAccount(loginAccount);
         }
         catch (error) {
-            return ErrorMessage.errorMessageFromString("Failed to login");
+            const errorMessage = error instanceof Error && error.message ? error.message : "Failed to login";
+            return ErrorMessage.errorMessageFromString(errorMessage);
         }
     }
 }

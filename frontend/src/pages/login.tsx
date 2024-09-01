@@ -2,6 +2,7 @@ import { FunctionComponent, useState } from 'react';
 import LoginDto from '../dtos/account/loginDto';
 import AccountViewModel from '../viewModels/AccountViewModel';
 import InputForm from '../components/inputForm';
+import ErrorMessage from '../viewModels/error';
 
 interface AccountLoginPageProps {
 }
@@ -15,7 +16,11 @@ const LoginPage: FunctionComponent<AccountLoginPageProps> = () => {
         const loginDto: LoginDto = new LoginDto();
         loginDto.email = email;
         loginDto.password = password;
-        await new AccountViewModel().loginAccount(loginDto);
+        const result = await new AccountViewModel().loginAccount(loginDto);
+        if (result instanceof ErrorMessage) {
+            console.error(result.error);
+        } 
+
     }
 
     let inputElements = [
