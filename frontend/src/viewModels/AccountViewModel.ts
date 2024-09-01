@@ -4,7 +4,7 @@ import LoginDto, { validateloginDto } from "../dtos/account/loginDto";
 import AccountMapper from "../mappers/accountMapper";
 import AccountService from "../services/accountService";
 import RegisterAccount from "../types/RegisterAccount";
-import LoginAccount from "../types/LoginAccount"; 
+import LoginAccount from "../types/LoginAccount";
 import ErrorMessage from "./error";
 
 export default class AccountViewModel {
@@ -15,11 +15,15 @@ export default class AccountViewModel {
         const registerAccount: RegisterAccount = AccountMapper.ToRegisterAccountFromRegisterDto(registerDto);
 
         try {
-            return await AccountService.registerAccount(registerAccount);
+
+            const response = await AccountService.registerAccount(registerAccount);
+            if (response && typeof response === 'object' && 'error' in response) {
+                return ErrorMessage.errorMessageFromString(response.error);
+            }
+            return response
         }
         catch (error) {
-            const errorMessage = error instanceof Error && error.message? error.message : "Failed to Register User";
-            return ErrorMessage.errorMessageFromString(errorMessage);
+            return ErrorMessage.errorMessageFromString("Failed to Register User");
         }
     }
 
@@ -30,11 +34,15 @@ export default class AccountViewModel {
         const loginAccount: LoginAccount = AccountMapper.ToLoginAccountFromloginDto(loginDto);
 
         try {
-            return await AccountService.loginAccount(loginAccount);
+
+            const response = await AccountService.loginAccount(loginAccount);
+            if (response && typeof response === 'object' && 'error' in response) {
+                return ErrorMessage.errorMessageFromString(response.error);
+            }
+            return response
         }
         catch (error) {
-            const errorMessage = error instanceof Error && error.message ? error.message : "Failed to login";
-            return ErrorMessage.errorMessageFromString(errorMessage);
+            return ErrorMessage.errorMessageFromString("Failed to login");
         }
     }
 }

@@ -7,7 +7,7 @@ const Api = axios.create({
     headers: {
         "Content-Type": "application/json"
     },
-    validateStatus: function (status) {
+    validateStatus: function () {
         return true;
     }
 });
