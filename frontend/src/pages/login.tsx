@@ -3,6 +3,7 @@ import LoginDto from '../dtos/account/loginDto';
 import AccountViewModel from '../viewModels/AccountViewModel';
 import InputForm from '../components/inputForm';
 import ErrorMessage from '../viewModels/error';
+import { handleLoginResult } from '../utils/errorMessage';
 
 interface AccountLoginPageProps {
 }
@@ -18,7 +19,7 @@ const LoginPage: FunctionComponent<AccountLoginPageProps> = () => {
         loginDto.password = password;
         const result = await new AccountViewModel().loginAccount(loginDto);
         if (result instanceof ErrorMessage) {
-            console.error(result.error);
+            handleLoginResult(result);
         } 
 
     }
