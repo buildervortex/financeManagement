@@ -1,0 +1,18 @@
+FROM node:latest
+# get build time properties
+ARG FMEXPRESSPORT=4040
+ARG FMJWTSYMETRICKEY="dfjalksfjkasfjkfjaksjflaksjflkasjfkasjfklasjfaksjflkasjfksfjkasf"
+ARG FMDBCONNECTIONSTRING="localhost/financeManagement"
+RUN ["mkdir","-p","/home/application/node_modules"]
+ENV FMEXPRESSPORT=${FMEXPRESSPORT}
+ENV FMJWTSYMETRICKEY=${FMJWTSYMETRICKEY}
+ENV FMDBCONNECTIONSTRING=${FMDBCONNECTIONSTRING}
+EXPOSE 4040
+EXPOSE 4050
+COPY ./dist /home/application
+COPY ./node_modules /home/application/node_modules
+WORKDIR /home/application
+ENTRYPOINT [ "node", "index.js" ]
+
+
+# docker build --build-arg FMEXPRESSPORT=${FMEXPRESSPORT} --build-arg FMJWTSYMETRICKEY=${FMJWTSYMETRICKEY} --build-arg FMDBCONNECTIONSTRING=${FMDBCONNECTIONSTRING} -t backend .

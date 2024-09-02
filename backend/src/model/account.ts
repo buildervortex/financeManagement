@@ -1,14 +1,16 @@
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import config from "config";
+import Income from "./income";
 
 interface Account extends mongoose.Document {
     _id: mongoose.Types.ObjectId,
-    fullName:string,
+    fullName: string,
     userName: string,
     email: string,
     password: string,
-    generateAuthToken():string;
+    generateAuthToken(): string;
+    incomes: Array<Income>;
 }
 
 const userSchema = new mongoose.Schema<Account>({
@@ -36,6 +38,9 @@ const userSchema = new mongoose.Schema<Account>({
     password: {
         type: String,
         required: true,
+    },
+    incomes: {
+        type: [Income]
     }
 })
 
