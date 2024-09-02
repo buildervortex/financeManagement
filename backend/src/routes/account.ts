@@ -77,5 +77,4 @@ accountRouter.post("/login", async (request: express.Request, response: express.
     response.send(AccountMapper.ToAccountDto(user));
 })
 
-
 export default accountRouter;
