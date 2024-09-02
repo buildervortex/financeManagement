@@ -20,7 +20,7 @@ export function validateAddIncomeDto(IncomeDto: addIncomeDto): Joi.ValidationRes
         monthlyDate: Joi.number().optional().when("monthly", {
             is: true,
             then: Joi.required(),
-            otherwise: Joi.optional()
+            otherwise: Joi.forbidden()
         })
     })
 
