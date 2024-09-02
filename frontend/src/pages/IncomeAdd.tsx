@@ -8,7 +8,7 @@ import InputForm from '../components/inputForm';
 interface AccountLoginPageProps {
 }
 
-const IncomePage: FunctionComponent<AccountLoginPageProps> = () => {
+const IncomeAddPage: FunctionComponent<AccountLoginPageProps> = () => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [amount, setAmount] = useState("");
@@ -96,9 +96,6 @@ const IncomePage: FunctionComponent<AccountLoginPageProps> = () => {
             className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
             placeholder: "CurrancyType"
         }
-        
-        
-
 
     ]
 
@@ -107,4 +104,4 @@ const IncomePage: FunctionComponent<AccountLoginPageProps> = () => {
     );
 }
 
-export default IncomePage;
+export default IncomeAddPage;
