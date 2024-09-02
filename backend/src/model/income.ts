@@ -45,6 +45,8 @@ const incomeSchema = new mongoose.Schema<Income>({
     },
     monthlyDate: {
         type: Number,
+        min: 0,
+        max: 31,
         validate: {
             validator: function (value) {
                 if (this.monthly && !value) {
@@ -52,7 +54,7 @@ const incomeSchema = new mongoose.Schema<Income>({
                 }
                 return true;
             },
-            message:"monthlyDate is required when monthly is true"
+            message: "monthlyDate is required when monthly is true"
         }
     }
 })
