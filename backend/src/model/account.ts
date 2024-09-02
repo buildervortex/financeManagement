@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import config from "config";
-import Income from "./income";
+import Income, { incomeSchema } from "./income";
 
 interface Account extends mongoose.Document {
     _id: mongoose.Types.ObjectId,
@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema<Account>({
         required: true,
     },
     incomes: {
-        type: [Income]
+        type: [incomeSchema]
     }
 })
 
