@@ -13,6 +13,9 @@ export default function jwtAuth(request: express.Request, response: express.Resp
 
     try {
         const decoded = jwt.verify(token, config.get("jwtSymerticKey"));
+        // decoded = {_id:<accountId>}
+        // inject the decoded into the request object.
+        // request.account = decoded.
         (request as any).account = decoded;
     }
     catch (error) {
