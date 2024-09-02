@@ -33,7 +33,7 @@ const investmentSchema = new mongoose.Schema<Investment>({
     },
     incomeDate: {
         type: Date,
-        required: true
+        default: Date.now
     },
     currencyType: {
         type: String,
@@ -44,7 +44,16 @@ const investmentSchema = new mongoose.Schema<Investment>({
         type: Boolean
     },
     monthlyDate: {
-        type: Date
+        type: Number,
+        validate: {
+            validator: function (value) {
+                if (this.monthly && !value) {
+                    return false;
+                }
+                return true;
+            },
+            message:"monthlyDate is required when monthly is true"
+        }
     }
 })
 
