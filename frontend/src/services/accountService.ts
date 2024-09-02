@@ -14,5 +14,4 @@ export default class AccountService {
         const response = await Api.post<any>("/accounts/login", loginAccount);
         return Cast.errorMessageCast(response);
     }
-
 }
