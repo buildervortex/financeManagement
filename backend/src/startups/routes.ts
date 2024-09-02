@@ -4,7 +4,7 @@ import compression from 'compression';
 import morgan from 'morgan';
 import cors from 'cors'
 
-
+import incomeRouter from '../routes/income';
 import accountRouter from '../routes/account';
 
 // uses dependency injection to get the express object to add the route handling middlewares
@@ -31,4 +31,5 @@ export default function configRoute(app: Application) {
 
     // config the routers
     app.use("/api/v1/accounts", accountRouter);
+    app.use("/api/v1/incomes", incomeRouter);
 }
