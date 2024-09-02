@@ -1,9 +1,6 @@
 import { FunctionComponent, useState } from 'react';
-// import LoginDto from '../dtos/account/loginDto';
-// import AccountViewModel from '../viewModels/AccountViewModel';
 import InputForm from '../components/inputForm';
-// import ErrorMessage from '../viewModels/error';
-// import { handleLoginResult } from '../utils/errorMessage';
+
 
 interface AccountLoginPageProps {
 }
@@ -18,16 +15,10 @@ const IncomeAddPage: FunctionComponent<AccountLoginPageProps> = () => {
     const [currancyType, setCurrancyType] = useState("");
 
      const handleSubmit = async (e: React.FormEvent) => {
-    //     e.preventDefault();
-    //     const loginDto: LoginDto = new LoginDto();
-    //     loginDto.email = email;
-    //     loginDto.password = password;
-    //     const result = await new AccountViewModel().loginAccount(loginDto);
-    //     if (result instanceof ErrorMessage) {
-    //         handleLoginResult(result);
-    //    } 
 
-    }
+        } 
+
+    
 
     let inputElements = [
         {

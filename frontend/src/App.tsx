@@ -19,13 +19,14 @@ function App() {
         <Routes>
           <Route path="/" element={<AccountRegisterPage></AccountRegisterPage>}></Route>
         </Routes>
+        
         <Routes>
           <Route path="/Login" element={<LoginPage></LoginPage>}></Route>
         </Routes>  
 
         <Routes>
-        <Route path="/IncomeAdd" element={<IncomeAddPage></IncomeAddPage>}></Route>
-          </Routes>      
+        <Route path="/addIncome" element={<IncomeAddPage></IncomeAddPage>}></Route>
+        </Routes>      
       </div>
       <Footer/>
     </Router>
