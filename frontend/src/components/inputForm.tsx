@@ -15,7 +15,7 @@ interface InputWithLabelProps extends React.InputHTMLAttributes<HTMLInputElement
 
 const InputForm: FunctionComponent<InputFormProps> = ({ formName, submitButton = "Submit", inputs, onSubmit }: InputFormProps) => {
     return (
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen">
             <div className="w-full px-3 bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:py-5 ">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 className="text-3xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl">{formName}</h1>

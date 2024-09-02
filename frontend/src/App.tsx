@@ -5,6 +5,7 @@ import AccountRegisterPage from './pages/AccountRegister';
 import LoginPage from './pages/login';
 import NavBar from './components/Navbar';
 import Footer from './components/Footer';
+import IncomeAddPage from './pages/IncomeAdd';
 
 
 
@@ -17,9 +18,14 @@ function App() {
         <Routes>
           <Route path="/" element={<AccountRegisterPage></AccountRegisterPage>}></Route>
         </Routes>
+        
         <Routes>
           <Route path="/Login" element={<LoginPage></LoginPage>}></Route>
-        </Routes>        
+        </Routes>  
+
+        <Routes>
+        <Route path="/addIncome" element={<IncomeAddPage></IncomeAddPage>}></Route>
+        </Routes>      
       </div>
       <Footer/>
     </Router>
