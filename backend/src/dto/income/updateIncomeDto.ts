@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-class addIncomeDto {
+class updateIncomeDto {
     name: string = ""
     description: string = ""
     amount: number = 0
@@ -10,7 +10,7 @@ class addIncomeDto {
 }
 
 
-export function validateAddIncomeDto(IncomeDto: addIncomeDto): Joi.ValidationResult {
+export function validateUpdateIncome(IncomeDto: updateIncomeDto): Joi.ValidationResult {
     const schema = Joi.object({
         name: Joi.string().min(5).max(50).required(),
         description: Joi.string().min(5).max(250).optional(),
@@ -27,4 +27,4 @@ export function validateAddIncomeDto(IncomeDto: addIncomeDto): Joi.ValidationRes
     return schema.validate(IncomeDto);
 }
 
-export default addIncomeDto;
+export default updateIncomeDto;
