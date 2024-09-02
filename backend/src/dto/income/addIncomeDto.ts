@@ -2,7 +2,7 @@ import Joi from "joi";
 
 class addIncomeDto {
     name: string = ""
-    description: string= ""
+    description: string = ""
     amount: number = 0
     currencyType: string = ""
     monthly: boolean = false
@@ -10,14 +10,18 @@ class addIncomeDto {
 }
 
 
-export function validateIncomeDto(IncomeDto: addIncomeDto): Joi.ValidationResult {
+export function validateAddIncomeDto(IncomeDto: addIncomeDto): Joi.ValidationResult {
     const schema = Joi.object({
-        name: Joi.string().min(2).max(20).required(),
-        description: Joi.string().min(2).max(200).required(),
-        amount:Joi.number().min(0).required(),
-        currencyType: Joi.string().min(0).max(3).required(),
+        name: Joi.string().min(5).max(50).required(),
+        description: Joi.string().min(5).max(250).optional(),
+        amount: Joi.number().min(0).required(),
+        currencyType: Joi.string().min(2).max(10).required(),
         monthly: Joi.boolean().required(),
-        monthlyDate:Joi.number()
+        monthlyDate: Joi.number().optional().when("monthly", {
+            is: true,
+            then: Joi.required(),
+            otherwise: Joi.optional()
+        })
     })
 
     return schema.validate(IncomeDto);

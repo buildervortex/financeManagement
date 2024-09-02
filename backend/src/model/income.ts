@@ -37,11 +37,12 @@ const incomeSchema = new mongoose.Schema<Income>({
     },
     currencyType: {
         type: String,
-        minLength: 1,
-        maxLength: 20
+        minLength: 2,
+        maxLength: 10
     },
     monthly: {
-        type: Boolean
+        type: Boolean,
+        required: true
     },
     monthlyDate: {
         type: Number,
