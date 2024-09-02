@@ -13,7 +13,7 @@ export default function jwtAuth(request: express.Request, response: express.Resp
 
     try {
         const decoded = jwt.verify(token, config.get("jwtSymerticKey"));
-        (request as any).user = decoded;
+        (request as any).account = decoded;
     }
     catch (error) {
         return response.status(400).send(ErrorMessage.errorMessageFromString("Access denided. Invalid token"));
