@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-interface Investment extends mongoose.Document {
+interface Income extends mongoose.Document {
     _id: mongoose.ObjectId;
     name: string;
     description: string;
@@ -11,7 +11,7 @@ interface Investment extends mongoose.Document {
     monthlyDate?: number;
 }
 
-const investmentSchema = new mongoose.Schema<Investment>({
+const incomeSchema = new mongoose.Schema<Income>({
     _id: {
         type: mongoose.Schema.Types.ObjectId,
         default: () => new mongoose.Types.ObjectId(),
@@ -57,5 +57,5 @@ const investmentSchema = new mongoose.Schema<Investment>({
     }
 })
 
-const Investment = mongoose.model<Investment & mongoose.Document>("Investment", investmentSchema, "Investment");
-export default Investment;
+const Income = mongoose.model<Income & mongoose.Document>("Investment", incomeSchema, "Investment");
+export default Income;
