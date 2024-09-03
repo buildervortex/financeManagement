@@ -15,4 +15,5 @@ export default class ErrorMessage {
     }
 
     static ServerError = { error: "Internal Server Error" };
+    static ObjectIdError = { error: "The Id is invalid" };
 }

@@ -11,7 +11,7 @@ interface Income extends mongoose.Document {
     monthlyDate?: number;
 }
 
-const incomeSchema = new mongoose.Schema<Income>({
+export const incomeSchema = new mongoose.Schema<Income>({
     _id: {
         type: mongoose.Schema.Types.ObjectId,
         default: () => new mongoose.Types.ObjectId(),
@@ -53,9 +53,12 @@ const incomeSchema = new mongoose.Schema<Income>({
                 if (this.monthly && !value) {
                     return false;
                 }
+                if (!this.monthly && value) {
+                    return false;
+                }
                 return true;
             },
-            message: "monthlyDate is required when monthly is true"
+            message: "Invalid monthlyDate value"
         }
     }
 })

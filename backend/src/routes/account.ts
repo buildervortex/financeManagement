@@ -6,7 +6,6 @@ import AccountRepository from "../repositories/accountRepository";
 import AccountMapper from "../mappers/accountMapper";
 import Account from "../model/account";
 import Cryptography from "../util/hashing";
-import jwtAuth from "../middleware/jwtAuth";
 
 const accountRouter = express.Router();
 const accountRespository = new AccountRepository();
