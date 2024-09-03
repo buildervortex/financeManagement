@@ -1,98 +1,91 @@
 import { FunctionComponent, useState } from 'react';
 import InputForm from '../components/inputForm';
 
-
-interface AccountLoginPageProps {
-}
+interface AccountLoginPageProps {}
 
 const IncomeAddPage: FunctionComponent<AccountLoginPageProps> = () => {
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [amount, setAmount] = useState("");
-    const [monthly, setMonthly] = useState("");
-    const [date, setDate] = useState("");
-    const [incomeDate, setIncomeDate] = useState("");
-    const [currancyType, setCurrancyType] = useState("");
+    const [name, setName] = useState<string>("");
+    const [description, setDescription] = useState<string>("");
+    const [amount, setAmount] = useState<number | "">("");
+    const [monthly, setMonthly] = useState<boolean>(false);
+    const [incomeDate, setIncomeDate] = useState<string>("");
+    const [currencyType, setCurrencyType] = useState<string>("");
 
-     const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        // Your submit logic here
+    };
 
-        } 
-
-    
-
-    let inputElements = [
+    // Input elements configuration
+    const inputElements = [
         {
             labelContent: 'Name',
-            onChange: (e: any) => setName(e.target.value),
-            type: "string",
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value),
+            type: "text",
             name: "name",
             id: "name",
             className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
-            placeholder: "Name"
+            placeholder: "Enter Name"
         },
         {
             labelContent: 'Description',
-            onChange: (e: any) => setDescription(e.target.value),
-            type: "string",
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value),
+            type: "text",
             name: "description",
             id: "description",
             className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
-            placeholder: "Description"
+            placeholder: "Enter Description"
         },
         {
             labelContent: 'Amount',
-            onChange: (e: any) => setAmount(e.target.value),
-            type: "float",
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setAmount(parseFloat(e.target.value) || ""),
+            type: "number",
             name: "amount",
             id: "amount",
             className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
-            placeholder: "Amount"
+            placeholder: "Enter Amount"
         },
-
         {
-            labelContent: 'Monthly',
-            onChange: (e: any) => setMonthly(e.target.value),
-            type: "boolean",
+            labelContent: 'Monthly ',
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setMonthly(e.target.checked),
+            type: "checkbox",
             name: "monthly",
             id: "monthly",
-            className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
-            placeholder: "Monthly"
+            className: "mr-2 leading-tight",
+            placeholder: ""
         },
-
+        ...(
+            monthly ? [
+                {
+                    labelContent: 'Income Date',
+                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => setIncomeDate(e.target.value),
+                    type: "number",
+                    name: "incomeDate",
+                    id: "incomeDate",
+                    className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
+                    placeholder: "Enter Income date"
+                }
+            ] : []
+        ),
         {
-            labelContent: 'Date',
-            onChange: (e: any) => setDate(e.target.value),
-            type: "date",
-            name: "date",
-            id: "date",
+            labelContent: 'Currency Type',
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setCurrencyType(e.target.value),
+            type: "text",
+            name: "currencyType",
+            id: "currencyType",
             className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
-            placeholder: "Date"
-        },
-        {
-            labelContent: 'IncomeDate',
-            onChange: (e: any) => setIncomeDate(e.target.value),
-            type: "date",
-            name: "incomeDate",
-            id: "incomeDate",
-            className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
-            placeholder: "IncomeDate"
-        },
-
-        {
-            labelContent: 'CurrancyType',
-            onChange: (e: any) => setCurrancyType(e.target.value),
-            type: "string",
-            name: "currancyType",
-            id: "currancyType",
-            className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
-            placeholder: "CurrancyType"
+            placeholder: "Enter Currency Type"
         }
-
-    ]
+    ];
 
     return (
-        <InputForm formName='Login' submitButton='Login' inputs={inputElements} onSubmit={handleSubmit}></InputForm>
+        <InputForm 
+            formName='Add Income Information' 
+            submitButton='Submit' 
+            inputs={inputElements} 
+            onSubmit={handleSubmit}
+        />
     );
-}
+};
 
 export default IncomeAddPage;
