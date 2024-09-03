@@ -1,4 +1,4 @@
-type Updateincome = {
+type UpdateIncome = {
     name: string ;
     description: string ;
     amount: number ;
@@ -7,4 +7,4 @@ type Updateincome = {
     monthlyDate?: number;
 }
 
-export default Updateincome;
+export default UpdateIncome;
