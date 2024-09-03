@@ -1,10 +1,11 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, ReactNode } from 'react';
 
 interface InputFormProps {
     formName?: string;
     submitButton?: string;
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     inputs: InputWithLabelProps[];
+    children?: ReactNode;
 }
 
 interface InputWithLabelProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -13,7 +14,7 @@ interface InputWithLabelProps extends React.InputHTMLAttributes<HTMLInputElement
     labelFor?: string;
 }
 
-const InputForm: FunctionComponent<InputFormProps> = ({ formName, submitButton = "Submit", inputs, onSubmit }: InputFormProps) => {
+const InputForm: FunctionComponent<InputFormProps> = ({ formName, submitButton = "Submit", inputs, onSubmit, children }: InputFormProps) => {
     return (
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen">
             <div className="w-full px-3 bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:py-5 ">
@@ -23,9 +24,12 @@ const InputForm: FunctionComponent<InputFormProps> = ({ formName, submitButton =
                         {inputs.map((inputElement, index) => {
                             const { labelContent, labelClassNames, labelFor, ...rest } = inputElement;
                             return (
-                                <div key={index}>
-                                    {labelContent && <label htmlFor={labelFor} className={labelClassNames}>{labelContent}</label>}
-                                    <input {...rest} />
+                                <div>
+                                    <div key={index}>
+                                        {labelContent && <label htmlFor={labelFor} className={labelClassNames}>{labelContent}</label>}
+                                        <input {...rest} />
+                                    </div>
+                                    {children}
                                 </div>
                             );
                         })}
