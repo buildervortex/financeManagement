@@ -1,4 +1,5 @@
 type Income ={
+    [x: string]: any;
     id: string;
     name: string ;
     description: string ;

@@ -2,6 +2,12 @@ import Joi from "joi";
 
 class deleteIncomeDto {
     id: string =""
+    name: any;
+    description: any;
+    amount: any;
+    currencyType: any;
+    monthly: any;
+    monthlyDate: any;
 }
 
 
