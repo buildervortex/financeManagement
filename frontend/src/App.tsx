@@ -6,6 +6,7 @@ import LoginPage from './pages/login';
 import NavBar from './components/Navbar';
 import Footer from './components/Footer';
 import IncomeAddPage from './pages/IncomeAdd';
+import CheckoutPage from './pages/CheckoutPage';
 
 
 
@@ -25,6 +26,7 @@ function App() {
 
         <Routes>
         <Route path="/addIncome" element={<IncomeAddPage></IncomeAddPage>}></Route>
+        <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>      
       </div>
       <Footer/>
