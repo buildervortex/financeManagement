@@ -40,7 +40,7 @@ const IncomeList: FunctionComponent<IncomeListProps> = ({ incomeList }) => {
         </div>
       </>
     ) : (
-      <p className="text-gray-500">No incomes added yet.</p>
+      <p className="text-gray-600">No incomes added yet.</p>
     )}
   </div>
 </div>
