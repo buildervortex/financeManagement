@@ -1,0 +1,20 @@
+---
+services:
+  fmbackend:
+    build:
+      context: .
+      dockerfile: dockerfile
+      args:
+        - FMEXPRESSPORT=${FMEXPRESSPORT}
+        - FMJWTSYMETRICKEY=${FMJWTSYMETRICKEY}
+        - FMDBCONNECTIONSTRING=${FMDBCONNECTIONSTRING}
+    stdin_open: true
+    container_name: fmBackend
+    expose:
+      - "4040"
+      - "4050"
+
+    ports:
+      - "4040:4040"
+    restart: always
+...

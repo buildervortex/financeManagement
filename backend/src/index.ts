@@ -18,6 +18,6 @@ configDatabase();
 
 // configure the server and the port number
 const PORT = parseInt(c.get("port")) || 4050;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`The application listen on port ${PORT}`);
 })
