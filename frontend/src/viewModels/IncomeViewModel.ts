@@ -2,7 +2,6 @@ import IncomeDto from "../dtos/income/incomeDto";
 import IncomeMapper from "../mappers/incomeMapper";
 import IncomeService from "../services/incomeService";
 import AddIncome from "../types/AddIncome";
-import Income from "../types/Income";
 import UpdateIncome from "../types/UpdateIncome";
 import ErrorMessage from "./error";
 

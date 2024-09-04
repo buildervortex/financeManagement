@@ -1,8 +1,12 @@
 import { FunctionComponent, useState } from 'react';
-import InputForm from '../components/inputForm'; 
+import InputForm from '../components/inputForm';
 import IncomeList from '../components/IncomeList';
+import IncomeDto from '../dtos/income/incomeDto';
+import IncomeViewModel from '../viewModels/IncomeViewModel';
+import { handleErrorResult } from '../utils/errorMessage';
+import ErrorMessage from '../viewModels/error';
 
-interface AccountLoginPageProps {}
+interface AddIncomePageProps { }
 
 interface IncomeEntry {
   name: string;
@@ -23,30 +27,37 @@ interface InputElement {
   placeholder: string;
 }
 
-const IncomeAddPage: FunctionComponent<AccountLoginPageProps> = () => {
+const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [amount, setAmount] = useState<number | "">("");
+  const [amount, setAmount] = useState<number>(0);
   const [monthly, setMonthly] = useState<boolean>(false);
-  const [incomeDate, setIncomeDate] = useState<string>("");
+  const [incomeDate, setIncomeDate] = useState<number>();
   const [currencyType, setCurrencyType] = useState<string>("");
   const [incomeList, setIncomeList] = useState<IncomeEntry[]>([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (name && description && typeof amount === 'number' && currencyType) {
-      const newIncome: IncomeEntry = { name, description, amount, monthly, incomeDate, currencyType };
-      setIncomeList((prev) => [...prev, newIncome]);
+    const incomeDto: IncomeDto = new IncomeDto();
+    incomeDto.id = 
+    incomeDto.name = name;
+    incomeDto.description = description;
+    incomeDto.amount = amount;
+    incomeDto.monthly = monthly;
+    incomeDto.monthlyDate = incomeDate;
+    incomeDto.currencyType = currencyType;
+    const result = await new IncomeViewModel().addIncome(incomeDto)
+    if (result instanceof ErrorMessage) {
+      handleErrorResult(result);
+  } 
 
-      // Clear the form fields
-      setName("");
-      setDescription("");
-      setAmount("");
-      setMonthly(false);
-      setIncomeDate("");
-      setCurrencyType("");
-    }
+    setName("");
+    setDescription("");
+    setAmount(0);
+    setMonthly(false);
+    setCurrencyType("");
+
   };
 
   // Input elements configuration
@@ -71,7 +82,7 @@ const IncomeAddPage: FunctionComponent<AccountLoginPageProps> = () => {
     },
     {
       labelContent: 'Amount',
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setAmount(parseFloat(e.target.value) || ""),
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setAmount(parseFloat(e.target.value)),
       type: "number",
       name: "amount",
       id: "amount",
@@ -84,13 +95,13 @@ const IncomeAddPage: FunctionComponent<AccountLoginPageProps> = () => {
       type: "checkbox",
       name: "monthly",
       id: "monthly",
-      className: "mr-2 leading-tight",
+      className: "mx-3 mr-2 leading-tight",
       placeholder: ""
     },
     ...(monthly ? [
       {
         labelContent: 'Income Date',
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => setIncomeDate(e.target.value),
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => setIncomeDate(parseInt(e.target.value)),
         type: "number",
         name: "incomeDate",
         id: "incomeDate",
