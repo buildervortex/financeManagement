@@ -1,13 +1,26 @@
 import { FunctionComponent, useState } from 'react';
 import InputForm from '../components/inputForm'; 
-// import CurrencySelect from '../components/CurrencySelect';
 import IncomeList from '../components/IncomeList';
+
 interface AccountLoginPageProps {}
 
 interface IncomeEntry {
   name: string;
+  description: string;
   amount: number;
   monthly: boolean;
+  incomeDate: string;
+  currencyType: string;
+}
+
+interface InputElement {
+  labelContent: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type: string;
+  name: string;
+  id: string;
+  className: string;
+  placeholder: string;
 }
 
 const IncomeAddPage: FunctionComponent<AccountLoginPageProps> = () => {
@@ -22,8 +35,8 @@ const IncomeAddPage: FunctionComponent<AccountLoginPageProps> = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (name && typeof amount === 'number') {
-      const newIncome: IncomeEntry = { name, amount, monthly };
+    if (name && description && typeof amount === 'number' && currencyType) {
+      const newIncome: IncomeEntry = { name, description, amount, monthly, incomeDate, currencyType };
       setIncomeList((prev) => [...prev, newIncome]);
 
       // Clear the form fields
@@ -37,14 +50,14 @@ const IncomeAddPage: FunctionComponent<AccountLoginPageProps> = () => {
   };
 
   // Input elements configuration
-  const inputElements = [
+  const inputElements: InputElement[] = [
     {
       labelContent: 'Name',
       onChange: (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value),
       type: "text",
       name: "name",
       id: "name",
-      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
+      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
       placeholder: "Enter Name"
     },
     {
@@ -53,7 +66,7 @@ const IncomeAddPage: FunctionComponent<AccountLoginPageProps> = () => {
       type: "text",
       name: "description",
       id: "description",
-      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
+      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
       placeholder: "Enter Description"
     },
     {
@@ -62,39 +75,37 @@ const IncomeAddPage: FunctionComponent<AccountLoginPageProps> = () => {
       type: "number",
       name: "amount",
       id: "amount",
-      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
+      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
       placeholder: "Enter Amount"
     },
     {
-        labelContent: 'Monthly ',
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => setMonthly(e.target.checked),
-        type: "checkbox",
-        name: "monthly",
-        id: "monthly",
-        className: "mr-2 leading-tight",
-        placeholder: ""
+      labelContent: 'Monthly',
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setMonthly(e.target.checked),
+      type: "checkbox",
+      name: "monthly",
+      id: "monthly",
+      className: "mr-2 leading-tight",
+      placeholder: ""
     },
-    ...(
-        monthly ? [
-            {
-                labelContent: 'Income Date',
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) => setIncomeDate(e.target.value),
-                type: "number",
-                name: "incomeDate",
-                id: "incomeDate",
-                className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
-                placeholder: "Enter Income date"
-            }
-        ] : []
-    ),
+    ...(monthly ? [
+      {
+        labelContent: 'Income Date',
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => setIncomeDate(e.target.value),
+        type: "number",
+        name: "incomeDate",
+        id: "incomeDate",
+        className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
+        placeholder: "Enter Income date"
+      }
+    ] : []),
     {
-        labelContent: 'Currency Type',
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => setCurrencyType(e.target.value),
-        type: "text",
-        name: "currencyType",
-        id: "currencyType",
-        className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 ",
-        placeholder: "Enter Currency Type"
+      labelContent: 'Currency Type',
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setCurrencyType(e.target.value),
+      type: "text",
+      name: "currencyType",
+      id: "currencyType",
+      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
+      placeholder: "Enter Currency Type"
     }
   ];
 
@@ -107,7 +118,9 @@ const IncomeAddPage: FunctionComponent<AccountLoginPageProps> = () => {
         onSubmit={handleSubmit}
       />
 
-      <div className='my-4 '><IncomeList incomeList={incomeList} /></div>
+      <div className='my-4'>
+        <IncomeList incomeList={incomeList} />
+      </div>
     </>
   );
 };
