@@ -63,5 +63,5 @@ export const incomeSchema = new mongoose.Schema<Income>({
     }
 })
 
-const Income = mongoose.model<Income & mongoose.Document>("Investment", incomeSchema, "Investment");
+const Income = mongoose.model<Income & mongoose.Document>("Income", incomeSchema, "Income");
 export default Income;

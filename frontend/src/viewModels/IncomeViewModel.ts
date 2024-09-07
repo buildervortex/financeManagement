@@ -16,14 +16,14 @@ export default class IncomeViewModel {
     }
 
     async updateIncome(updateincome: UpdateIncome, id: number): Promise<IncomeDto | ErrorMessage> {
-        const response = await IncomeService.updateIncome(updateincome,`/incomes/${id}`);
+        const response = await IncomeService.updateIncome(updateincome, `/incomes/${id}`);
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
         return IncomeMapper.ToIncomeDtoFromIncome(response);
     }
-    
-    async DeleteIncome (id:string): Promise<IncomeDto | ErrorMessage>{
+
+    async DeleteIncome(id: string): Promise<IncomeDto | ErrorMessage> {
         const response = await IncomeService.deleteIncome(`/incomes/${id}`);
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
@@ -31,7 +31,7 @@ export default class IncomeViewModel {
         return IncomeMapper.ToIncomeDtoFromIncome(response);
     }
 
-    async getIncomes (): Promise<IncomeDto[] | ErrorMessage>{
+    async getIncomes(): Promise<IncomeDto[] | ErrorMessage> {
         const response = await IncomeService.getIncomes();
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
@@ -40,12 +40,11 @@ export default class IncomeViewModel {
 
     }
 
-    async getIncome (id: number): Promise<IncomeDto | ErrorMessage> {
+    async getIncome(id: number): Promise<IncomeDto | ErrorMessage> {
         const response = await IncomeService.getIncome(`/incomes/${id}`);
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
         return IncomeMapper.ToIncomeDtoFromIncome(response);
     }
-           
-    }
+}
