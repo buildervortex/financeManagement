@@ -5,6 +5,7 @@ import IncomeDto from '../dtos/income/incomeDto';
 import IncomeViewModel from '../viewModels/IncomeViewModel';
 import { handleErrorResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
+import addIncomeDto from '../dtos/income/addIncomeDto';
 
 interface AddIncomePageProps { }
 
@@ -39,15 +40,14 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const incomeDto: IncomeDto = new IncomeDto();
-    incomeDto.id = 
-    incomeDto.name = name;
-    incomeDto.description = description;
-    incomeDto.amount = amount;
-    incomeDto.monthly = monthly;
-    incomeDto.monthlyDate = incomeDate;
-    incomeDto.currencyType = currencyType;
-    const result = await new IncomeViewModel().addIncome(incomeDto)
+    const addincomeDto: addIncomeDto = new addIncomeDto();
+    addincomeDto.name = name;
+    addincomeDto.description = description;
+    addincomeDto.amount = amount;
+    addincomeDto.monthly = monthly;
+    addincomeDto.monthlyDate = incomeDate;
+    addincomeDto.currencyType = currencyType;
+    const result = await new IncomeViewModel().addIncome(addincomeDto)
     if (result instanceof ErrorMessage) {
       handleErrorResult(result);
   } 
