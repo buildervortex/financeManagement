@@ -1,5 +1,3 @@
-import Joi from "joi";
-
 class IncomeDto {
     id: string = ""
     name: string = ""
