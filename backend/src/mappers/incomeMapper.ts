@@ -14,6 +14,7 @@ export default class IncomeMapper {
         incomeDto.monthly = income.monthly;
         incomeDto.monthlyDate = income.monthlyDate;
         incomeDto.name = income.name;
+        incomeDto.incomeDate = income.incomeDate;
 
         return incomeDto;
     }

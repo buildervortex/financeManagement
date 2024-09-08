@@ -1,5 +1,4 @@
 type Income ={
-    [x: string]: any;
     id: string;
     name: string ;
     description: string ;
@@ -7,6 +6,8 @@ type Income ={
     currencyType: string ;
     monthly: boolean ;
     monthlyDate?: number;
+    incomeDate: Date;
 }
 
 export default Income;
+// In my project of express and nodejs i have used mappers to map the data between model and the 
