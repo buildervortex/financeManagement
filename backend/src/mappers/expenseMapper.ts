@@ -14,6 +14,7 @@ export default class ExpenseMapper {
         expenseDto.id = expense.id;
         expenseDto.name = expense.name;
         expenseDto.paymentDate = expense.paymentDate;
+        expenseDto.paid = expense.paid;
 
         return expenseDto;
     }
@@ -26,11 +27,12 @@ export default class ExpenseMapper {
         expense.currencyType = addExpenseDto.currencyType;
         expense.description = addExpenseDto.description;
         expense.name = addExpenseDto.name;
+        expense.paid = addExpenseDto.paid;
 
         return expense;
     }
 
-    static ToExpenseFromUpdateExpenseDto(updateExpenseDto:UpdateExpenseDto): Expense{
+    static ToExpenseFromUpdateExpenseDto(updateExpenseDto: UpdateExpenseDto): Expense {
         const expense = new Expense();
 
         expense.amount = updateExpenseDto.amount;
@@ -38,7 +40,8 @@ export default class ExpenseMapper {
         expense.currencyType = updateExpenseDto.currencyType;
         expense.description = updateExpenseDto.description;
         expense.name = updateExpenseDto.name;
+        expense.paid = updateExpenseDto.paid;
 
-        return expense;       
+        return expense;
     }
 }

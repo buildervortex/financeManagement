@@ -8,6 +8,8 @@ class ExpenseDto {
     amount: number = 0
     currencyType: string = ""
     paymentDate?: Date = new Date();
+    type: string = ""
+    paid: boolean = true
 }
 
 export default ExpenseDto;

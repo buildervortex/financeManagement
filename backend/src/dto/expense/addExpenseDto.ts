@@ -6,6 +6,7 @@ class AddExpenseDto {
     description?: string = "";
     amount: number = 0;
     currencyType: string = "LKR";
+    paid: boolean = true;
 }
 
 export function validateAddExpenseDto(addExpenseDto: AddExpenseDto): Joi.ValidationResult {
@@ -14,7 +15,8 @@ export function validateAddExpenseDto(addExpenseDto: AddExpenseDto): Joi.Validat
         category: Joi.string().min(2).max(50),
         description: Joi.string().min(5).max(250),
         amount: Joi.number().min(1).required(),
-        currencyType: Joi.string().min(2).max(10)
+        currencyType: Joi.string().min(2).max(10),
+        paid: Joi.boolean().default(true).required()
     })
 
     return schema.validate(addExpenseDto);

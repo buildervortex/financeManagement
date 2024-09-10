@@ -8,6 +8,8 @@ interface Expense extends mongoose.Document {
     amount: number;
     currencyType: string;
     paymentDate?: Date;
+    type: string;
+    paid: boolean;
 }
 
 export const expenseSchema = new mongoose.Schema<Expense>({
@@ -43,6 +45,14 @@ export const expenseSchema = new mongoose.Schema<Expense>({
     paymentDate: {
         type: Date,
         default: Date.now
+    },
+    type: {
+        type: String,
+        default: "direct"
+    },
+    paid: {
+        type: Boolean,
+        required: true
     }
 })
 
