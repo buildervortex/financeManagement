@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import config from "config";
 import Income, { incomeSchema } from "./income";
 import Expense, { expenseSchema } from "./expense";
+import Subscription, { subscriptionSchema } from "./subscriptions";
 
 interface Account extends mongoose.Document {
     _id: mongoose.Types.ObjectId,
@@ -13,6 +14,7 @@ interface Account extends mongoose.Document {
     generateAuthToken(): string;
     incomes: Array<Income>;
     expenses: Array<Expense>;
+    subscriptions: Array<Subscription>;
 }
 
 const userSchema = new mongoose.Schema<Account>({
@@ -46,6 +48,9 @@ const userSchema = new mongoose.Schema<Account>({
     },
     expenses: {
         type: [expenseSchema]
+    },
+    subscriptions: {
+        type: [subscriptionSchema]
     }
 })
 
