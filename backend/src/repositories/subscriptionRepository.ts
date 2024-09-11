@@ -56,7 +56,7 @@ export default class SubscrpitionRepository implements ISubscryptionRepository {
         newSubscription.duration = existingSubscription.duration;
         newSubscription.repeatAlways = existingSubscription.repeatAlways;
         newSubscription.repeatCount = existingSubscription.repeatCount;
-        newSubscription.remainingInstallments = existingSubscription.remainingInstallments;
+        newSubscription.paidInstallments = existingSubscription.paidInstallments;
 
 
 

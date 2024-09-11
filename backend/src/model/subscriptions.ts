@@ -14,7 +14,7 @@ interface Subscription extends mongoose.Document {
     repeatAlways?: boolean;
     repeatCount?: number;
     remindBeforeDays: number;
-    remainingInstallments?: number;
+    paidInstallments: number;
 }
 
 export const subscriptionSchema = new mongoose.Schema<Subscription>({
@@ -92,7 +92,7 @@ export const subscriptionSchema = new mongoose.Schema<Subscription>({
         default: 1,
         min: 0
     },
-    remainingInstallments: {
+    paidInstallments: {
         type: Number
     }
 

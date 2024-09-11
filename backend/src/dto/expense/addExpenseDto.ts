@@ -9,6 +9,7 @@ class AddExpenseDto {
     paid: boolean = true;
 }
 
+
 export function validateAddExpenseDto(addExpenseDto: AddExpenseDto): Joi.ValidationResult {
     const schema = Joi.object({
         name: Joi.string().min(2).max(50).required(),

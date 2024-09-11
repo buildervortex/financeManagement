@@ -12,7 +12,7 @@ class SubscriptionDto {
     repeatCount?: number = 1;
     repeatAlways?: boolean = false;
     remindBeforeDays: number = 1;
-    remainingInstallments?: number;
+    paidInstallments?: number;
 }
 
 export default SubscriptionDto;
