@@ -140,7 +140,6 @@ subscriptionRouter.post("/:id/pay", jwtAuth, async (request: express.Request | a
     let expense: Expense;
 
     try {
-        // subscription = await subscriptionRepository.deleteSubscription(subscriptionId, request.account._id);
         expense = await subscriptionService.paySubscription(subscriptionId, request.account._id);
     }
     catch (error) {
