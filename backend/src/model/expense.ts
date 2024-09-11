@@ -10,6 +10,7 @@ interface Expense extends mongoose.Document {
     paymentDate?: Date;
     type: string;
     paid: boolean;
+    addtionalIdentifiers: Array<mongoose.ObjectId>;
 }
 
 export const expenseSchema = new mongoose.Schema<Expense>({
@@ -53,6 +54,9 @@ export const expenseSchema = new mongoose.Schema<Expense>({
     paid: {
         type: Boolean,
         required: true
+    },
+    addtionalIdentifiers: {
+        type: [mongoose.Schema.Types.ObjectId]
     }
 })
 

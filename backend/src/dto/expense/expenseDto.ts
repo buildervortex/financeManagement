@@ -12,4 +12,5 @@ class ExpenseDto {
     paid: boolean = true
 }
 
+
 export default ExpenseDto;
