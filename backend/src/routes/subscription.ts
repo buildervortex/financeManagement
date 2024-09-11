@@ -9,9 +9,12 @@ import { validateAddSubscriptionDto } from "../dto/subscription/addSusbscription
 import { validateUpdateSubscriptionDto } from "../dto/subscription/updateSubscriptionDto";
 import Expense from "../model/expense";
 import SubscriptionUtils from "../util/subscriptionUtils";
+import SubscriptionService from "../services/subscription";
+import ExpenseMapper from "../mappers/expenseMapper";
 
 const subscriptionRouter = express.Router();
 const subscriptionRepository = new SubscrpitionRepository();
+const subscriptionService = new SubscriptionService();
 
 subscriptionRouter.get("/:id", jwtAuth, async (request: express.Request | any, response: express.Response) => {
     const subscriptionId = request.params.id;
@@ -133,7 +136,19 @@ subscriptionRouter.post("/:id/pay", jwtAuth, async (request: express.Request | a
     if (!isObjectIdValid(subscriptionId)) {
         return response.status(400).send(ErrorMessage.ObjectIdError);
     }
+
     let expense: Expense;
+
+    try {
+        // subscription = await subscriptionRepository.deleteSubscription(subscriptionId, request.account._id);
+        expense = await subscriptionService.paySubscription(subscriptionId, request.account._id);
+    }
+    catch (error) {
+        if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
+        else return response.status(500).send(ErrorMessage.ServerError);
+    }
+
+    response.send(ExpenseMapper.ToExpenseDto(expense));
 })
 
 export default subscriptionRouter;

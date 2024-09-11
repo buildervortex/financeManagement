@@ -15,6 +15,7 @@ export default class ExpenseMapper {
         expenseDto.name = expense.name;
         expenseDto.paymentDate = expense.paymentDate;
         expenseDto.paid = expense.paid;
+        expenseDto.type = expense.type;
 
         return expenseDto;
     }

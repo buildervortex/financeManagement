@@ -93,7 +93,8 @@ export const subscriptionSchema = new mongoose.Schema<Subscription>({
         min: 0
     },
     paidInstallments: {
-        type: Number
+        type: Number,
+        default: 0
     }
 
 })
