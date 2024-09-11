@@ -1,8 +1,8 @@
 import Joi from "joi";
 
 class LoginDto {
-    email: string  = "";
-    password: string  = "";
+    email?: string
+    password?: string
 }
 
 export function validateLoginDto(LoginDto: LoginDto): Joi.ValidationResult {

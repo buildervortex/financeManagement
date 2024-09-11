@@ -3,16 +3,16 @@ import mongoose from "mongoose";
 interface Subscription extends mongoose.Document {
     _id: mongoose.ObjectId;
     name: string;
-    category?: string;
-    description?: string;
+    category: string;
+    description: string;
     amount: number;
     currencyType: string;
     nextInstallmentDate?: Date;
-    previousInstalmentDate?: Date;
+    previousInstalmentDate: Date;
     installmentStartingDate: Date;
     duration: number;
-    repeatAlways?: boolean;
-    repeatCount?: number;
+    repeatAlways: boolean;
+    repeatCount: number;
     remindBeforeDays: number;
     paidInstallments: number;
 }
@@ -30,7 +30,6 @@ export const subscriptionSchema = new mongoose.Schema<Subscription>({
     },
     category: {
         type: String,
-        default: "subscription",
         minlength: 2,
         maxlength: 50
     },
@@ -48,7 +47,6 @@ export const subscriptionSchema = new mongoose.Schema<Subscription>({
         type: String,
         minLength: 2,
         maxLength: 10,
-        default: "LKR"
     },
     nextInstallmentDate: {
         type: Date
@@ -59,17 +57,14 @@ export const subscriptionSchema = new mongoose.Schema<Subscription>({
     installmentStartingDate: {
         type: Date,
         required: true,
-        default: new Date()
     },
     duration: {
         type: Number,
         min: 1,
-        default: 1,
         required: true
     },
     repeatAlways: {
         type: Boolean,
-        default: false,
         validate: {
             validator: function (value) {
                 return !(value && this.repeatCount);
@@ -89,12 +84,10 @@ export const subscriptionSchema = new mongoose.Schema<Subscription>({
     },
     remindBeforeDays: {
         type: Number,
-        default: 1,
         min: 0
     },
     paidInstallments: {
         type: Number,
-        default: 0
     }
 
 })
