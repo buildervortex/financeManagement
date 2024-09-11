@@ -1,15 +1,15 @@
 import Joi from "joi";
 
 class ExpenseDto {
-    id: string = ""
-    name: string = ""
-    category?: string = ""
-    description?: string = ""
-    amount: number = 0
-    currencyType: string = ""
-    paymentDate?: Date = new Date();
-    type: string = ""
-    paid: boolean = true
+    id?: string
+    name?: string
+    category?: string
+    description?: string
+    amount?: number
+    currencyType?: string;
+    paymentDate?: Date
+    type?: string;
+    paid?: boolean
 }
 
 

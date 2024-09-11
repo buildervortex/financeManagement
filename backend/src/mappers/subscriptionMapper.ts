@@ -14,7 +14,7 @@ export default class SubscriptionMapper {
         subscriptionDto.duration = subscription.duration;
         subscriptionDto.id = subscription.id;
         subscriptionDto.installmentStartingDate = subscription.installmentStartingDate;
-        subscriptionDto.name = subscription.name;
+        subscriptionDto.name = subscription?.name;
         subscriptionDto.nextInstallmentDate = subscription.nextInstallmentDate;
         subscriptionDto.previousInstalmentDate = subscription.previousInstalmentDate;
         subscriptionDto.paidInstallments = subscription.paidInstallments;
