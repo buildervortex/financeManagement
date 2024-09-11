@@ -48,22 +48,11 @@ export default class SubscrpitionRepository implements ISubscryptionRepository {
             throw new Error("Subscription not found");
         }
 
-        let existingSubscription = existingAccount.subscriptions[subscriptionIndex];
-        // map nonUpdated values
-        newSubscription.nextInstallmentDate = existingSubscription.nextInstallmentDate;
-        newSubscription.previousInstalmentDate = existingSubscription.previousInstalmentDate;
-        newSubscription.installmentStartingDate = existingSubscription.installmentStartingDate;
-        newSubscription.duration = existingSubscription.duration;
-        newSubscription.repeatAlways = existingSubscription.repeatAlways;
-        newSubscription.repeatCount = existingSubscription.repeatCount;
-        newSubscription.paidInstallments = existingSubscription.paidInstallments;
+        let existingSubscription: Subscription = existingAccount.subscriptions[subscriptionIndex];
 
+        const updatedSubscription = existingSubscription.set(newSubscription);
 
-
-        existingAccount.subscriptions[subscriptionIndex] = newSubscription;
-        const updatedAccount = await existingAccount.save();
-
-        const updatedSubscription = updatedAccount.subscriptions[subscriptionIndex];
+        await existingAccount.save();
         return updatedSubscription;
     }
     async deleteSubscription(subscriptionId: string, accountId: string): Promise<Subscription> {

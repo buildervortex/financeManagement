@@ -21,24 +21,25 @@ export default class IncomeMapper {
 
     static ToIncomeFromAddIncomeDto(addIncomeDto: addIncomeDto): Income {
         const income = new Income();
-        income.amount = addIncomeDto.amount;
-        income.currencyType = addIncomeDto.currencyType;
-        income.description = addIncomeDto.description;
-        income.monthly = addIncomeDto.monthly;
-        income.monthlyDate = addIncomeDto.monthlyDate;
-        income.name = addIncomeDto.name;
+        income.amount = addIncomeDto.amount!;
+        income.currencyType = addIncomeDto.currencyType!;
+        income.description = addIncomeDto.description!;
+        income.monthly = addIncomeDto.monthly!;
+        income.monthlyDate = addIncomeDto.monthlyDate!;
+        income.name = addIncomeDto.name!;
+        income.incomeDate = new Date();
 
         return income;
     }
 
     static ToIncomeFromUpdateIncomeDto(updateIncomeDto: updateIncomeDto): Income {
         const income = new Income();
-        income.amount = updateIncomeDto.amount;
-        income.currencyType = updateIncomeDto.currencyType;
-        income.description = updateIncomeDto.description;
-        income.monthly = updateIncomeDto.monthly;
-        income.monthlyDate = updateIncomeDto.monthlyDate;
-        income.name = updateIncomeDto.name;
+        income.amount = updateIncomeDto.amount!;
+        income.currencyType = updateIncomeDto.currencyType!;
+        income.description = updateIncomeDto.description!;
+        income.monthly = updateIncomeDto.monthly!;
+        income.monthlyDate = updateIncomeDto.monthlyDate!;
+        income.name = updateIncomeDto.name!;
 
         return income;
     }

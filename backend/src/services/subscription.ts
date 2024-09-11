@@ -17,8 +17,8 @@ export default class SubscriptionService implements ISubscriptionService {
 
         let expense: Expense = new Expense();
         expense.name = subscription.name;
-        expense.category = subscription.category;
-        expense.description = subscription.description;
+        expense.category = subscription.category!;
+        expense.description = subscription.description!;
         expense.amount = subscription.amount;
         expense.currencyType = subscription.currencyType;
         expense.type = "subscription";

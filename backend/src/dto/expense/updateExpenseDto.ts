@@ -1,12 +1,12 @@
 import Joi from "joi";
 
 class UpdateExpenseDto {
-    name: string = "";
+    name?: string
     category?: string;
-    description?: string = "";
-    amount: number = 0;
-    currencyType: string = "LKR";
-    paid: boolean = true;
+    description?: string
+    amount?: number
+    currencyType?: string
+    paid?: boolean
 }
 
 export function validateUpdateExpenseDto(updateExpenseDto: UpdateExpenseDto): Joi.ValidationResult {

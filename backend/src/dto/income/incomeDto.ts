@@ -1,12 +1,12 @@
 class IncomeDto {
-    id: string = ""
-    name: string = ""
-    description: string = ""
-    amount: number = 0
-    currencyType: string = ""
-    monthly: boolean = false
+    id?: string
+    name?: string
+    description?: string
+    amount?: number = 0
+    currencyType?: string
+    monthly?: boolean
     monthlyDate?: number;
-    incomeDate: Date = new Date();
+    incomeDate?: Date
 }
 
 export default IncomeDto;

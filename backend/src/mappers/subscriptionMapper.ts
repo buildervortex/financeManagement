@@ -27,16 +27,17 @@ export default class SubscriptionMapper {
     static ToSubscriptionFromAddSubscriptionDto(addSubscriptionDto: AddSubscriptionDto): Subscription {
         const subscription = new Subscription();
 
-        subscription.amount = addSubscriptionDto.amount
-        subscription.category = addSubscriptionDto.category
-        subscription.currencyType = addSubscriptionDto.currencyType
-        subscription.description = addSubscriptionDto.description
-        subscription.duration = addSubscriptionDto.duration
-        subscription.installmentStartingDate = addSubscriptionDto.installmentStartingDate
-        subscription.name = addSubscriptionDto.name
-        subscription.remindBeforeDays = addSubscriptionDto.remindBeforeDays
-        subscription.repeatAlways = addSubscriptionDto.repeatAlways
-        subscription.repeatCount = addSubscriptionDto.repeatCount
+        subscription.amount = addSubscriptionDto.amount!
+        subscription.category = addSubscriptionDto?.category ?? "subscription"
+        subscription.currencyType = addSubscriptionDto?.currencyType ?? "LKR"
+        subscription.description = addSubscriptionDto.description!
+        subscription.duration = addSubscriptionDto?.duration ?? 1
+        subscription.installmentStartingDate = addSubscriptionDto?.installmentStartingDate ?? new Date()
+        subscription.name = addSubscriptionDto.name!
+        subscription.remindBeforeDays = addSubscriptionDto?.remindBeforeDays ?? 1
+        subscription.repeatAlways = addSubscriptionDto?.repeatAlways ?? false
+        subscription.repeatCount = addSubscriptionDto.repeatCount!
+        subscription.paidInstallments = 0;
 
         return subscription;
     }
@@ -44,12 +45,12 @@ export default class SubscriptionMapper {
     static ToSubscriptionFromUpdateSubscriptionDto(updateSubscriptionDto: UpdateSubscriptionDto): Subscription {
         const subscription = new Subscription();
 
-        subscription.amount = updateSubscriptionDto.amount
-        subscription.category = updateSubscriptionDto.category
-        subscription.currencyType = updateSubscriptionDto.currencyType
-        subscription.description = updateSubscriptionDto.description
-        subscription.name = updateSubscriptionDto.name
-        subscription.remindBeforeDays = updateSubscriptionDto.remindBeforeDays
+        subscription.amount = updateSubscriptionDto.amount!
+        subscription.category = updateSubscriptionDto?.category ?? "subscription"
+        subscription.currencyType = updateSubscriptionDto?.currencyType ?? "LKR"
+        subscription.description = updateSubscriptionDto.description!
+        subscription.name = updateSubscriptionDto.name!
+        subscription.remindBeforeDays = updateSubscriptionDto.remindBeforeDays!
 
         return subscription;
     }

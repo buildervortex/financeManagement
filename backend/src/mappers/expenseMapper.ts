@@ -23,12 +23,14 @@ export default class ExpenseMapper {
     static ToExpenseFromAddExpenseDto(addExpenseDto: AddExpenseDto): Expense {
         const expense = new Expense();
 
-        expense.amount = addExpenseDto.amount;
-        expense.category = addExpenseDto.category;
-        expense.currencyType = addExpenseDto.currencyType;
-        expense.description = addExpenseDto.description;
-        expense.name = addExpenseDto.name;
-        expense.paid = addExpenseDto.paid;
+        expense.amount = addExpenseDto.amount!;
+        expense.category = addExpenseDto?.category ?? "direct";
+        expense.currencyType = addExpenseDto?.currencyType ?? "LKR";
+        expense.description = addExpenseDto.description!;
+        expense.name = addExpenseDto.name!;
+        expense.paid = addExpenseDto.paid!;
+        expense.paymentDate = new Date()
+        expense.type = "direct"
 
         return expense;
     }
@@ -36,12 +38,12 @@ export default class ExpenseMapper {
     static ToExpenseFromUpdateExpenseDto(updateExpenseDto: UpdateExpenseDto): Expense {
         const expense = new Expense();
 
-        expense.amount = updateExpenseDto.amount;
-        expense.category = updateExpenseDto.category;
-        expense.currencyType = updateExpenseDto.currencyType;
-        expense.description = updateExpenseDto.description;
-        expense.name = updateExpenseDto.name;
-        expense.paid = updateExpenseDto.paid;
+        expense.amount = updateExpenseDto.amount!;
+        expense.category = updateExpenseDto?.category ?? "direct";
+        expense.currencyType = updateExpenseDto?.currencyType ?? "LKR";
+        expense.description = updateExpenseDto.description!;
+        expense.name = updateExpenseDto.name!;
+        expense.paid = updateExpenseDto.paid!;
 
         return expense;
     }
