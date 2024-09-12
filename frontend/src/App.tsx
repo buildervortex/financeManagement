@@ -6,7 +6,8 @@ import LoginPage from './pages/login';
 import NavBar from './components/Navbar';
 import Footer from './components/Footer';
 import IncomeAddPage from './pages/IncomeAdd';
-import CheckoutPage from './pages/CheckoutPage';
+import CheckoutPage from './pages/IncomeDetail';
+import IncomeupdatePage from './pages/IncomeUpdate';
 
 
 
@@ -26,7 +27,8 @@ function App() {
 
         <Routes>
         <Route path="/addIncome" element={<IncomeAddPage></IncomeAddPage>}></Route>
-        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/updateIncome" element={<IncomeupdatePage />}></Route>
+        <Route path="/Income-details" element={<CheckoutPage />} />
         </Routes>      
       </div>
       <Footer/>

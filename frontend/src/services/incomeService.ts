@@ -23,7 +23,7 @@ export default class IncomeService {
     }
 
     static async getIncomes(): Promise<Income[] | ErrorMessage> {
-        const response = await Api.get<Income[] | ErrorMessage>(`/incomes/}` );
+        const response = await Api.get<Income[] | ErrorMessage>(`/incomes/` );
         return Cast.errorMessageCast(response);
     }
 
