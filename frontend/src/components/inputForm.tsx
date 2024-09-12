@@ -26,7 +26,7 @@ const InputForm: FunctionComponent<InputFormProps> = ({ formName, submitButton =
                             return (
                                 <div>
                                     <div key={index}>
-                                        {labelContent && <label htmlFor={labelFor} className={labelClassNames}>{labelContent}</label>}
+                                        {labelContent && <label htmlFor={labelFor} className={labelClassNames} >{labelContent}</label>}
                                         <input {...rest} />
                                     </div>
                                     {children}
