@@ -19,7 +19,7 @@ const NavBar = () => {
   const Links = [
     { name: "Dashboard", link: "/" },
     { name: "Profile", link: "/" },
-    { name: "Contact & FAQ", link: "/" },
+    { name: "Contact & FAQ", link: "/contact" },
   ];
 
   return (
@@ -42,7 +42,7 @@ const NavBar = () => {
             <h1 className='w-full text-3xl font-bold text-[#FF8343] m-4'>Finance Management</h1>
             <li className='p-4 border-b border-gray-200 hover:text-[#FF8343]'><a href='/'>Dashboard</a></li>
             <li className='p-4 border-b border-gray-200 hover:text-[#FF8343]'><a href='/'>Profile</a></li>
-            <li className='p-4 hover:text-[#FF8343]'><a href='/'>Contact & FAQ</a></li>
+            <li className='p-4 hover:text-[#FF8343]'><a href='/contact'>Contact & FAQ</a></li>
           </ul>
         </>
       ) : (

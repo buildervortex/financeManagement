@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import IncomeAddPage from './pages/IncomeAdd';
 import CheckoutPage from './pages/IncomeDetail';
 import IncomeupdatePage from './pages/IncomeUpdate';
+import Contact from './pages/contact';
 
 
 
@@ -23,13 +24,14 @@ function App() {
         
         <Routes>
           <Route path="/Login" element={<LoginPage></LoginPage>}></Route>
+          <Route path="/contact" element={<Contact></Contact>}></Route>
         </Routes>  
 
         <Routes>
         <Route path="/addIncome" element={<IncomeAddPage></IncomeAddPage>}></Route>
         <Route path="/updateIncome" element={<IncomeupdatePage />}></Route>
         <Route path="/Income-details" element={<CheckoutPage />} />
-        </Routes>      
+        </Routes>   
       </div>
       <Footer/>
     </Router>

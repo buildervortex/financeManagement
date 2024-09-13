@@ -45,45 +45,47 @@ const CheckoutPage: FunctionComponent = () => {
 
   return (
     <div className="m-10 p-8 w-full max-w-2xl mx-auto bg-gray-50 shadow-xl rounded-lg mt-10">
-      <h1 className="text-3xl font-semibold text-gray-900 mb-6 border-b-2 border-gray-200 pb-2">Income Details</h1>
-      <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200">
+      <h1 className="text-2xl font-semibold text-gray-700 mb-2 text-center">Income Details</h1>
+      <div className=" p-4">
         <div className="mb-4">
-          <p className="text-lg font-medium text-gray-900">Name:</p>
-          <p className="text-xl text-gray-600 font-semibold">{income.name}</p>
+          <p className="text-lg font-medium text-gray-900">Income Name:</p>
+          <p className="text-xl text-gray-600">{income.name}</p>
         </div>
         <div className="mb-4">
           <p className="text-lg font-medium text-gray-900">Description:</p>
-          <p className="text-lg text-gray-600 font-semibold">{income.description}</p>
+          <p className="text-lg text-gray-600">{income.description}</p>
         </div>
         <div className="mb-4">
           <p className="text-lg font-medium text-gray-900">Amount:</p>
-          <p className="text-xl text-gray-600 font-semibold">{income.currencyType} {income.amount.toFixed(2)}</p>
+          <p className="text-xl text-gray-600">{income.currencyType} {income.amount.toFixed(2)}</p>
         </div>
         <div className="mb-4">
           <p className="text-lg font-medium text-gray-900">Monthly:</p>
-          <p className={`text-xl font-semibold ${income.monthly ? 'text-green-600' : 'text-red-600'}`}>
+          <p className={`text-xl ${income.monthly ? 'text-green-600' : 'text-red-600'}`}>
             {income.monthly ? "Yes" : "No"}
           </p>
         </div>
         <div className="mb-4">
           <p className="text-lg font-medium text-gray-900">Income Date:</p>
-          <p className="text-xl text-gray-600 font-semibold">{formatDate(income.incomeDate)}</p>
+          <p className="text-xl text-gray-600">{formatDate(income.incomeDate)}</p>
         </div>
-        <div className="mt-6">
-          <button 
-            onClick={handleUpdateClick} 
-            className="my-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-          >
-            Update Income
-          </button><br/>
-          <button 
-            onClick={handleDeleteClick} 
-            className="px-5 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
-            Delete Income
-          </button>
+        <div className="mt-6 items-center">
+          <div className='flex items-center gap-x-4'>
+            <button 
+              onClick={handleUpdateClick} 
+              className="my-2 px-4 py-2 border border-[#FF8343] bg-[#FF8343] text-white rounded-md hover:bg-[#fd8b53]"
+            >
+              Update Income
+            </button><br/>
+            <button 
+              onClick={handleDeleteClick} 
+              className="px-5 py-2 border border-[#FF8343] text-[#FF8343] rounded-md hover:bg-gray-100">
+              Delete Income
+            </button>
+          </div>
         </div>
       </div>
-
+      
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900 bg-opacity-50" onClick={closeModal}>
