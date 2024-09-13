@@ -1,5 +1,12 @@
-### Register a new user
-POST http://localhost:4040/api/v1/accounts/register
+@baseUrl = http://localhost:4040/api/v1
+@userName = exampleUser
+@email = exampleUser@example.com
+@password = exampleUser
+
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmUzZTBmY2UzYTE4MDY5MzZhZmRjYjYiLCJpYXQiOjE3MjYyMTE3NTZ9.y7boe5EtRPlmiBxPFe2TbOiwYgJoheanxVLhOsd2P1s
+
+### Register a new user (expected to fail)
+POST {{baseUrl}}/accounts/register
 Content-Type: application/json
 
 {
@@ -10,20 +17,23 @@ Content-Type: application/json
 }
 
 ### Login with the registered user
-POST http://localhost:4040/api/v1/accounts/login
+POST {{baseUrl}}/accounts/login
 Content-Type: application/json
 
 {
-  "email": "john.doe@example.com",
-  "password": "securePassword123"
+  "email": "{{email}}",
+  "password": "{{password}}"
 }
 
 
+
 ### Login with incorrect credentials (expected to fail)
-POST http://localhost:4040/api/v1/accounts/login
+POST {{baseUrl}}/accounts/login
 Content-Type: application/json
 
 {
   "email": "john.doe@example.com",
   "password": "wrongPassword"
 }
+
+### addIncome

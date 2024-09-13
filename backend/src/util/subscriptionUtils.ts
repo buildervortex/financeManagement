@@ -1,3 +1,4 @@
+import Expense from "../model/expense";
 import Subscription from "../model/subscriptions";
 
 export default class SubscriptionUtils {
@@ -26,5 +27,19 @@ export default class SubscriptionUtils {
         nextInstallmentDate.setDate(subscription.installmentStartingDate.getDate() + subscription.duration);
         subscription.nextInstallmentDate = nextInstallmentDate;
         return subscription;
+    }
+
+    static subscriptionToExpense(subscription: Subscription): Expense {
+        let expense: Expense = new Expense();
+        expense.name = subscription.name;
+        expense.category = subscription.category!;
+        expense.description = subscription.description!;
+        expense.amount = subscription.amount;
+        expense.currencyType = subscription.currencyType;
+        expense.type = "subscription";
+        expense.paid = true;
+        expense.addtionalIdentifiers?.push(subscription._id);
+
+        return expense;
     }
 }

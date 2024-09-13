@@ -125,4 +125,39 @@ expenseRouter.delete("/:id", jwtAuth, async (request: express.Request | any, res
     response.send(ExpenseMapper.ToExpenseDto(expense));
 });
 
+expenseRouter.post("/:id/pay", jwtAuth, async (request: express.Request | any, response: express.Response) => {
+    const expenseId = request.params.id;
+    if (!isObjectIdValid(expenseId)) {
+        return response.status(400).send(ErrorMessage.ObjectIdError);
+    }
+    let expense: Expense;
+
+    try {
+        expense = await expenseRepository.getExpense(expenseId, request.account._id);
+    }
+    catch (error) {
+        if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
+        else return response.status(500).send(ErrorMessage.ServerError);
+    }
+    if (!expense) {
+        return response.status(500).send(ErrorMessage.ServerError);
+    }
+    if (expense.paid === true) {
+        return response.status(400).send(ErrorMessage.errorMessageFromString("The expense is already paid"));
+    }
+    expense.paid = true;
+    try {
+        expense = await expenseRepository.updateExpense(request.account._id, expenseId, expense);
+    }
+    catch (error) {
+        if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
+        else return response.status(500).send(ErrorMessage.ServerError);
+    }
+    if (!expense) {
+        return response.status(500).send(ErrorMessage.ServerError);
+    }
+
+    response.send(ExpenseMapper.ToExpenseDto(expense));
+})
+
 export default expenseRouter

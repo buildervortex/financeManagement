@@ -19,6 +19,8 @@ export default class SubscriptionMapper {
         subscriptionDto.previousInstalmentDate = subscription.previousInstalmentDate;
         subscriptionDto.paidInstallments = subscription.paidInstallments;
         subscriptionDto.remindBeforeDays = subscription.remindBeforeDays;
+        subscriptionDto.repeatCount = subscription.repeatCount;
+        subscriptionDto.repeatAlways = subscription.repeatAlways;
 
         return subscriptionDto;
 
