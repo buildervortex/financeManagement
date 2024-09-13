@@ -11,16 +11,16 @@ export default class SubscriptionMapper {
         subscriptionDto.category = subscription.category;
         subscriptionDto.currencyType = subscription.currencyType;
         subscriptionDto.description = subscription.currencyType;
-        subscriptionDto.duration = subscription.duration;
+        subscriptionDto.installmentIntervalDays = subscription.installmentIntervalDays;
         subscriptionDto.id = subscription.id;
-        subscriptionDto.installmentStartingDate = subscription.installmentStartingDate;
+        subscriptionDto.initialPaymentDate = subscription.initialPaymentDate;
         subscriptionDto.name = subscription?.name;
         subscriptionDto.nextInstallmentDate = subscription.nextInstallmentDate;
-        subscriptionDto.previousInstalmentDate = subscription.previousInstalmentDate;
-        subscriptionDto.paidInstallments = subscription.paidInstallments;
+        subscriptionDto.lastPaymentDate = subscription.lastPaymentDate;
+        subscriptionDto.completedInstallments = subscription.completedInstallments;
         subscriptionDto.remindBeforeDays = subscription.remindBeforeDays;
-        subscriptionDto.repeatCount = subscription.repeatCount;
-        subscriptionDto.repeatAlways = subscription.repeatAlways;
+        subscriptionDto.totalInstallments = subscription.totalInstallments;
+        subscriptionDto.isRecurringIndefinitely = subscription.isRecurringIndefinitely;
 
         return subscriptionDto;
 
@@ -33,13 +33,13 @@ export default class SubscriptionMapper {
         subscription.category = addSubscriptionDto.category!
         subscription.currencyType = addSubscriptionDto.currencyType!
         subscription.description = addSubscriptionDto.description!
-        subscription.duration = addSubscriptionDto.duration!
-        subscription.installmentStartingDate = addSubscriptionDto.installmentStartingDate!
+        subscription.installmentIntervalDays = addSubscriptionDto.installmentIntervalDays!
+        subscription.initialPaymentDate = addSubscriptionDto.initialPaymentDate!
         subscription.name = addSubscriptionDto.name!
         subscription.remindBeforeDays = addSubscriptionDto.remindBeforeDays!
-        subscription.repeatAlways = addSubscriptionDto.repeatAlways!
-        subscription.repeatCount = addSubscriptionDto.repeatCount!
-        subscription.paidInstallments = 0;
+        subscription.isRecurringIndefinitely = addSubscriptionDto.isRecurringIndefinitely!
+        subscription.totalInstallments = addSubscriptionDto.totalInstallments!
+        subscription.completedInstallments = 0;
 
         return subscription;
     }

@@ -25,4 +25,8 @@ export default class SubscriptionService implements ISubscriptionService {
         return expenseRepository.addExpense(expense, accountId);
     }
 
+    async handleSubscriptionDueDates(accountId: string) {
+        let subscriptions = await subscriptionRepository.getSubscriptions(accountId);
+    }
+
 }

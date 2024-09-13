@@ -6,10 +6,10 @@ class AddSubscriptionDto {
     description?: string
     amount?: number
     currencyType?: string = "LKR";
-    installmentStartingDate?: Date = new Date();
-    duration?: number = 1
-    repeatCount?: number
-    repeatAlways?: boolean = false
+    initialPaymentDate?: Date = new Date();
+    installmentIntervalDays?: number = 1
+    totalInstallments?: number
+    isRecurringIndefinitely?: boolean = false
     remindBeforeDays?: number = 1
 }
 
@@ -20,16 +20,21 @@ export function validateAddSubscriptionDto(addSubscriptionDto: AddSubscriptionDt
         description: Joi.string().min(5).max(250),
         amount: Joi.number().min(1).required(),
         currencyType: Joi.string().min(2).max(10),
-        installmentStartingDate: Joi.date().required(),
-        duration: Joi.number().min(1),
-        repeatAlways: Joi.boolean(),
-        repeatCount: Joi.number().min(1).when("repeatAlways", {
+        initialPaymentDate: Joi.date().greater("now").required(),
+        installmentIntervalDays: Joi.number().integer().min(1),
+        isRecurringIndefinitely: Joi.boolean(),
+        totalInstallments: Joi.number().min(1).when("isRecurringIndefinitely", {
             is: true,
             then: Joi.forbidden(),
             otherwise: Joi.required()
         }),
-        remindBeforeDays: Joi.number().min(1)
-    })
+        remindBeforeDays: Joi.number().integer().min(1)
+    }).custom((value, helpers) => {
+        if(value.remindBeforeDays >= value.installmentIntervalDays){
+            return helpers.error("\"remindBeforeDays\" should be less than \"installmentIntervalDays\"");
+        }
+        return value;
+    },"Custom validation for remindBeforeDays")
     return schema.validate(addSubscriptionDto);
 }
 

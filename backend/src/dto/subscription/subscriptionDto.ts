@@ -6,13 +6,13 @@ class SubscriptionDto {
     amount?: number
     currencyType?: string
     nextInstallmentDate?: Date;
-    previousInstalmentDate?: Date;
-    installmentStartingDate?: Date
-    duration?: number
-    repeatCount?: number
-    repeatAlways?: boolean
+    lastPaymentDate?: Date;
+    initialPaymentDate?: Date
+    installmentIntervalDays?: number
+    totalInstallments?: number
+    isRecurringIndefinitely?: boolean
     remindBeforeDays?: number
-    paidInstallments?: number;
+    completedInstallments?: number;
 }
 
 export default SubscriptionDto;

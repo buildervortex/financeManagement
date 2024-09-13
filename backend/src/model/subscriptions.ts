@@ -8,13 +8,13 @@ interface Subscription extends mongoose.Document {
     amount: number;
     currencyType: string;
     nextInstallmentDate?: Date;
-    previousInstalmentDate: Date;
-    installmentStartingDate: Date;
-    duration: number;
-    repeatAlways: boolean;
-    repeatCount: number;
+    lastPaymentDate: Date;
+    initialPaymentDate: Date;
+    installmentIntervalDays: number;
+    isRecurringIndefinitely: boolean;
+    totalInstallments: number;
     remindBeforeDays: number;
-    paidInstallments: number;
+    completedInstallments: number;
 }
 
 export const subscriptionSchema = new mongoose.Schema<Subscription>({
@@ -51,43 +51,56 @@ export const subscriptionSchema = new mongoose.Schema<Subscription>({
     nextInstallmentDate: {
         type: Date
     },
-    previousInstalmentDate: {
+    lastPaymentDate: {
         type: Date
     },
-    installmentStartingDate: {
+    initialPaymentDate: {
         type: Date,
         required: true,
     },
-    duration: {
+    installmentIntervalDays: {
         type: Number,
         min: 1,
         required: true
     },
-    repeatAlways: {
+    isRecurringIndefinitely: {
         type: Boolean,
         validate: {
             validator: function (value) {
-                return !(value && this.repeatCount);
+                return !(value && this.totalInstallments);
             }
         },
         message: "Cannot set repeat always to true if a repeat count is provided."
     },
-    repeatCount: {
+    totalInstallments: {
         type: Number,
         min: 1,
         validate: {
             validator: function (value) {
-                return !this.repeatAlways;
+                return !this.isRecurringIndefinitely;
             },
             message: "Bot the repeat count and repeat always cannot be used at the same time"
         }
     },
     remindBeforeDays: {
         type: Number,
-        min: 0
+        min: 0,
+        validate: {
+            validator: function (value) {
+                return value < this.installmentIntervalDays;
+            },
+            message: "Reminder days must be less than the installment interval days."
+        }
     },
-    paidInstallments: {
+    completedInstallments: {
         type: Number,
+        min: 0,
+        validate: {
+            validator: function (value) {
+                return value <= this.totalInstallments;
+            },
+            message: "Completed installments cannot exceed total installments."
+        }
     }
 
 })

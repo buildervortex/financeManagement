@@ -133,15 +133,15 @@ x-auth-token: {{authToken}}
   "description": "newDescription",
   "amount": 10000,
   "currencyType": "LKR",
-  "installmentStartingDate": "2024-09-15T12:30:00.000Z",
-  "duration": 60,
-  "repeatCount": 4,
-  "repeatAlways": false,
-  "remindBeforeDays": 5
+  "initialPaymentDate": "2024-09-15T12:30:00.000Z",
+  "installmentIntervalDays": 60,
+  "totalInstallments": 4,
+  "isRecurringIndefinitely": false,
+  "remindBeforeDays": 40
 }
 
 ### Update a subscription
-PUT {{baseUrl}}/subscriptions/66e428cefda5a9c316d6151a
+PUT {{baseUrl}}/subscriptions/66e447a3988b5303c05a660c
 Content-Type: application/json
 x-auth-token: {{authToken}}
 
@@ -160,16 +160,16 @@ Content-Type: application/json
 x-auth-token: {{authToken}}
 
 ### Get a subscription
-GET {{baseUrl}}/subscriptions/66e428cefda5a9c316d6151a
+GET {{baseUrl}}/subscriptions/66e447a3988b5303c05a660c
 Content-Type: application/json
 x-auth-token: {{authToken}}
 
 ### Delete a subscription
-DELETE {{baseUrl}}/subscriptions/66e428cefda5a9c316d6151a
+DELETE {{baseUrl}}/subscriptions/66e447a3988b5303c05a660c
 Content-Type: application/json
 x-auth-token: {{authToken}}
 
 ### Pay a subscription
-POST {{baseUrl}}/subscriptions/66e437e7cf3723b3ce308afc/pay
+POST {{baseUrl}}/subscriptions/66e447a3988b5303c05a660c/pay
 Content-Type: application/json
 x-auth-token: {{authToken}}
