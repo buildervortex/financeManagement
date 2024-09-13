@@ -5,8 +5,8 @@ import { isObjectIdValid } from "../util/validate";
 import ErrorMessage from "../model/error";
 import Expense from "../model/expense";
 import ExpenseMapper from "../mappers/expenseMapper";
-import { validateAddExpenseDto } from "../dto/expense/addExpenseDto";
-import { validateUpdateExpenseDto } from "../dto/expense/updateExpenseDto";
+import AddExpenseDto, { validateAddExpenseDto } from "../dto/expense/addExpenseDto";
+import UpdateExpenseDto, { validateUpdateExpenseDto } from "../dto/expense/updateExpenseDto";
 
 const expenseRouter = express.Router();
 const expenseRepository = new ExpenseRepository();
@@ -51,13 +51,14 @@ expenseRouter.get("/", jwtAuth, async (request: express.Request | any, response:
 });
 
 expenseRouter.post("/", jwtAuth, async (request: express.Request | any, response: express.Response) => {
-    const { error } = validateAddExpenseDto(request.body);
+    const addExpenseDtoObject: AddExpenseDto = Object.assign(new AddExpenseDto(), request.body);
+    const { error } = validateAddExpenseDto(addExpenseDtoObject);
 
     if (error) {
         return response.status(400).send(ErrorMessage.errorMessageFromJoiError(error));
     }
 
-    let expense: Expense = ExpenseMapper.ToExpenseFromAddExpenseDto(request.body);
+    let expense: Expense = ExpenseMapper.ToExpenseFromAddExpenseDto(addExpenseDtoObject);
 
     try {
         expense = await expenseRepository.addExpense(expense, request.account._id);
@@ -80,13 +81,14 @@ expenseRouter.put("/:id", jwtAuth, async (request: express.Request | any, respon
         return response.status(400).send(ErrorMessage.ObjectIdError);
     }
 
-    const { error } = validateUpdateExpenseDto(request.body);
+    const updateExpenseDtoObject: UpdateExpenseDto = Object.assign(new UpdateExpenseDto(), request.body);
+    const { error } = validateUpdateExpenseDto(updateExpenseDtoObject);
 
     if (error) {
         return response.status(400).send(ErrorMessage.errorMessageFromJoiError(error));
     }
 
-    let expense: Expense = ExpenseMapper.ToExpenseFromUpdateExpenseDto(request.body);
+    let expense: Expense = ExpenseMapper.ToExpenseFromUpdateExpenseDto(updateExpenseDtoObject);
 
     try {
         expense = await expenseRepository.updateExpense(request.account._id, expenseId, expense);

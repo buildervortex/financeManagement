@@ -5,8 +5,8 @@ import ErrorMessage from "../model/error";
 import IncomeRepository from "../repositories/incomeRepository";
 import Income from "../model/income";
 import IncomeMapper from "../mappers/incomeMapper";
-import { validateAddIncomeDto } from "../dto/income/addIncomeDto";
-import { validateUpdateIncome } from "../dto/income/updateIncomeDto";
+import addIncomeDto, { validateAddIncomeDto } from "../dto/income/addIncomeDto";
+import updateIncomeDto, { validateUpdateIncome } from "../dto/income/updateIncomeDto";
 
 const incomeRouter = express.Router();
 const incomeRepository = new IncomeRepository();
@@ -51,13 +51,14 @@ incomeRouter.get("/", jwtAuth, async (request: express.Request | any, response: 
     response.send(incomes.map(income => IncomeMapper.ToIncomeDto(income)));
 });
 incomeRouter.post("/", jwtAuth, async (request: express.Request | any, response: express.Response) => {
-    const { error } = validateAddIncomeDto(request.body);
+    let addIncomeDtoObject: addIncomeDto = Object.assign(new addIncomeDto(), request.body);
+    const { error } = validateAddIncomeDto(addIncomeDtoObject);
 
     if (error) {
         return response.status(400).send(ErrorMessage.errorMessageFromJoiError(error));
     }
 
-    let income: Income = IncomeMapper.ToIncomeFromAddIncomeDto(request.body);
+    let income: Income = IncomeMapper.ToIncomeFromAddIncomeDto(addIncomeDtoObject);
 
     try {
         income = await incomeRepository.addIncome(income, request.account._id);
@@ -75,18 +76,19 @@ incomeRouter.post("/", jwtAuth, async (request: express.Request | any, response:
 });
 
 incomeRouter.put("/:id", jwtAuth, async (request: express.Request | any, response: express.Response) => {
+    const updateIncomeDtoObject: updateIncomeDto = Object.assign(new updateIncomeDto(),request.body);
     const incomeId = request.params.id;
     if (!isObjectIdValid(incomeId)) {
         return response.status(400).send(ErrorMessage.ObjectIdError);
     }
 
-    const { error } = validateUpdateIncome(request.body);
+    const { error } = validateUpdateIncome(updateIncomeDtoObject);
 
     if (error) {
         return response.status(400).send(ErrorMessage.errorMessageFromJoiError(error));
     }
 
-    let income: Income = IncomeMapper.ToIncomeFromUpdateIncomeDto(request.body);
+    let income: Income = IncomeMapper.ToIncomeFromUpdateIncomeDto(updateIncomeDtoObject);
 
     try {
         income = await incomeRepository.updateIncome(request.account._id, incomeId, income);

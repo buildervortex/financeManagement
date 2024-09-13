@@ -2,10 +2,10 @@ import Joi from "joi";
 
 class UpdateExpenseDto {
     name?: string
-    category?: string;
+    category?: string = "simpleExpense";
     description?: string
     amount?: number
-    currencyType?: string
+    currencyType?: string = "LKR";
     paid?: boolean
 }
 
@@ -16,7 +16,7 @@ export function validateUpdateExpenseDto(updateExpenseDto: UpdateExpenseDto): Jo
         description: Joi.string().min(5).max(250),
         amount: Joi.number().min(1).required(),
         currencyType: Joi.string().min(2).max(10),
-        paid: Joi.boolean().default(true).required()
+        paid: Joi.boolean().required()
     })
 
     return schema.validate(updateExpenseDto);

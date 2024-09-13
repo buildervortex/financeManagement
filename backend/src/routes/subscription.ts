@@ -5,8 +5,8 @@ import { isObjectIdValid } from "../util/validate";
 import ErrorMessage from "../model/error";
 import Subscription from "../model/subscriptions";
 import SubscriptionMapper from "../mappers/subscriptionMapper";
-import { validateAddSubscriptionDto } from "../dto/subscription/addSusbscriptionDto";
-import { validateUpdateSubscriptionDto } from "../dto/subscription/updateSubscriptionDto";
+import AddSubscriptionDto, { validateAddSubscriptionDto } from "../dto/subscription/addSusbscriptionDto";
+import UpdateSubscriptionDto, { validateUpdateSubscriptionDto } from "../dto/subscription/updateSubscriptionDto";
 import Expense from "../model/expense";
 import SubscriptionUtils from "../util/subscriptionUtils";
 import SubscriptionService from "../services/subscription";
@@ -57,13 +57,14 @@ subscriptionRouter.get("/", jwtAuth, async (request: express.Request | any, resp
 
 
 subscriptionRouter.post("/", jwtAuth, async (request: express.Request | any, response: express.Response) => {
-    const { error } = validateAddSubscriptionDto(request.body);
+    const addSubscriptionDtoObject: AddSubscriptionDto = Object.assign(new AddSubscriptionDto(), request.body);
+    const { error } = validateAddSubscriptionDto(addSubscriptionDtoObject);
 
     if (error) {
         return response.status(400).send(ErrorMessage.errorMessageFromJoiError(error));
     }
 
-    let subscription: Subscription = SubscriptionMapper.ToSubscriptionFromAddSubscriptionDto(request.body);
+    let subscription: Subscription = SubscriptionMapper.ToSubscriptionFromAddSubscriptionDto(addSubscriptionDtoObject);
 
     try {
         SubscriptionUtils.setInitialNextInstallmentDate(subscription);
@@ -87,13 +88,14 @@ subscriptionRouter.put("/:id", jwtAuth, async (request: express.Request | any, r
         return response.status(400).send(ErrorMessage.ObjectIdError);
     }
 
-    const { error } = validateUpdateSubscriptionDto(request.body);
+    const updateSubscriptionDtoObject: UpdateSubscriptionDto = Object.assign(new UpdateSubscriptionDto(), request.body);
+    const { error } = validateUpdateSubscriptionDto(updateSubscriptionDtoObject);
 
     if (error) {
         return response.status(400).send(ErrorMessage.errorMessageFromJoiError(error));
     }
 
-    let subscription: Subscription = SubscriptionMapper.ToSubscriptionFromAddSubscriptionDto(request.body);
+    let subscription: Subscription = SubscriptionMapper.ToSubscriptionFromAddSubscriptionDto(updateSubscriptionDtoObject);
 
     try {
         subscription = await subscriptionRepository.updateSubscription(subscription, subscriptionId, request.account._id);

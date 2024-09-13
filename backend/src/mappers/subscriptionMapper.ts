@@ -30,14 +30,14 @@ export default class SubscriptionMapper {
         const subscription = new Subscription();
 
         subscription.amount = addSubscriptionDto.amount!
-        subscription.category = addSubscriptionDto?.category ?? "subscription"
-        subscription.currencyType = addSubscriptionDto?.currencyType ?? "LKR"
+        subscription.category = addSubscriptionDto.category!
+        subscription.currencyType = addSubscriptionDto.currencyType!
         subscription.description = addSubscriptionDto.description!
-        subscription.duration = addSubscriptionDto?.duration ?? 1
-        subscription.installmentStartingDate = addSubscriptionDto?.installmentStartingDate ?? new Date()
+        subscription.duration = addSubscriptionDto.duration!
+        subscription.installmentStartingDate = addSubscriptionDto.installmentStartingDate!
         subscription.name = addSubscriptionDto.name!
-        subscription.remindBeforeDays = addSubscriptionDto?.remindBeforeDays ?? 1
-        subscription.repeatAlways = addSubscriptionDto?.repeatAlways ?? false
+        subscription.remindBeforeDays = addSubscriptionDto.remindBeforeDays!
+        subscription.repeatAlways = addSubscriptionDto.repeatAlways!
         subscription.repeatCount = addSubscriptionDto.repeatCount!
         subscription.paidInstallments = 0;
 
@@ -48,8 +48,8 @@ export default class SubscriptionMapper {
         const subscription = new Subscription();
 
         subscription.amount = updateSubscriptionDto.amount!
-        subscription.category = updateSubscriptionDto?.category ?? "subscription"
-        subscription.currencyType = updateSubscriptionDto?.currencyType ?? "LKR"
+        subscription.category = updateSubscriptionDto.category!
+        subscription.currencyType = updateSubscriptionDto.currencyType!
         subscription.description = updateSubscriptionDto.description!
         subscription.name = updateSubscriptionDto.name!
         subscription.remindBeforeDays = updateSubscriptionDto.remindBeforeDays!

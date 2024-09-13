@@ -4,8 +4,8 @@ class addIncomeDto {
     name?: string
     description?: string
     amount?: number
-    currencyType?: string
-    monthly?: boolean
+    currencyType?: string = "LKR";
+    monthly?: boolean = false;
     monthlyDate?: number;
 }
 
@@ -15,8 +15,8 @@ export function validateAddIncomeDto(IncomeDto: addIncomeDto): Joi.ValidationRes
         name: Joi.string().min(5).max(50).required(),
         description: Joi.string().min(5).max(250).optional(),
         amount: Joi.number().min(0).required(),
-        currencyType: Joi.string().min(2).max(10).required(),
-        monthly: Joi.boolean().required(),
+        currencyType: Joi.string().min(2).max(10),
+        monthly: Joi.boolean(),
         monthlyDate: Joi.number().optional().when("monthly", {
             is: true,
             then: Joi.required(),
