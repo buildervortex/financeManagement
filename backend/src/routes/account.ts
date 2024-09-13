@@ -6,9 +6,11 @@ import AccountRepository from "../repositories/accountRepository";
 import AccountMapper from "../mappers/accountMapper";
 import Account from "../model/account";
 import Cryptography from "../util/hashing";
+import SubscriptionService from "../services/subscription";
 
 const accountRouter = express.Router();
 const accountRespository = new AccountRepository();
+const subscriptionService = new SubscriptionService();
 
 accountRouter.post("/register", async (request: express.Request, response: express.Response) => {
 
@@ -42,6 +44,7 @@ accountRouter.post("/register", async (request: express.Request, response: expre
     response.header("x-auth-token", token);
 
     response.send(AccountMapper.ToAccountDto(user));
+
 });
 
 accountRouter.post("/login", async (request: express.Request, response: express.Response) => {
@@ -74,6 +77,9 @@ accountRouter.post("/login", async (request: express.Request, response: express.
     response.header("x-auth-token", token);
 
     response.send(AccountMapper.ToAccountDto(user));
+
+    // run services
+    subscriptionService.handleSubscriptionDueDates(user.id);
 })
 
 export default accountRouter;

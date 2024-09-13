@@ -2,10 +2,9 @@ import Expense from "../model/expense";
 import Subscription from "../model/subscriptions";
 
 export default class SubscriptionUtils {
-    static validateSubscription(subscription: Subscription): boolean {
+    static toPay(subscription: Subscription): boolean {
         if (subscription.totalInstallments) {
             if (subscription.completedInstallments < subscription.totalInstallments) return true;
-
         }
         return false;
     }
@@ -29,7 +28,7 @@ export default class SubscriptionUtils {
         return subscription;
     }
 
-    static subscriptionToExpense(subscription: Subscription): Expense {
+    static subscriptionToExpense(subscription: Subscription,paid:boolean = true): Expense {
         let expense: Expense = new Expense();
         expense.name = subscription.name;
         expense.category = subscription.category!;
@@ -37,7 +36,7 @@ export default class SubscriptionUtils {
         expense.amount = subscription.amount;
         expense.currencyType = subscription.currencyType;
         expense.type = "subscription";
-        expense.paid = true;
+        expense.paid = paid;
         expense.addtionalIdentifiers?.push(subscription._id);
 
         return expense;
