@@ -50,7 +50,9 @@ export default class SubscrpitionRepository implements ISubscryptionRepository {
 
         let existingSubscription: Subscription = existingAccount.subscriptions[subscriptionIndex];
 
-        const updatedSubscription = existingSubscription.set(newSubscription);
+        const { _id, id, ...parsedSubscription } = newSubscription;
+
+        const updatedSubscription = existingSubscription.set(parsedSubscription);
 
         await existingAccount.save();
         return updatedSubscription;

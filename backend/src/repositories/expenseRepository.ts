@@ -52,8 +52,8 @@ export default class ExpenseRepository implements IExpenseRepository {
             throw new Error("Expense not found");
         }
 
-        // existingAccount.expenses[expenseIndex] = newExpense;
-        existingAccount.expenses[expenseIndex].set(newExpense);
+        const { _id, id, ...parsedExpense } = newExpense;
+        existingAccount.expenses[expenseIndex].set(parsedExpense);
 
         const updatedAccount = await existingAccount.save();
 

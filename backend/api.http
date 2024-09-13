@@ -36,4 +36,15 @@ Content-Type: application/json
   "password": "wrongPassword"
 }
 
-### addIncome
+### Add an income
+POST {{baseUrl}}/incomes
+Content-Type: application/json
+
+{
+    "name":"myexpenses",    # Required
+    "amount":150000,        # Required
+    "currencyType":"LKR",   # 
+    "monthly":true,
+    "monthlyDate":5,
+    "paid": 
+}
