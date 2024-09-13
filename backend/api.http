@@ -39,12 +39,137 @@ Content-Type: application/json
 ### Add an income
 POST {{baseUrl}}/incomes
 Content-Type: application/json
+x-auth-token: {{authToken}}
 
 {
-    "name":"myexpenses",    # Required
-    "amount":150000,        # Required
-    "currencyType":"LKR",   # 
-    "monthly":true,
-    "monthlyDate":5,
-    "paid": 
+    "name":"myexpenses",     
+    "description": "new des",
+    "amount":150000,         
+    "currencyType":"LKR",    
+    "monthly":true,          
+    "monthlyDate":5          
 }
+
+### Update an income
+PUT {{baseUrl}}/incomes/66e4379acf3723b3ce308ae3
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+{
+  "name":"updatedExpense",  
+  "amount": 40000,          
+  "description": "updated", 
+  "currencyType":"USD",     
+  "monthly":true,           
+  "monthlyDate":4      
+}
+
+### Get All Incomes
+GET {{baseUrl}}/incomes
+x-auth-token: {{authToken}}
+
+### Get an Income
+GET {{baseUrl}}/incomes/66e4379acf3723b3ce308ae3
+x-auth-token: {{authToken}}
+
+### Delete an Income
+DELETE {{baseUrl}}/incomes/66e4379acf3723b3ce308ae3
+x-auth-token: {{authToken}}
+
+
+### Add an expense
+POST {{baseUrl}}/expenses
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+{
+  "name": "newExpense",
+  "category":"newCategory",
+  "description": "description",
+  "amount":50000,
+  "currencyType": "LKR",
+  "paid": true
+}
+
+### Update an expense
+PUT {{baseUrl}}/expenses/66e437cbcf3723b3ce308af1
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+{
+  "name": "UpdatedExpense",
+  "category":"UPdatedCategory",
+  "description": "Updateddescription",
+  "amount":900,
+  "currencyType": "USD",
+  "paid": true
+}
+
+### Get all expenses
+GET  {{baseUrl}}/expenses
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+### Get an expense
+GET  {{baseUrl}}/expenses/66e437cbcf3723b3ce308af1
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+### Delete an expense
+DELETE   {{baseUrl}}/expenses/66e437cbcf3723b3ce308af1
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+
+
+### Add a subscription
+POST {{baseUrl}}/subscriptions
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+{
+  "name": "newsubscription",
+  "category": "newCategory",
+  "description": "newDescription",
+  "amount": 10000,
+  "currencyType": "LKR",
+  "installmentStartingDate": "2024-09-15T12:30:00.000Z",
+  "duration": 60,
+  "repeatCount": 4,
+  "repeatAlways": false,
+  "remindBeforeDays": 5
+}
+
+### Update a subscription
+PUT {{baseUrl}}/subscriptions/66e428cefda5a9c316d6151a
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+{
+  "name": "updatedSubscription",
+  "category": "updatedCategory",
+  "description": "updatedDescription",
+  "amount": 40000,
+  "currencyType": "USD",
+  "remindBeforeDays": 4
+}
+
+### Get all subscriptions
+GET {{baseUrl}}/subscriptions
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+### Get a subscription
+GET {{baseUrl}}/subscriptions/66e428cefda5a9c316d6151a
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+### Delete a subscription
+DELETE {{baseUrl}}/subscriptions/66e428cefda5a9c316d6151a
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+### Pay a subscription
+POST {{baseUrl}}/subscriptions/66e437e7cf3723b3ce308afc/pay
+Content-Type: application/json
+x-auth-token: {{authToken}}

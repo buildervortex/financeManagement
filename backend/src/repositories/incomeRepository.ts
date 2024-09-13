@@ -52,13 +52,11 @@ export default class IncomeRepository implements IIncomeRepository {
             throw new Error("Income not found");
         }
 
-        const { _id, id, ...parsedIncome } = newIncome;
+        const existingIncome = existingAccount.incomes[incomeIndex];
+        newIncome._id = existingIncome._id;
+        const updatedIncome = existingIncome.set(newIncome.toObject());
 
-        existingAccount.incomes[incomeIndex].set(parsedIncome);
-
-        const updatedAccount = await existingAccount.save();
-
-        const updatedIncome = updatedAccount.incomes[incomeIndex];
+        await existingAccount.save();
         return updatedIncome;
     }
 
