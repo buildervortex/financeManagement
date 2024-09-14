@@ -6,7 +6,7 @@ import ErrorMessage from "../viewModels/error";
 import Api from "./api";
 
 export default class ExpenseService{
-    static async addExpense (addExpenseDto: AddExpenseDto,): Promise<ExpenseDto | ErrorMessage> {
+    static async addExpense (addExpenseDto: AddExpenseDto): Promise<ExpenseDto | ErrorMessage> {
         const response = await Api.post<ExpenseDto | ErrorMessage>("/expenses", addExpenseDto);
         return Cast.errorMessageCast(response);
     }
