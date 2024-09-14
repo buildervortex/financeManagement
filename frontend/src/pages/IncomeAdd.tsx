@@ -67,13 +67,13 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
   // Input elements configuration
   const inputElements: InputElement[] = [
     {
-      labelContent: 'Name',
+      labelContent: 'Income',
       onChange: (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value),
       type: "text",
       name: "name",
       id: "name",
       className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-      placeholder: "Enter Name"
+      placeholder: "Enter Your Income"
     },
     {
       labelContent: 'Description',
