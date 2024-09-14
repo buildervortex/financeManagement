@@ -49,8 +49,5 @@ export default class ExpenseViewModel{
             return ErrorMessage.errorMessageFromString(response.error);
         }
         return response;
-
     }
-
-
 }
