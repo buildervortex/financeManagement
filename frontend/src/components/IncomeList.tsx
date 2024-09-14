@@ -3,10 +3,11 @@ import IncomeDto from '../dtos/income/incomeDto';
 import { useNavigate } from 'react-router-dom';
 
 interface IncomeListProps {
+  formName?: string;
   incomeList: IncomeDto[];
 }
 
-const IncomeList: FunctionComponent<IncomeListProps> = ({ incomeList }) => {
+const IncomeList: FunctionComponent<IncomeListProps> = ({ formName,incomeList }) => {
 
   const navigate = useNavigate();
 
@@ -16,7 +17,7 @@ const IncomeList: FunctionComponent<IncomeListProps> = ({ incomeList }) => {
 
   return (
     <div className="mt-8 w-full max-w-xl mx-auto p-4 bg-white rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold mb-4 text-black border-b pb-2">Income Summary</h2>
+      <h2 className="text-xl font-semibold mb-4 text-black border-b pb-2">{formName}</h2>
       {incomeList.length > 0 ? (
         <>
           <ul className="space-y-4">
