@@ -1,13 +1,13 @@
-import addSusbscriptionDto, { validateAddSubscriptionDto } from "../dtos/subscription/addSusbscriptionDto";
+import addSusbscriptionDto, { validateAddSubscriptionDto } from "../dtos/subscription/addSubscriptionDto";
 import SubscriptionDto from "../dtos/subscription/subscriptionDto";
-import subscriptionDto from "../dtos/subscription/subscriptionDto";
 import updateSubscriptionDto, { validateUpdateSubscriptionDto } from "../dtos/subscription/updateSubscriptionDto";
+import SubscriptionService from "../services/subscriptionService";
 import ErrorMessage from "./error";
 
 
 export default class SubscriptionViewModel{
     
-    async addSusbscription(addSubscription: addSusbscriptionDto): Promise<subscriptionDto | ErrorMessage> {
+    async addSusbscription(addSubscription: addSusbscriptionDto): Promise<SubscriptionDto | ErrorMessage> {
         const { error } = validateAddSubscriptionDto(addSubscription);
         if (error)
             return ErrorMessage.errorMessageFromJoiError(error);
@@ -22,7 +22,7 @@ export default class SubscriptionViewModel{
         const { error } = validateUpdateSubscriptionDto(updateExpenseDto);
         if (error)
             return ErrorMessage.errorMessageFromJoiError(error);
-        const response = await SubscriptionService.updateExpense(updateExpenseDto, id);
+        const response = await SubscriptionService.updateSubscription(updateExpenseDto, id);
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
@@ -30,15 +30,15 @@ export default class SubscriptionViewModel{
     }
 
     async DeleteSubscription(id: string): Promise<SubscriptionDto | ErrorMessage> {
-        const response = await SubscriptionService.deleteExpense(id);
+        const response = await SubscriptionService.deleteSubscription(id);
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
         return response;
     }
 
-    async getSubscrption(id : string): Promise<SubscriptionDto | ErrorMessage> {
-        const response = await SubscrptionService.getSubscrption(id);
+    async getSubscription(id : string): Promise<SubscriptionDto | ErrorMessage> {
+        const response = await SubscriptionService.getSubscription(id);
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
@@ -46,8 +46,8 @@ export default class SubscriptionViewModel{
 
     }
 
-    async getSubscription(): Promise<SubscriptionDto[] | ErrorMessage> {
-        const response = await Subscriptionservice.getSubscription();
+    async getSubscriptions(): Promise<SubscriptionDto[] | ErrorMessage> {
+        const response = await SubscriptionService.getSubscriptions();
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }

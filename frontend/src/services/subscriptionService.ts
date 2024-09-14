@@ -6,6 +6,7 @@ import Cast from "../utils/cast";
 import ErrorMessage from "../viewModels/error";
 import Api from "./api";
 
+
 export default class SubscriptionService{
     static async addSubscription (addSubscriptionDto : AddSubscriptionDto) : Promise<SubscriptionDto | ErrorMessage> {
         const response = await Api.post<SubscriptionDto | ErrorMessage>("/subscriptions", addSubscriptionDto);
@@ -36,7 +37,5 @@ export default class SubscriptionService{
         const response = await Api.post<SubscriptionDto | ErrorMessage> (`/subscriptions/${id}/pay`);
         return Cast.errorMessageCast(response);
     }
-
-
 
 }
