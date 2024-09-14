@@ -1,17 +1,17 @@
-import RegisterAccount from "../types/RegisterAccount";
-import LoginAccount from "../types/LoginAccount";
-import Account from "../types/Account";
 import ErrorMessage from "../viewModels/error";
 import Api from "./api";
 import Cast from "../utils/cast";
+import RegisterDto from "../dtos/account/registerDto";
+import AccountDto from "../dtos/account/accountDto";
+import loginDto from "../dtos/account/loginDto";
 
 export default class AccountService {
-    static async registerAccount(registerAccount: RegisterAccount): Promise<Account | ErrorMessage> {
-        const response = await Api.post<Account | ErrorMessage>("/accounts/register", registerAccount);
+    static async registerAccount(registerAccountDto: RegisterDto): Promise<AccountDto | ErrorMessage> {
+        const response = await Api.post<AccountDto | ErrorMessage>("/accounts/register", registerAccountDto);
         return Cast.errorMessageCast(response);
     }
-    static async loginAccount(loginAccount: LoginAccount): Promise<Account | ErrorMessage> {
-        const response = await Api.post<any>("/accounts/login", loginAccount);
+    static async loginAccount(loginAccountDto: loginDto): Promise<AccountDto | ErrorMessage> {
+        const response = await Api.post<any>("/accounts/login", loginAccountDto);
         return Cast.errorMessageCast(response);
     }
 }
