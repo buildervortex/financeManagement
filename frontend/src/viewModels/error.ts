@@ -15,7 +15,7 @@ export default class ErrorMessage {
     }
 
     static errorMessageFromString(error: string) {
-        
+
         return new ErrorMessage(error);
     }
 
