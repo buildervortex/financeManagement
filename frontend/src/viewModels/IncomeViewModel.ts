@@ -1,7 +1,6 @@
 import addIncomeDto, { validateAddIncomeDto } from "../dtos/income/addIncomeDto";
 import IncomeDto from "../dtos/income/incomeDto";
 import updateIncomeDto, { validateUpdateIncome } from "../dtos/income/updateIncomeDto";
-import IncomeMapper from "../mappers/incomeMapper";
 import IncomeService from "../services/incomeService";
 import ErrorMessage from "./error";
 
@@ -11,11 +10,11 @@ export default class IncomeViewModel {
         const { error } = validateAddIncomeDto(addIncome);
         if (error)
             return ErrorMessage.errorMessageFromJoiError(error);
-        const response = await IncomeService.addIncome(IncomeMapper.ToAddIncomeFromAddIncomeDto(addIncome));
+        const response = await IncomeService.addIncome(addIncome);
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
-        return IncomeMapper.ToIncomeDtoFromIncome(response);
+        return response;
     }
 
     async updateIncome(updateIncomeDto: updateIncomeDto, id: string): Promise<IncomeDto | ErrorMessage> {
@@ -23,11 +22,12 @@ export default class IncomeViewModel {
         if (error)
             return ErrorMessage.errorMessageFromJoiError(error);
 
-        const response = await IncomeService.updateIncome(IncomeMapper.ToUpdateIncomeFromUpdateIncomeDto(updateIncomeDto), id);
+
+        const response = await IncomeService.updateIncome(updateIncomeDto, id);
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
-        return IncomeMapper.ToIncomeDtoFromIncome(response);
+        return response;
     }
 
     async DeleteIncome(id: string): Promise<IncomeDto | ErrorMessage> {
@@ -35,7 +35,7 @@ export default class IncomeViewModel {
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
-        return IncomeMapper.ToIncomeDtoFromIncome(response);
+        return response;
     }
 
     async getIncomes(): Promise<IncomeDto[] | ErrorMessage> {
@@ -43,7 +43,7 @@ export default class IncomeViewModel {
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
-        return response.map(income => IncomeMapper.ToIncomeDtoFromIncome(income));
+        return response;
 
     }
 
@@ -52,6 +52,6 @@ export default class IncomeViewModel {
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
-        return IncomeMapper.ToIncomeDtoFromIncome(response);
+        return response;
     }
 }
