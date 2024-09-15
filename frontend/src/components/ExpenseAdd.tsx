@@ -6,7 +6,7 @@ import { handleErrorResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
 import IncomeDto from '../dtos/income/incomeDto';
 
-interface AddExpensePageProps { }
+interface AddExpenseProps { }
 
 interface InputElement {
   labelContent: string;
@@ -18,7 +18,7 @@ interface InputElement {
   placeholder: string;
 }
 
-const ExpenseAddPage: FunctionComponent<AddExpensePageProps> = () => {
+const ExpenseAdd: FunctionComponent<AddExpenseProps> = () => {
   const [name, setName] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -137,4 +137,4 @@ const ExpenseAddPage: FunctionComponent<AddExpensePageProps> = () => {
   );
 };
 
-export default ExpenseAddPage;
+export default ExpenseAdd;

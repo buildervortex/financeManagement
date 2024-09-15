@@ -9,7 +9,7 @@ import IncomeAddPage from './pages/IncomeAdd';
 import CheckoutPage from './pages/IncomeDetail';
 import IncomeupdatePage from './pages/IncomeUpdate';
 import Contact from './pages/contact';
-import ExpenseAddPage from './pages/ExpenseAdd';
+import ExpenseAddPage from './components/ExpenseAdd';
 
 
 
