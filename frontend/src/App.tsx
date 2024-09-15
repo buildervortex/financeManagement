@@ -9,7 +9,8 @@ import IncomeAddPage from './pages/IncomeAdd';
 import CheckoutPage from './pages/IncomeDetail';
 import IncomeupdatePage from './pages/IncomeUpdate';
 import Contact from './pages/contact';
-import ExpenseAddPage from './components/ExpenseAdd';
+import ExpensePage from './pages/Expence';
+
 
 
 
@@ -26,7 +27,7 @@ function App() {
           <Route path="/addIncome" element={<IncomeAddPage></IncomeAddPage>}></Route>
           <Route path="/updateIncome" element={<IncomeupdatePage />}></Route>
           <Route path="/Income-details" element={<CheckoutPage />} />
-          <Route path="/addExpense" element={<ExpenseAddPage />} />
+          <Route path="/addExpense" element={<ExpensePage />} />
         </Routes>
       </div>
       <Footer/>
