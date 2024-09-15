@@ -14,7 +14,7 @@ const ExpensePage = () => {
             id="tabs"
             value={activeTab}
             onChange={(e) => setActiveTab(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#FF8343] focus:border-[#FF8343] block w-full p-2.5"
           >
             <option value="expense">Expense</option>
             <option value="subscription">Subscription</option>
@@ -23,7 +23,7 @@ const ExpensePage = () => {
         <div className="hidden text-sm font-medium text-center text-gray-500 rounded-lg shadow sm:flex">
           <button
             onClick={() => setActiveTab('expense')}
-            className={`w-1/2 p-4 border-r border-gray-200 rounded-s-lg focus:ring-4 focus:ring-blue-300 focus:outline-none ${
+            className={`w-1/2 p-4 border-r border-gray-200 rounded-s-lg focus:ring-4 focus:ring-[#fcaa7e] focus:outline-none ${
               activeTab === 'expense'
                 ? 'text-gray-900 bg-gray-100'
                 : 'bg-white hover:text-gray-700 hover:bg-gray-50'
@@ -33,7 +33,7 @@ const ExpensePage = () => {
           </button>
           <button
             onClick={() => setActiveTab('subscription')}
-            className={`w-1/2 p-4 border-r border-gray-200 rounded-e-lg focus:ring-4 focus:ring-blue-300 focus:outline-none ${
+            className={`w-1/2 p-4 border-r border-gray-200 rounded-e-lg focus:ring-4 focus:ring-[#fcaa7e] focus:outline-none ${
               activeTab === 'subscription'
                 ? 'text-gray-900 bg-gray-100'
                 : 'bg-white hover:text-gray-700 hover:bg-gray-50'
