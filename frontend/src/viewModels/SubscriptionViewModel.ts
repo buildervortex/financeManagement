@@ -1,3 +1,4 @@
+import ExpenseDto from "../dtos/expense/expenseDto";
 import addSusbscriptionDto, { validateAddSubscriptionDto } from "../dtos/subscription/addSubscriptionDto";
 import SubscriptionDto from "../dtos/subscription/subscriptionDto";
 import updateSubscriptionDto, { validateUpdateSubscriptionDto } from "../dtos/subscription/updateSubscriptionDto";
@@ -5,8 +6,8 @@ import SubscriptionService from "../services/subscriptionService";
 import ErrorMessage from "./error";
 
 
-export default class SubscriptionViewModel{
-    
+export default class SubscriptionViewModel {
+
     async addSusbscription(addSubscription: addSusbscriptionDto): Promise<SubscriptionDto | ErrorMessage> {
         const { error } = validateAddSubscriptionDto(addSubscription);
         if (error)
@@ -37,7 +38,7 @@ export default class SubscriptionViewModel{
         return response;
     }
 
-    async getSubscription(id : string): Promise<SubscriptionDto | ErrorMessage> {
+    async getSubscription(id: string): Promise<SubscriptionDto | ErrorMessage> {
         const response = await SubscriptionService.getSubscription(id);
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
@@ -49,6 +50,13 @@ export default class SubscriptionViewModel{
     async getSubscriptions(): Promise<SubscriptionDto[] | ErrorMessage> {
         const response = await SubscriptionService.getSubscriptions();
         if (response && typeof response === 'object' && 'error' in response) {
+            return ErrorMessage.errorMessageFromString(response.error);
+        }
+        return response;
+    }
+    async paySubscription(id: string): Promise<ExpenseDto | ErrorMessage> {
+        const response = await SubscriptionService.paySubscription(id);
+        if (response && typeof response == "object" && "error" in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
         return response;

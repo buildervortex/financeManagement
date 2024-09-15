@@ -33,8 +33,8 @@ export default class SubscriptionService{
         return Cast.errorMessageCast(response);
     }
 
-    static async paySubscription(id : string) : Promise<SubscriptionDto | ErrorMessage> {
-        const response = await Api.post<SubscriptionDto | ErrorMessage> (`/subscriptions/${id}/pay`);
+    static async paySubscription(id : string) : Promise<ExpenseDto | ErrorMessage> {
+        const response = await Api.post<ExpenseDto | ErrorMessage> (`/subscriptions/${id}/pay`);
         return Cast.errorMessageCast(response);
     }
 
