@@ -70,13 +70,13 @@ const SubscriptionAdd: FunctionComponent<AddExpenseProps> = () => {
   // Input elements configuration
   const inputElements: InputElement[] = [
     {
-      labelContent: 'Expense Name',
+      labelContent: 'Subscription Name',
       onChange: (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value),
       type: "text",
       name: "name",
       id: "name",
       className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-      placeholder: "Enter Expense Name"
+      placeholder: "Enter Subscription Name"
     },
     {
       labelContent: 'Category',
@@ -115,31 +115,31 @@ const SubscriptionAdd: FunctionComponent<AddExpenseProps> = () => {
       placeholder: "Enter Currency Type"
     },
     {
-        labelContent: 'initial Payment Date',
+        labelContent: 'Initial Payment Date',
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => setInitialPaymentDate(e.target.value),
         type: "text",
         name: "name",
         id: "name",
         className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-        placeholder: "initial Payment Date"
+        placeholder: "Initial Payment Date"
       },
       {
-        labelContent: 'installment Interval Days',
+        labelContent: 'Installment Interval Days',
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => setInstallmentIntervalDays(e.target.value),
         type: "text",
         name: "name",
         id: "name",
         className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-        placeholder: "installment Interval Days"
+        placeholder: "Installment Interval Days"
       },
       {
-        labelContent: 'total Installments',
+        labelContent: 'Total Installments',
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => setTotalInstallments(e.target.value),
         type: "text",
         name: "name",
         id: "name",
         className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-        placeholder: "total Installments"
+        placeholder: "Total Installments"
       },
     {
         labelContent: 'Recurring Indefinitely',
@@ -151,13 +151,13 @@ const SubscriptionAdd: FunctionComponent<AddExpenseProps> = () => {
         placeholder: ""
       },
       {
-        labelContent: 'remind Before Days',
+        labelContent: 'Remind Before Days',
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => setRemindBeforeDays(e.target.value),
         type: "text",
         name: "name",
         id: "name",
         className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-        placeholder: "remind Before Days"
+        placeholder: "Remind Before Days"
       },
   ];
 
