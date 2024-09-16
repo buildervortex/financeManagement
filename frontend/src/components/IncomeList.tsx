@@ -4,10 +4,11 @@ import { useNavigate } from 'react-router-dom';
 
 interface IncomeListProps {
   formName?: string;
+  description?: string;
   incomeList: IncomeDto[];
 }
 
-const IncomeList: FunctionComponent<IncomeListProps> = ({ formName,incomeList }) => {
+const IncomeList: FunctionComponent<IncomeListProps> = ({ formName,description,incomeList }) => {
 
   const navigate = useNavigate();
 
@@ -41,7 +42,7 @@ const IncomeList: FunctionComponent<IncomeListProps> = ({ formName,incomeList })
           
         </>
       ) : (
-        <p className="text-gray-500 text-center py-6">No incomes added yet.</p>
+        <p className="text-gray-500 text-center py-6">{description}</p>
       )}
     </div>
   );

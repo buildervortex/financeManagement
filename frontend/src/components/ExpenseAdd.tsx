@@ -131,7 +131,9 @@ const ExpenseAdd: FunctionComponent<AddExpenseProps> = () => {
       />
 
 <div className="my-4">
-        <IncomeList incomeList={incomes} /> 
+        <IncomeList 
+        description='No expense added yet.'
+        incomeList={incomes} /> 
       </div>
     </>
   );

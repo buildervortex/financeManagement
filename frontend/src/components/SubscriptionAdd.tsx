@@ -171,7 +171,9 @@ const SubscriptionAdd: FunctionComponent<AddExpenseProps> = () => {
       />
 
 <div className="my-4">
-        <IncomeList incomeList={incomes} /> 
+        <IncomeList 
+        description='No subscription added yet.'
+        incomeList={incomes} /> 
       </div>
     </>
   );

@@ -134,7 +134,9 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
       />
 
 <div className="my-4">
-        <IncomeList incomeList={incomes} /> 
+        <IncomeList 
+        description='No income added yet.'
+        incomeList={incomes} /> 
       </div>
     </>
   );
