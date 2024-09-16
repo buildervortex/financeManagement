@@ -1,18 +1,18 @@
 import { FunctionComponent } from 'react';
-import addExpenseDto from '../dtos/expense/addExpenseDto';
+import ExpenseDto from '../dtos/expense/expenseDto';
 import { useNavigate } from 'react-router-dom';
 
 interface ExpenseListProps {
   formName?: string;
   description?: string;
-  ExpenseList: addExpenseDto[];
+  ExpenseList: ExpenseDto[];
 }
 
 const ExpenseList: FunctionComponent<ExpenseListProps> = ({ formName,description,ExpenseList }) => {
 
   const navigate = useNavigate();
 
-  const handleItemClick = (expense: addExpenseDto) => {
+  const handleItemClick = (expense: ExpenseDto) => {
     navigate('/Expense-details', { state: { expense } });
   };
 
@@ -33,7 +33,7 @@ const ExpenseList: FunctionComponent<ExpenseListProps> = ({ formName,description
                   <p className="text-sm font-medium text-gray-700">{expense.name}</p>
                 </div>
                 <p className="text-lg font-bold text-orange-500">
-                    {expense.currencyType} {ExpenseList[index].amount.toFixed(2)}
+                    {expense.currencyType} {expense.amount?.toFixed(2)}
                   </p>
               </div>
             </li>

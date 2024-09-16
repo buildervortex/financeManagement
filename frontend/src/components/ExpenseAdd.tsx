@@ -5,6 +5,7 @@ import ExpenseViewModel from '../viewModels/ExpenseViewModel';
 import { handleErrorResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
 import addExpenseDto from '../dtos/expense/addExpenseDto';
+import ExpenseDto from '../dtos/expense/expenseDto';
 
 interface AddExpenseProps { }
 
@@ -25,11 +26,11 @@ const ExpenseAdd: FunctionComponent<AddExpenseProps> = () => {
   const [amount, setAmount] = useState<number>(0);
   const [currencyType, setCurrencyType] = useState<string>("");
   const [paid, setPaid] = useState<boolean>(false);
-  const [expenses, setExpenses] = useState<addExpenseDto[]>([]);
+  const [expenses, setExpenses] = useState<ExpenseDto[]>([]);
 
   useEffect(() => {
      const fetchExpenses = async () => {
-      const result: addExpenseDto[] | ErrorMessage = await new ExpenseViewModel().getExpenses();
+      const result: ExpenseDto[] | ErrorMessage = await new ExpenseViewModel().getExpenses();
       if (result instanceof ErrorMessage) {
         handleErrorResult(result);
       } else {
