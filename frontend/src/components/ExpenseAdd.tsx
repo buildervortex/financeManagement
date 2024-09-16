@@ -1,10 +1,10 @@
 import { FunctionComponent, useState,useEffect } from 'react';
 import InputForm from '../components/inputForm';
-import IncomeList from '../components/IncomeList';
-import IncomeViewModel from '../viewModels/IncomeViewModel';
+import ExpenseList from '../components/ExpenseList';
+import ExpenseViewModel from '../viewModels/ExpenseViewModel';
 import { handleErrorResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
-import IncomeDto from '../dtos/income/incomeDto';
+import addExpenseDto from '../dtos/expense/addExpenseDto';
 
 interface AddExpenseProps { }
 
@@ -25,42 +25,41 @@ const ExpenseAdd: FunctionComponent<AddExpenseProps> = () => {
   const [amount, setAmount] = useState<number>(0);
   const [currencyType, setCurrencyType] = useState<string>("");
   const [paid, setPaid] = useState<boolean>(false);
-  const [incomes, setIncomes] = useState<IncomeDto[]>([]);
+  const [expenses, setExpenses] = useState<addExpenseDto[]>([]);
 
-//   useEffect(() => {
-//     const fetchIncomes = async () => {
-//       const result: IncomeDto[] | ErrorMessage = await new IncomeViewModel().getIncomes();
-//       if (result instanceof ErrorMessage) {
-//         handleErrorResult(result);
-//       } else {
-//         setIncomes(result); 
-//       }
-//     };
-//     fetchIncomes();
-//   }, []);
+  useEffect(() => {
+     const fetchExpenses = async () => {
+      const result: addExpenseDto[] | ErrorMessage = await new ExpenseViewModel().getExpenses();
+      if (result instanceof ErrorMessage) {
+        handleErrorResult(result);
+      } else {
+        setExpenses(result); 
+      }    };
+    fetchExpenses();
+  }, []);
 
 
   const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
+     e.preventDefault();
 
-//     const addincomeDto: addIncomeDto = new addIncomeDto();
-//     addincomeDto.name = name;
-//     addincomeDto.description = description;
-//     addincomeDto.amount = amount;
-//     addincomeDto.monthly = monthly;
-//     addincomeDto.monthlyDate = incomeDate;
-//     addincomeDto.currencyType = currencyType;
-//     const result = await new IncomeViewModel().addIncome(addincomeDto)
-//     if (result instanceof ErrorMessage) {
-//       handleErrorResult(result);
-//   } 
+    const AddExpenseDto: addExpenseDto = new addExpenseDto();
+    AddExpenseDto.name = name;
+    AddExpenseDto.category = category;
+    AddExpenseDto.description = description;
+    AddExpenseDto.amount = amount;
+    AddExpenseDto.currencyType = currencyType;
+    AddExpenseDto.paid = paid;
+    const result = await new ExpenseViewModel().addExpense(AddExpenseDto)
+    if (result instanceof ErrorMessage) {
+      handleErrorResult(result);
+  } 
 
     setName("");
     setCategory("");
     setDescription("");
     setAmount(0);
     setCurrencyType("");
-
+    setPaid(false);
   };
 
   // Input elements configuration
@@ -131,9 +130,9 @@ const ExpenseAdd: FunctionComponent<AddExpenseProps> = () => {
       />
 
 <div className="my-4">
-        <IncomeList 
+        <ExpenseList 
         description='No expense added yet.'
-        incomeList={incomes} /> 
+        ExpenseList={expenses} /> 
       </div>
     </>
   );
