@@ -20,7 +20,7 @@ export function validateAddSubscriptionDto(addSubscriptionDto: AddSubscriptionDt
         description: Joi.string().min(5).max(250),
         amount: Joi.number().min(1).required(),
         currencyType: Joi.string().min(2).max(10),
-        initialPaymentDate: Joi.date().greater("now").required(),
+        initialPaymentDate: Joi.date().required(),
         installmentIntervalDays: Joi.number().integer().min(1),
         isRecurringIndefinitely: Joi.boolean(),
         totalInstallments: Joi.number().min(1).when("isRecurringIndefinitely", {
