@@ -95,7 +95,7 @@ subscriptionRouter.put("/:id", jwtAuth, async (request: express.Request | any, r
         return response.status(400).send(ErrorMessage.errorMessageFromJoiError(error));
     }
 
-    let subscription: Subscription = SubscriptionMapper.ToSubscriptionFromAddSubscriptionDto(updateSubscriptionDtoObject);
+    let subscription: Subscription = SubscriptionMapper.ToSubscriptionFromUpdateSubscriptionDto(updateSubscriptionDtoObject);
 
     try {
         subscription = await subscriptionRepository.updateSubscription(subscription, subscriptionId, request.account._id);

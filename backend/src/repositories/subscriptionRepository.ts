@@ -42,7 +42,7 @@ export default class SubscrpitionRepository implements ISubscryptionRepository {
             throw new Error("Account not found")
         }
 
-        const subscriptionIndex = existingAccount.subscriptions.findIndex(subscription => subscription.id == subscriptionId);
+        const subscriptionIndex = existingAccount.subscriptions.findIndex(subscription => subscription.id === subscriptionId);
 
         if (subscriptionIndex === -1) {
             throw new Error("Subscription not found");

@@ -4,7 +4,7 @@ interface Subscription extends mongoose.Document {
     _id: mongoose.ObjectId;
     name: string;
     category: string;
-    description: string;
+    description?: string;
     amount: number;
     currencyType: string;
     nextInstallmentDate?: Date;
