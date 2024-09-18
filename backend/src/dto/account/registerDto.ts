@@ -1,10 +1,10 @@
 import Joi from "joi";
 
 class RegisterDto {
-    userName: string = "";
-    fullName: string = ""
-    email: string  = "";
-    password: string  = "";
+    userName?: string
+    fullName?: string
+    email?: string
+    password?: string
 }
 
 export function validateRegisterDto(registerDto: RegisterDto): Joi.ValidationResult {

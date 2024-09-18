@@ -1,5 +1,3 @@
-import Joi from "joi";
-
 class IncomeDto {
     id: string = ""
     name: string = ""
@@ -8,6 +6,7 @@ class IncomeDto {
     currencyType: string = ""
     monthly: boolean = false
     monthlyDate?: number;
+    incomeDate: Date = new Date();
 }
 
 export default IncomeDto;

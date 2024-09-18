@@ -1,5 +1,12 @@
-### Register a new user
-POST http://localhost:4040/api/v1/accounts/register
+@baseUrl = http://localhost:4040/api/v1
+@userName = exampleUser
+@email = exampleUser@example.com
+@password = exampleUser
+
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmUzZTBmY2UzYTE4MDY5MzZhZmRjYjYiLCJpYXQiOjE3MjYyMTE3NTZ9.y7boe5EtRPlmiBxPFe2TbOiwYgJoheanxVLhOsd2P1s
+
+### Register a new user (expected to fail)
+POST {{baseUrl}}/accounts/register
 Content-Type: application/json
 
 {
@@ -10,20 +17,159 @@ Content-Type: application/json
 }
 
 ### Login with the registered user
-POST http://localhost:4040/api/v1/accounts/login
+POST {{baseUrl}}/accounts/login
 Content-Type: application/json
 
 {
-  "email": "john.doe@example.com",
-  "password": "securePassword123"
+  "email": "{{email}}",
+  "password": "{{password}}"
 }
 
 
+
 ### Login with incorrect credentials (expected to fail)
-POST http://localhost:4040/api/v1/accounts/login
+POST {{baseUrl}}/accounts/login
 Content-Type: application/json
 
 {
   "email": "john.doe@example.com",
   "password": "wrongPassword"
 }
+
+### Add an income
+POST {{baseUrl}}/incomes
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+{
+    "name":"myexpenses",     
+    "description": "new des",
+    "amount":150000,         
+    "currencyType":"LKR",    
+    "monthly":true,          
+    "monthlyDate":5          
+}
+
+### Update an income
+PUT {{baseUrl}}/incomes/66e4379acf3723b3ce308ae3
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+{
+  "name":"updatedExpense",  
+  "amount": 40000,          
+  "description": "updated", 
+  "currencyType":"USD",     
+  "monthly":true,           
+  "monthlyDate":4      
+}
+
+### Get All Incomes
+GET {{baseUrl}}/incomes
+x-auth-token: {{authToken}}
+
+### Get an Income
+GET {{baseUrl}}/incomes/66e4379acf3723b3ce308ae3
+x-auth-token: {{authToken}}
+
+### Delete an Income
+DELETE {{baseUrl}}/incomes/66e4379acf3723b3ce308ae3
+x-auth-token: {{authToken}}
+
+
+### Add an expense
+POST {{baseUrl}}/expenses
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+{
+  "name": "newExpense",
+  "category":"newCategory",
+  "description": "description",
+  "amount":50000,
+  "currencyType": "LKR",
+  "paid": true
+}
+
+### Update an expense
+PUT {{baseUrl}}/expenses/66e437cbcf3723b3ce308af1
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+{
+  "name": "UpdatedExpense",
+  "category":"UPdatedCategory",
+  "description": "Updateddescription",
+  "amount":900,
+  "currencyType": "USD",
+  "paid": true
+}
+
+### Get all expenses
+GET  {{baseUrl}}/expenses
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+### Get an expense
+GET  {{baseUrl}}/expenses/66e437cbcf3723b3ce308af1
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+### Delete an expense
+DELETE   {{baseUrl}}/expenses/66e437cbcf3723b3ce308af1
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+
+
+### Add a subscription
+POST {{baseUrl}}/subscriptions
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+{
+  "name": "newsubscription",
+  "category": "newCategory",
+  "description": "newDescription",
+  "amount": 10000,
+  "currencyType": "LKR",
+  "initialPaymentDate": "2024-09-15T12:30:00.000Z",
+  "installmentIntervalDays": 60,
+  "totalInstallments": 4,
+  "isRecurringIndefinitely": false,
+  "remindBeforeDays": 40
+}
+
+### Update a subscription
+PUT {{baseUrl}}/subscriptions/66e447a3988b5303c05a660c
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+{
+  "name": "updatedSubscription",
+  "category": "updatedCategory",
+  "description": "updatedDescription",
+  "amount": 40000,
+  "currencyType": "USD",
+  "remindBeforeDays": 4
+}
+
+### Get all subscriptions
+GET {{baseUrl}}/subscriptions
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+### Get a subscription
+GET {{baseUrl}}/subscriptions/66e447a3988b5303c05a660c
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+### Delete a subscription
+DELETE {{baseUrl}}/subscriptions/66e447a3988b5303c05a660c
+Content-Type: application/json
+x-auth-token: {{authToken}}
+
+### Pay a subscription
+POST {{baseUrl}}/subscriptions/66e447a3988b5303c05a660c/pay
+Content-Type: application/json
+x-auth-token: {{authToken}}

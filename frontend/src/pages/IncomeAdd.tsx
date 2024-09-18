@@ -1,22 +1,13 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useState,useEffect } from 'react';
 import InputForm from '../components/inputForm';
 import IncomeList from '../components/IncomeList';
-import IncomeDto from '../dtos/income/incomeDto';
 import IncomeViewModel from '../viewModels/IncomeViewModel';
 import { handleErrorResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
 import addIncomeDto from '../dtos/income/addIncomeDto';
+import IncomeDto from '../dtos/income/incomeDto';
 
 interface AddIncomePageProps { }
-
-interface IncomeEntry {
-  name: string;
-  description: string;
-  amount: number;
-  monthly: boolean;
-  incomeDate: string;
-  currencyType: string;
-}
 
 interface InputElement {
   labelContent: string;
@@ -35,7 +26,20 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
   const [monthly, setMonthly] = useState<boolean>(false);
   const [incomeDate, setIncomeDate] = useState<number>();
   const [currencyType, setCurrencyType] = useState<string>("");
-  const [incomeList, setIncomeList] = useState<IncomeEntry[]>([]);
+  const [incomes, setIncomes] = useState<IncomeDto[]>([]);
+
+  useEffect(() => {
+    const fetchIncomes = async () => {
+      const result: IncomeDto[] | ErrorMessage = await new IncomeViewModel().getIncomes();
+      if (result instanceof ErrorMessage) {
+        handleErrorResult(result);
+      } else {
+        setIncomes(result); 
+      }
+    };
+    fetchIncomes();
+  }, []);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,13 +67,13 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
   // Input elements configuration
   const inputElements: InputElement[] = [
     {
-      labelContent: 'Name',
+      labelContent: 'Income',
       onChange: (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value),
       type: "text",
       name: "name",
       id: "name",
       className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-      placeholder: "Enter Name"
+      placeholder: "Enter Your Income"
     },
     {
       labelContent: 'Description',
@@ -129,8 +133,10 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
         onSubmit={handleSubmit}
       />
 
-      <div className='my-4'>
-        <IncomeList incomeList={incomeList} />
+<div className="my-4">
+        <IncomeList 
+        description='No income added yet.'
+        incomeList={incomes} /> 
       </div>
     </>
   );

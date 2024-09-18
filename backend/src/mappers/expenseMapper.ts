@@ -14,6 +14,8 @@ export default class ExpenseMapper {
         expenseDto.id = expense.id;
         expenseDto.name = expense.name;
         expenseDto.paymentDate = expense.paymentDate;
+        expenseDto.paid = expense.paid;
+        expenseDto.type = expense.type;
 
         return expenseDto;
     }
@@ -21,24 +23,28 @@ export default class ExpenseMapper {
     static ToExpenseFromAddExpenseDto(addExpenseDto: AddExpenseDto): Expense {
         const expense = new Expense();
 
-        expense.amount = addExpenseDto.amount;
-        expense.category = addExpenseDto.category;
-        expense.currencyType = addExpenseDto.currencyType;
-        expense.description = addExpenseDto.description;
-        expense.name = addExpenseDto.name;
+        expense.amount = addExpenseDto.amount!;
+        expense.category = addExpenseDto.category!;
+        expense.currencyType = addExpenseDto.currencyType!;
+        expense.description = addExpenseDto.description!;
+        expense.name = addExpenseDto.name!;
+        expense.paid = addExpenseDto.paid!;
+        expense.paymentDate = new Date()
+        expense.type = "direct"
 
         return expense;
     }
 
-    static ToExpenseFromUpdateExpenseDto(updateExpenseDto:UpdateExpenseDto): Expense{
+    static ToExpenseFromUpdateExpenseDto(updateExpenseDto: UpdateExpenseDto): Expense {
         const expense = new Expense();
 
-        expense.amount = updateExpenseDto.amount;
-        expense.category = updateExpenseDto.category;
-        expense.currencyType = updateExpenseDto.currencyType;
-        expense.description = updateExpenseDto.description;
-        expense.name = updateExpenseDto.name;
+        expense.amount = updateExpenseDto.amount!;
+        expense.category = updateExpenseDto.category!;
+        expense.currencyType = updateExpenseDto.currencyType!;
+        expense.description = updateExpenseDto.description!;
+        expense.name = updateExpenseDto.name!;
+        expense.paid = updateExpenseDto.paid!;
 
-        return expense;       
+        return expense;
     }
 }

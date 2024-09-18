@@ -20,4 +20,9 @@ export default class AccountRepository implements IAccountRepository {
         }
         return existingUser;
     }
+
+    async getAccounts(): Promise<Account[]> {
+        return await Account.find();
+    }
+
 }

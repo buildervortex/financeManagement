@@ -3,11 +3,14 @@ import mongoose from "mongoose";
 interface Expense extends mongoose.Document {
     _id: mongoose.ObjectId;
     name: string;
-    category?: string;
-    description?: string;
+    category: string;
+    description: string;
     amount: number;
     currencyType: string;
-    paymentDate?: Date;
+    paymentDate: Date;
+    type: string;
+    paid: boolean;
+    addtionalIdentifiers: Array<mongoose.ObjectId>;
 }
 
 export const expenseSchema = new mongoose.Schema<Expense>({
@@ -23,7 +26,6 @@ export const expenseSchema = new mongoose.Schema<Expense>({
     },
     category: {
         type: String,
-        default: "direct"
     },
     description: {
         type: String,
@@ -38,11 +40,20 @@ export const expenseSchema = new mongoose.Schema<Expense>({
         type: String,
         minLength: 2,
         maxLength: 10,
-        default: "LKR"
     },
     paymentDate: {
         type: Date,
-        default: Date.now
+    },
+    type: {
+        type: String,
+        required: true
+    },
+    paid: {
+        type: Boolean,
+        required: true
+    },
+    addtionalIdentifiers: {
+        type: [mongoose.Schema.Types.ObjectId]
     }
 })
 

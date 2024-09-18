@@ -6,7 +6,11 @@ import LoginPage from './pages/login';
 import NavBar from './components/Navbar';
 import Footer from './components/Footer';
 import IncomeAddPage from './pages/IncomeAdd';
-import CheckoutPage from './pages/CheckoutPage';
+import CheckoutPage from './pages/IncomeDetail';
+import IncomeupdatePage from './pages/IncomeUpdate';
+import Contact from './pages/contact';
+import ExpensePage from './pages/Expence';
+
 
 
 
@@ -18,16 +22,13 @@ function App() {
       <ToastContainer />
         <Routes>
           <Route path="/" element={<AccountRegisterPage></AccountRegisterPage>}></Route>
-        </Routes>
-        
-        <Routes>
           <Route path="/Login" element={<LoginPage></LoginPage>}></Route>
-        </Routes>  
-
-        <Routes>
-        <Route path="/addIncome" element={<IncomeAddPage></IncomeAddPage>}></Route>
-        <Route path="/checkout" element={<CheckoutPage />} />
-        </Routes>      
+          <Route path="/contact" element={<Contact></Contact>}></Route>
+          <Route path="/addIncome" element={<IncomeAddPage></IncomeAddPage>}></Route>
+          <Route path="/updateIncome" element={<IncomeupdatePage />}></Route>
+          <Route path="/Income-details" element={<CheckoutPage />} />
+          <Route path="/addExpense" element={<ExpensePage />} />
+        </Routes>
       </div>
       <Footer/>
     </Router>

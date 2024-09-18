@@ -8,7 +8,7 @@ interface Income extends mongoose.Document {
     incomeDate: Date;
     currencyType: string;
     monthly: boolean;
-    monthlyDate?: number;
+    monthlyDate: number;
 }
 
 export const incomeSchema = new mongoose.Schema<Income>({
@@ -33,7 +33,6 @@ export const incomeSchema = new mongoose.Schema<Income>({
     },
     incomeDate: {
         type: Date,
-        default: Date.now
     },
     currencyType: {
         type: String,

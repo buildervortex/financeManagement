@@ -6,18 +6,18 @@ import LoginDto from '../dto/account/loginDto';
 export default class AccountMapper {
     static ToAccountFromRegisterDto(registerDto: RegisterDto): Account {
         const user = new Account();
-        user.email = registerDto.email;
-        user.password = registerDto.password;
-        user.userName = registerDto.userName;
-        user.fullName = registerDto.fullName;
+        user.email = registerDto.email!;
+        user.password = registerDto.password!;
+        user.userName = registerDto.userName!;
+        user.fullName = registerDto.fullName!;
 
         return user;
     }
 
     static ToAccountFromloginDto(loginDto: LoginDto): Account {
         const user = new Account();
-        user.email = loginDto.email;
-        user.password = loginDto.password;
+        user.email = loginDto.email!;
+        user.password = loginDto.password!;
         return user;
     }
 

@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
   return (
     
 
-    <footer className="w-full max-h-screen py-10 overflow-hidden text-black bg-[#fc8346]">
+    <footer className="w-full max-h-screen py-10 overflow-hidden text-black bg-[#f7f7f7fe]">
       <div className="container px-6 mx-auto">
         {/* Top section */}
         <div className="grid grid-cols-1 gap-8 mb-8 md:grid-cols-4">
@@ -33,10 +33,10 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="mb-4 text-lg font-semibold">Quick Links</h4>
             <ul>
-              <li><a href="/" className="text-sm hover:text-gray-300">Home</a></li>
-              <li><a href="/" className="text-sm hover:text-gray-300">Dashboard</a></li>
-              <li><a href="/" className="text-sm hover:text-gray-300">FAQ</a></li>
-              <li><a href="/" className="text-sm hover:text-gray-300">Contact Us</a></li>
+              <li><a href="/" className="text-sm hover:text-orange-400">Home</a></li>
+              <li><a href="/" className="text-sm hover:text-orange-400">Dashboard</a></li>
+              <li><a href="/" className="text-sm hover:text-orange-400">FAQ</a></li>
+              <li><a href="/" className="text-sm hover:text-orange-400">Contact Us</a></li>
 
             </ul>
           </div>
@@ -45,10 +45,10 @@ const Footer: React.FC = () => {
           <div>
             <ul>
             <h4 className="mb-4 text-lg font-semibold">Explore</h4>
-            <li><a href="/" className="text-sm hover:text-gray-300">Asset Management</a></li>
-              <li><a href="/dashboard" className="text-sm hover:text-gray-300">Budget Managment</a></li>
-              <li><a href="/faq" className="text-sm hover:text-gray-300">Cash Managment</a></li>
-              <li><a href="/contact" className="text-sm hover:text-gray-300">Expense Management</a></li>
+            <li><a href="/" className="text-sm hover:text-orange-400">Asset Management</a></li>
+              <li><a href="/dashboard" className="text-sm hover:text-orange-400">Budget Managment</a></li>
+              <li><a href="/faq" className="text-sm hover:text-orange-400">Cash Managment</a></li>
+              <li><a href="/contact" className="text-sm hover:text-orange-400">Expense Management</a></li>
            </ul>
           </div>   
         

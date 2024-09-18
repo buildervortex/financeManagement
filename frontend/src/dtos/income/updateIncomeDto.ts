@@ -1,11 +1,11 @@
 import Joi from "joi";
 
 class updateIncomeDto {
-    name: string = ""
-    description: string = ""
-    amount: number = 0
-    currencyType: string = ""
-    monthly: boolean = false
+    name?: string
+    description?: string
+    amount?: number
+    currencyType?: string = "LKR";
+    monthly?: boolean = false;
     monthlyDate?: number;
 }
 
