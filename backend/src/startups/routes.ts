@@ -9,6 +9,7 @@ import accountRouter from '../routes/account';
 import expenseRouter from '../routes/expense';
 import subscriptionRouter from '../routes/subscription';
 import goalRouter from '../routes/goal';
+import notificationRouter from '../routes/notification';
 
 // uses dependency injection to get the express object to add the route handling middlewares
 export default function configRoute(app: Application) {
@@ -33,6 +34,7 @@ export default function configRoute(app: Application) {
 
 
     // config the routers
+    app.use("/api/v1/accounts/notification", notificationRouter)
     app.use("/api/v1/accounts", accountRouter);
     app.use("/api/v1/incomes", incomeRouter);
     app.use("/api/v1/expenses", expenseRouter)

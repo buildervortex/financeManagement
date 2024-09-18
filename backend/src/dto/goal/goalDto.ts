@@ -1,7 +1,7 @@
 import GoalPaymentDto from "./goalPaymentDto";
 
 class GoalDto {
-    _id?: string;
+    id?: string;
     name?: string;
     description?: string;
     targetAmount?: number;

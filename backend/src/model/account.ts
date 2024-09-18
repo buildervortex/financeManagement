@@ -5,6 +5,7 @@ import Income, { incomeSchema } from "./income";
 import Expense, { expenseSchema } from "./expense";
 import Subscription, { subscriptionSchema } from "./subscriptions";
 import Goal, { goalSchema } from "./goal";
+import Notification, { notificationSchema } from "./notification";
 
 interface Account extends mongoose.Document {
     _id: mongoose.Types.ObjectId,
@@ -17,6 +18,7 @@ interface Account extends mongoose.Document {
     expenses: Array<Expense>;
     subscriptions: Array<Subscription>;
     goals: Array<Goal>;
+    notification: Array<Notification>;
 }
 
 const userSchema = new mongoose.Schema<Account>({
@@ -56,6 +58,9 @@ const userSchema = new mongoose.Schema<Account>({
     },
     goals: {
         type: [goalSchema]
+    },
+    notification: {
+        type: [notificationSchema]
     }
 })
 

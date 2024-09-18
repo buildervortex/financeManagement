@@ -7,6 +7,7 @@ import AccountMapper from "../mappers/accountMapper";
 import Account from "../model/account";
 import Cryptography from "../util/hashing";
 import SubscriptionService from "../services/subscription";
+import { accountNotification } from "../services/notificationService";
 
 const accountRouter = express.Router();
 const accountRespository = new AccountRepository();
@@ -20,30 +21,30 @@ accountRouter.post("/register", async (request: express.Request, response: expre
         return response.status(400).send(ErrorMessage.errorMessageFromJoiError(error));
     }
 
-    let user: Account;
+    let account: Account;
 
     try {
 
-        user = AccountMapper.ToAccountFromRegisterDto(request.body)
+        account = AccountMapper.ToAccountFromRegisterDto(request.body)
         // hash the password
-        user.password = await Cryptography.hasPassword(user.password);
-        user = await accountRespository.createAccount(user);
+        account.password = await Cryptography.hasPassword(account.password);
+        account = await accountRespository.createAccount(account);
     }
     catch (error) {
         if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
         else return response.status(500).send(ErrorMessage.ServerError);
     }
 
-    if (!user) {
+    if (!account) {
         return response.status(500).send(ErrorMessage.ServerError);
     }
 
     // create the jwt token
-    const token = user.generateAuthToken()
+    const token = account.generateAuthToken()
 
     response.header("x-auth-token", token);
 
-    response.send(AccountMapper.ToAccountDto(user));
+    response.send(AccountMapper.ToAccountDto(account));
 
 });
 
@@ -54,32 +55,32 @@ accountRouter.post("/login", async (request: express.Request, response: express.
         return response.status(400).send(ErrorMessage.errorMessageFromJoiError(error));
     }
 
-    let user: Account;
+    let account: Account;
 
     try {
-        user = await accountRespository.loginAccount(AccountMapper.ToAccountFromloginDto(request.body));
+        account = await accountRespository.loginAccount(AccountMapper.ToAccountFromloginDto(request.body));
     }
     catch (error) {
         if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
         else return response.status(500).send(ErrorMessage.ServerError);
     }
 
-    if (!user) {
+    if (!account) {
         return response.status(500).send(ErrorMessage.ServerError);
     }
 
-    const valid = await Cryptography.isValidPassword(user.password, request.body.password);
+    const valid = await Cryptography.isValidPassword(account.password, request.body.password);
     if (!valid) return response.status(400).send(ErrorMessage.errorMessageFromString("Invalid email or password"));
 
     // create the jwt token
-    const token = user.generateAuthToken()
+    const token = account.generateAuthToken()
 
     response.header("x-auth-token", token);
 
-    response.send(AccountMapper.ToAccountDto(user));
+    response.send(AccountMapper.ToAccountDto(account));
 
     // run services
-    subscriptionService.handleSubscriptionDueDates(user.id);
+    subscriptionService.handleSubscriptionDueDates(account.id);
 })
 
 export default accountRouter;
