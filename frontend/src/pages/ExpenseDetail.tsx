@@ -76,12 +76,12 @@ const CheckoutExpensePage: FunctionComponent = () => {
               onClick={handleUpdateClick} 
               className="my-2 px-4 py-2 border border-[#FF8343] bg-[#FF8343] text-white rounded-md hover:bg-[#fd8b53]"
             >
-              Update Income
+              Update Expense
             </button><br/>
             <button 
               onClick={handleDeleteClick} 
               className="px-5 py-2 border border-[#FF8343] text-[#FF8343] rounded-md hover:bg-gray-300">
-              Delete Income
+              Delete Expense
             </button>
           </div>
         </div>
@@ -95,7 +95,7 @@ const CheckoutExpensePage: FunctionComponent = () => {
             onClick={(e) => e.stopPropagation()} // Prevent click event from closing the modal
           >
             <h2 className="mb-4 text-xl font-semibold text-gray-800">Confirm Delete</h2>
-            <p className="mb-4 text-gray-600">Are you sure you want to delete this income entry?</p>
+            <p className="mb-4 text-gray-600">Are you sure you want to delete this expense entry?</p>
             <div className="flex justify-end space-x-4">
               <button 
                 onClick={closeModal} 
