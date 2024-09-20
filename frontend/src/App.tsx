@@ -7,9 +7,11 @@ import NavBar from './components/Navbar';
 import Footer from './components/Footer';
 import IncomeAddPage from './pages/IncomeAdd';
 import CheckoutPage from './pages/IncomeDetail';
+import CheckoutExpensePage from './pages/ExpenseDetail'
 import IncomeupdatePage from './pages/IncomeUpdate';
 import Contact from './pages/contact';
 import ExpensePage from './pages/Expence';
+import ExpenseUpdate from './pages/ExpenseUpdate';
 
 
 
@@ -28,6 +30,8 @@ function App() {
           <Route path="/updateIncome" element={<IncomeupdatePage />}></Route>
           <Route path="/Income-details" element={<CheckoutPage />} />
           <Route path="/addExpense" element={<ExpensePage />} />
+          <Route path="/updateExpense" element={<ExpenseUpdate />}></Route>
+          <Route path="/Expense-details" element={<CheckoutExpensePage />} />
         </Routes>
       </div>
       <Footer/>

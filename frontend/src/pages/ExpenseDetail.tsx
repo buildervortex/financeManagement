@@ -10,10 +10,10 @@ interface LocationState {
   expense: ExpenseDto;
 }
 
-const CheckoutPage: FunctionComponent = () => {
+const CheckoutExpensePage: FunctionComponent = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { expense } = location.state as LocationState;
+  const { expense } = location.state as LocationState || {};
   
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -22,7 +22,7 @@ const CheckoutPage: FunctionComponent = () => {
   };
 
   const handleUpdateClick = () => {
-    navigate('/updateexpense', { state: { expense } });
+    navigate('/updateExpense', { state: { expense } });
   };
 
   const handleDeleteClick = () => {
@@ -34,41 +34,42 @@ const CheckoutPage: FunctionComponent = () => {
   };
 
   const deleteExpense = async () => {
-    // const result: ExpenseDto | ErrorMessage = await new ExpenseViewModel().DeleteExpense(expense.id);
-    // if (result instanceof ErrorMessage) {
-    //   handleErrorResult(result);
-    // } else {
-    //   navigate('/addExpense');
-    // }
-    // closeModal();
+    const expenseId = expense.id ?? ''; 
+    const result: ExpenseDto | ErrorMessage = await new ExpenseViewModel().DeleteExpense(expenseId);
+    if (result instanceof ErrorMessage) {
+      handleErrorResult(result);
+    } else {
+      navigate('/addExpense');
+    }
+    closeModal();
   };
 
   return (
     <div className="w-full max-w-2xl p-8 m-10 mx-auto mt-10 rounded-lg shadow-xl bg-gray-50">
-      <h1 className="px-4 mb-3 text-2xl text-center text-gray-900 ">INCOME DETAILS</h1>
+      <h1 className="px-4 mb-3 text-2xl text-center text-gray-900 ">EXPENSE DETAILS</h1>
       <div className="p-4 ">
         <div className="mb-4">
-          <p className="text-lg font-medium text-gray-900">Income Name:</p>
+          <p className="text-lg font-medium text-gray-900">Expense Name:</p>
           <p className="text-xl text-gray-600">{expense.name}</p>
+        </div>
+        <div className="mb-4">
+          <p className="text-lg font-medium text-gray-900">Category:</p>
+          <p className="text-lg text-gray-600">{expense.category}</p>
         </div>
         <div className="mb-4">
           <p className="text-lg font-medium text-gray-900">Description:</p>
           <p className="text-lg text-gray-600">{expense.description}</p>
         </div>
-        {/* <div className="mb-4">
+        <div className="mb-4">
           <p className="text-lg font-medium text-gray-900">Amount:</p>
-          <p className="text-xl text-gray-600">{income.currencyType} {income.amount.toFixed(2)}</p>
+          <p className="text-xl text-gray-600">{expense.currencyType} {(expense.amount ?? 0).toFixed(2)}</p>
         </div>
         <div className="mb-4">
-          <p className="text-lg font-medium text-gray-900">Monthly:</p>
-          <p className={`text-xl ${income.monthly ? 'text-green-600' : 'text-red-600'}`}>
-            {income.monthly ? "Yes" : "No"}
+          <p className="text-lg font-medium text-gray-900">Paid:</p>
+          <p className={`text-xl ${expense.paid ? 'text-green-600' : 'text-red-600'}`}>
+            {expense.paid ? "Yes" : "No"}
           </p>
-        </div> */}
-        {/* <div className="mb-4">
-          <p className="text-lg font-medium text-gray-900">Income Date:</p>
-          <p className="text-xl text-gray-600">{formatDate(income.incomeDate)}</p>
-        </div> */}
+        </div>
         <div className="items-center mt-6">
           <div className='flex items-center gap-x-4'>
             <button 
@@ -116,4 +117,4 @@ const CheckoutPage: FunctionComponent = () => {
   );
 };
 
-export default CheckoutPage;
+export default CheckoutExpensePage;
