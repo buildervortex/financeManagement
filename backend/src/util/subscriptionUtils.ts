@@ -1,5 +1,6 @@
 import Expense from "../model/expense";
 import Subscription from "../model/subscriptions";
+import { getDifferenceInDays } from "./dates";
 
 export default class SubscriptionUtils {
     static toPay(subscription: Subscription): boolean {
@@ -28,7 +29,7 @@ export default class SubscriptionUtils {
         return subscription;
     }
 
-    static subscriptionToExpense(subscription: Subscription,paid:boolean = true): Expense {
+    static subscriptionToExpense(subscription: Subscription, paid: boolean = true): Expense {
         let expense: Expense = new Expense();
         expense.name = subscription.name;
         expense.category = subscription.category!;
@@ -40,5 +41,17 @@ export default class SubscriptionUtils {
         expense.addtionalIdentifiers?.push(subscription._id);
 
         return expense;
+    }
+
+    static isNearToNextInstallment(subscription: Subscription): boolean {
+        if (!subscription.nextInstallmentDate) return false;
+        if (!subscription.isRecurringIndefinitely && subscription.completedInstallments == subscription.totalInstallments) return false;
+        if (getDifferenceInDays(new Date(), subscription.nextInstallmentDate) > subscription.remindBeforeDays) return false;
+        return true;
+    }
+
+    static getEffectiveRemainingDaysToNextInstallment(subscription: Subscription): number {
+        if (subscription.nextInstallmentDate) return 0;
+        return getDifferenceInDays(new Date(), subscription.nextInstallmentDate!);
     }
 }

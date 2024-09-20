@@ -9,7 +9,7 @@ export default class GoalMapper {
     static ToGoalDto(goal: Goal): GoalDto {
         const goalDto = new GoalDto();
 
-        goalDto._id = goal.id;
+        goalDto.id = goal.id;
         goalDto.name = goal.name;
         goalDto.description = goal.description;
         goalDto.targetAmount = goal.targetAmount;
