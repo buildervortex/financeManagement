@@ -1,5 +1,3 @@
-import Joi from "joi";
-
 class ExpenseDto {
     id?: string
     name?: string
@@ -11,6 +9,5 @@ class ExpenseDto {
     type?: string;
     paid?: boolean
 }
-
 
 export default ExpenseDto;

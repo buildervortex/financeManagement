@@ -66,11 +66,16 @@ const SubscriptionAdd: FunctionComponent<AddExpenseProps> = () => {
       handleErrorResult(result);
   } 
 
-    setName("");
-    setCategory("");
-    setDescription("");
-    setAmount(0);
-    setCurrencyType("");
+  setName("");
+  setCategory("");
+  setDescription("");
+  setAmount(0);
+  setCurrencyType("");
+  setInitialPaymentDate(undefined);
+  setInstallmentIntervalDays(1);
+  setTotalInstallments(undefined);
+  setIsRecurringIndefinitely(false);
+  setRemindBeforeDays(1);
    
 
   };
@@ -90,20 +95,20 @@ const SubscriptionAdd: FunctionComponent<AddExpenseProps> = () => {
       labelContent: 'Category',
       onChange: (e: React.ChangeEvent<HTMLInputElement>) => setCategory(e.target.value),
       type: "text",
-      name: "description",
-      id: "description",
+      name: "category",
+      id: "category",
       className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
       placeholder: "Enter Category"
     },
     {
-        labelContent: 'Description',
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value),
-        type: "text",
-        name: "description",
-        id: "description",
-        className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-        placeholder: "Enter Description"
-      },
+      labelContent: 'Description',
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value),
+      type: "text",
+      name: "description",
+      id: "description",
+      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
+      placeholder: "Enter Description"
+    },
     {
       labelContent: 'Amount',
       onChange: (e: React.ChangeEvent<HTMLInputElement>) => setAmount(parseFloat(e.target.value)),
@@ -123,50 +128,50 @@ const SubscriptionAdd: FunctionComponent<AddExpenseProps> = () => {
       placeholder: "Enter Currency Type"
     },
     {
-        labelContent: 'Initial Payment Date',
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => setInitialPaymentDate(e.target.value),
-        type: "text",
-        name: "name",
-        id: "name",
-        className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-        placeholder: "Initial Payment Date"
-      },
-      {
-        labelContent: 'Installment Interval Days',
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => setInstallmentIntervalDays(e.target.value),
-        type: "text",
-        name: "name",
-        id: "name",
-        className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-        placeholder: "Installment Interval Days"
-      },
-      {
-        labelContent: 'Total Installments',
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => setTotalInstallments(e.target.value),
-        type: "text",
-        name: "name",
-        id: "name",
-        className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-        placeholder: "Total Installments"
-      },
+      labelContent: 'Initial Payment Date',
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setInitialPaymentDate(new Date(e.target.value)),
+      type: "date",
+      name: "initialPaymentDate",
+      id: "initialPaymentDate",
+      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
+      placeholder: "Initial Payment Date"
+    },
     {
-        labelContent: 'Recurring Indefinitely',
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => setIsRecurringIndefinitely(e.target.checked),
-        type: "checkbox",
-        name: "Paid",
-        id: "Paid",
-        className: "mx-3 mr-2 leading-tight",
-        placeholder: ""
-      },
-      {
-        labelContent: 'Remind Before Days',
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => setRemindBeforeDays(e.target.value),
-        type: "text",
-        name: "name",
-        id: "name",
-        className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-        placeholder: "Remind Before Days"
-      },
+      labelContent: 'Installment Interval Days',
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setInstallmentIntervalDays(parseInt(e.target.value)),
+      type: "number",
+      name: "installmentIntervalDays",
+      id: "installmentIntervalDays",
+      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
+      placeholder: "Installment Interval Days"
+    },
+    {
+      labelContent: 'Total Installments',
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setTotalInstallments(parseInt(e.target.value)),
+      type: "number",
+      name: "totalInstallments",
+      id: "totalInstallments",
+      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
+      placeholder: "Total Installments"
+    },
+    {
+      labelContent: 'Recurring Indefinitely',
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setIsRecurringIndefinitely(e.target.checked),
+      type: "checkbox",
+      name: "isRecurringIndefinitely",
+      id: "isRecurringIndefinitely",
+      className: "mx-3 mr-2 leading-tight",
+      placeholder: ""
+    },
+    {
+      labelContent: 'Remind Before Days',
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setRemindBeforeDays(parseInt(e.target.value)),
+      type: "number",
+      name: "remindBeforeDays",
+      id: "remindBeforeDays",
+      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
+      placeholder: "Remind Before Days"
+    },
   ];
 
   return (
@@ -178,10 +183,11 @@ const SubscriptionAdd: FunctionComponent<AddExpenseProps> = () => {
         onSubmit={handleSubmit}
       />
 
-<div className="my-4">
+      <div className="my-4">
         <SubscriptionList 
-        description='No subscription added yet.'
-        SubscriptionList={subscription} /> 
+          description='No subscription added yet.'
+          SubscriptionList={subscription} 
+        /> 
       </div>
     </>
   );
