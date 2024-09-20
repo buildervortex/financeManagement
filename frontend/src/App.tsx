@@ -12,9 +12,7 @@ import IncomeupdatePage from './pages/IncomeUpdate';
 import Contact from './pages/contact';
 import ExpensePage from './pages/Expence';
 import ExpenseUpdate from './pages/ExpenseUpdate';
-
-
-
+import SusbcriptionDetails from './pages/subscriptionDetails';
 
 function App() {
   return (
@@ -24,6 +22,7 @@ function App() {
       <ToastContainer />
         <Routes>
           <Route path="/" element={<AccountRegisterPage></AccountRegisterPage>}></Route>
+          <Route path="/Subscription-details" element={<SusbcriptionDetails />}></Route>
           <Route path="/Login" element={<LoginPage></LoginPage>}></Route>
           <Route path="/contact" element={<Contact></Contact>}></Route>
           <Route path="/addIncome" element={<IncomeAddPage></IncomeAddPage>}></Route>
