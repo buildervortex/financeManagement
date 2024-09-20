@@ -6,9 +6,9 @@ const ExpensePage = () => {
   const [activeTab, setActiveTab] = useState('expense');
 
   return (
-    <div className="w-full p-4 flex flex-col items-center">
+    <div className="flex flex-col items-center w-full p-4">
       <div className="w-full max-w-md mb-4">
-        <div className="sm:hidden w-full">
+        <div className="w-full sm:hidden">
           <select
             title="Expenses Type"
             id="tabs"

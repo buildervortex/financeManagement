@@ -1,10 +1,12 @@
 import { FunctionComponent, useState,useEffect } from 'react';
 import InputForm from '../components/inputForm';
-import IncomeList from '../components/IncomeList';
-import IncomeViewModel from '../viewModels/IncomeViewModel';
 import { handleErrorResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
-import IncomeDto from '../dtos/income/incomeDto';
+import SubscriptionDto  from '../dtos/subscription/subscriptionDto';
+import SubscriptionList from './SubscriptionList';
+import SubscriptionViewModel from '../viewModels/SubscriptionViewModel';
+import AddSubscriptionDto from '../dtos/subscription/addSubscriptionDto';
+
 
 interface AddExpenseProps { }
 
@@ -24,46 +26,52 @@ const SubscriptionAdd: FunctionComponent<AddExpenseProps> = () => {
   const [description, setDescription] = useState<string>("");
   const [amount, setAmount] = useState<number>(0);
   const [currencyType, setCurrencyType] = useState<string>("");
-  const [initialPaymentDate, setInitialPaymentDate] = useState<string>("");
-  const [installmentIntervalDays, setInstallmentIntervalDays] = useState<string>("");
-  const [totalInstallments, setTotalInstallments] = useState<string>("");
+  const [initialPaymentDate, setInitialPaymentDate] = useState<Date>();
+  const [installmentIntervalDays, setInstallmentIntervalDays] = useState<number>(1);
+  const [totalInstallments, setTotalInstallments] = useState<number>();
   const [isRecurringIndefinitely, setIsRecurringIndefinitely] = useState<boolean>(false);
-  const [remindBeforeDays, setRemindBeforeDays] = useState<string>("");
-  const [incomes, setIncomes] = useState<IncomeDto[]>([]);
+  const [remindBeforeDays, setRemindBeforeDays] = useState<number>(1);
+  const [subscription, setSubscription] = useState<SubscriptionDto[]>([]);
 
-//   useEffect(() => {
-//     const fetchIncomes = async () => {
-//       const result: IncomeDto[] | ErrorMessage = await new IncomeViewModel().getIncomes();
-//       if (result instanceof ErrorMessage) {
-//         handleErrorResult(result);
-//       } else {
-//         setIncomes(result); 
-//       }
-//     };
-//     fetchIncomes();
-//   }, []);
+  useEffect(() => {
+    const fetchSubscription= async () => {
+      const result: SubscriptionDto[] | ErrorMessage = await new SubscriptionViewModel().getSubscriptions();
+      if (result instanceof ErrorMessage) {
+        handleErrorResult(result);
+      } else {
+        setSubscription(result); 
+      }
+    };
+    fetchSubscription();
+  }, []);
 
 
   const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
+     e.preventDefault();
 
-//     const addincomeDto: addIncomeDto = new addIncomeDto();
-//     addincomeDto.name = name;
-//     addincomeDto.description = description;
-//     addincomeDto.amount = amount;
-//     addincomeDto.monthly = monthly;
-//     addincomeDto.monthlyDate = incomeDate;
-//     addincomeDto.currencyType = currencyType;
-//     const result = await new IncomeViewModel().addIncome(addincomeDto)
-//     if (result instanceof ErrorMessage) {
-//       handleErrorResult(result);
-//   } 
+    const addsubscriptionDto: AddSubscriptionDto = new AddSubscriptionDto();
+    addsubscriptionDto.name = name;
+    addsubscriptionDto.category = category;
+    addsubscriptionDto.description = description;
+    addsubscriptionDto.amount = amount;
+    addsubscriptionDto.currencyType = currencyType;
+    addsubscriptionDto.initialPaymentDate = initialPaymentDate;
+    addsubscriptionDto.installmentIntervalDays= installmentIntervalDays;
+    addsubscriptionDto.totalInstallments=totalInstallments;
+    addsubscriptionDto.isRecurringIndefinitely=isRecurringIndefinitely;
+    addsubscriptionDto.remindBeforeDays=remindBeforeDays;
+    
+    const result = await new SubscriptionViewModel().addSusbscription(addsubscriptionDto)
+    if (result instanceof ErrorMessage) {
+      handleErrorResult(result);
+  } 
 
     setName("");
     setCategory("");
     setDescription("");
     setAmount(0);
     setCurrencyType("");
+   
 
   };
 
@@ -171,9 +179,9 @@ const SubscriptionAdd: FunctionComponent<AddExpenseProps> = () => {
       />
 
 <div className="my-4">
-        <IncomeList 
+        <SubscriptionList 
         description='No subscription added yet.'
-        incomeList={incomes} /> 
+        SubscriptionList={subscription} /> 
       </div>
     </>
   );
