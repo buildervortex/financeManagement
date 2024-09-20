@@ -84,7 +84,7 @@ const SusbcriptionDetails = () => {
         </div>
         <div className="mb-4">
           <p className="text-lg font-medium text-gray-900">Initial Payment Date:</p>
-          <p className="text-xl text-gray-600">{formatDate(subscription.initialPaymentDate ?? new Date)}</p>
+          <p className="text-xl text-gray-600">{formatDate(subscription.initialPaymentDate ?? new Date())}</p>
         </div>
         <div className="items-center mt-6">
           <div className='flex items-center gap-x-4'>

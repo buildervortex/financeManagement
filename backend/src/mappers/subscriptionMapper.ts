@@ -10,7 +10,7 @@ export default class SubscriptionMapper {
         subscriptionDto.amount = subscription.amount;
         subscriptionDto.category = subscription.category;
         subscriptionDto.currencyType = subscription.currencyType;
-        subscriptionDto.description = subscription.currencyType;
+        subscriptionDto.description = subscription.description;
         subscriptionDto.installmentIntervalDays = subscription.installmentIntervalDays;
         subscriptionDto.id = subscription.id;
         subscriptionDto.initialPaymentDate = subscription.initialPaymentDate;
