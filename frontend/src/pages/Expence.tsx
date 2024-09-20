@@ -23,7 +23,7 @@ const ExpensePage = () => {
         <div className="hidden text-sm font-medium text-center text-gray-500 rounded-lg shadow sm:flex">
           <button
             onClick={() => setActiveTab('expense')}
-            className={`w-1/2 p-4 border-r border-gray-200 rounded-s-lg focus:ring-4 focus:ring-[#fcaa7e] focus:outline-none ${
+            className={`w-1/2 p-4 mr-1 border-r border-gray-200 rounded-s-lg focus:ring-2 focus:ring-[#fcaa7e] focus:outline-none ${
               activeTab === 'expense'
                 ? 'text-gray-900 bg-gray-100'
                 : 'bg-white hover:text-gray-700 hover:bg-gray-50'
@@ -33,7 +33,7 @@ const ExpensePage = () => {
           </button>
           <button
             onClick={() => setActiveTab('subscription')}
-            className={`w-1/2 p-4 border-r border-gray-200 rounded-e-lg focus:ring-4 focus:ring-[#fcaa7e] focus:outline-none ${
+            className={`w-1/2 p-4 border-r border-gray-200 rounded-e-lg focus:ring-2 focus:ring-[#fcaa7e] focus:outline-none ${
               activeTab === 'subscription'
                 ? 'text-gray-900 bg-gray-100'
                 : 'bg-white hover:text-gray-700 hover:bg-gray-50'
