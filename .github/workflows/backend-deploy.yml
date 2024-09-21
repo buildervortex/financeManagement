@@ -32,10 +32,26 @@ jobs:
     runs-on: ubuntu-latest
     needs: build_and_push
     steps:
-      - name: Execute remote commands over ssh
+      - name: Execute remote commands over ssh in server 1
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{secrets.SSH_HOST}}
+          host: ${{secrets.SSH_HOST1}}
+          username: ${{secrets.SSH_USERNAME}}
+          password: ${{secrets.SSH_PASSWORD}}
+          script: | 
+            # change the directory
+            cd /home/lahirukasunidilhara
+
+            # down the docker compose if previous compose is up
+            docker-compose down
+
+            # run the docker-compose file
+            docker compose up -d
+
+      - name: Execute remote commands over ssh in server 2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{secrets.SSH_HOST2}}
           username: ${{secrets.SSH_USERNAME}}
           password: ${{secrets.SSH_PASSWORD}}
           script: | 
