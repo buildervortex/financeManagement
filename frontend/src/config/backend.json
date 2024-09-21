@@ -1,4 +1,4 @@
 {
-  "apiBaseUrl": "http://localhost:4040/api/v1",
+  "apiBaseUrl": "http://129.151.46.246:80/api/v1",
   "timeout": 10000
 }
