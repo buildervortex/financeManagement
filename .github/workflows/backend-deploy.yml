@@ -31,9 +31,9 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: ${{secrets.DOCKERHUB_REPOSITORY}}:latest
           build-args: |
-            FMEXPRESSPORT=${{ secrets.FMEXPRESSPORT }} 
-            FMJWTSYMETRICKEY=${{ secrets.FMJWTSYMETRICKEY }} 
-            FMDBCONNECTIONSTRING=${{ secrets.FMDBCONNECTIONSTRING }}
+            FMEXPRESSPORT=4040
+            FMJWTSYMETRICKEY=asdfasdfadsf
+            FMDBCONNECTIONSTRING=mongodb://152.67.3.153:8040/financeManagement
 
   # deploy:
   #   runs-on: ubuntu-latest
