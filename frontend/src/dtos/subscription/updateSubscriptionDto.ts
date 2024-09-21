@@ -7,6 +7,7 @@ class UpdateSubscriptionDto {
     amount?: number
     currencyType?: string = "LKR";
     remindBeforeDays?: number = 1;
+    
 }
 
 
@@ -23,3 +24,6 @@ export function validateUpdateSubscriptionDto(updateSubscriptionDto: UpdateSubsc
 }
 
 export default UpdateSubscriptionDto;
+
+
+

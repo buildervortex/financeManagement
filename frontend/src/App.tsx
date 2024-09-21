@@ -13,6 +13,7 @@ import Contact from './pages/contact';
 import ExpensePage from './pages/Expence';
 import ExpenseUpdate from './pages/ExpenseUpdate';
 import SusbcriptionDetails from './pages/subscriptionDetails';
+import SubscriptionUpdate from './pages/SubscriptionUpdate';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/addExpense" element={<ExpensePage />} />
           <Route path="/updateExpense" element={<ExpenseUpdate />}></Route>
           <Route path="/Expense-details" element={<CheckoutExpensePage />} />
+          <Route path="/updateSubscription" element={<SubscriptionUpdate />}></Route>
         </Routes>
       </div>
       <Footer/>
