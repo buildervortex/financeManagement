@@ -22,7 +22,7 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: lahirudilhara/financemanagement:latest
+          tags: ${{DOCKERHUB_REPOSITORY}}:latest
           build-args: | 
             FMEXPRESSPORT =${{secrets.FMEXPRESSPORT}}
             FMJWTSYMETRICKEY =${{secrets.FMJWTSYMETRICKEY}}
