@@ -1,8 +1,9 @@
 on:
-  push:
-    branches:
-      - master
-      - test
+  # push:
+  #   branches:
+  #     - master
+  #     - test
+    workflow_dispatch: 
 
 jobs:
   build_and_push:
@@ -53,7 +54,7 @@ jobs:
             docker compose down
 
             # run the docker-compose file
-            docker compose up -d
+            docker compose up --pull -d
 
       - name: Execute remote commands over ssh in server 2
         uses: appleboy/ssh-action@v1.0.3
@@ -69,4 +70,4 @@ jobs:
             docker compose down
 
             # run the docker-compose file
-            docker compose up -d
+            docker compose up --pull -d
