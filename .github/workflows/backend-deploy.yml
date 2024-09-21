@@ -53,8 +53,11 @@ jobs:
             # down the docker compose if previous compose is up
             docker compose down
 
+            # pull the latest image
+            docker compose pull
+
             # run the docker-compose file
-            docker compose up --pull -d
+            docker compose up -d
 
       - name: Execute remote commands over ssh in server 2
         uses: appleboy/ssh-action@v1.0.3
@@ -69,5 +72,8 @@ jobs:
             # down the docker compose if previous compose is up
             docker compose down
 
+            # pull the latest image
+            docker compose pull
+
             # run the docker-compose file
-            docker compose up --pull -d
+            docker compose up -d
