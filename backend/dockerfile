@@ -3,7 +3,7 @@ FROM node:latest
 ARG FMEXPRESSPORT=4040
 ARG FMJWTSYMETRICKEY="dfjalksfjkasfjkfjaksjflaksjflkasjfkasjfklasjfaksjflkasjfksfjkasf"
 ARG FMDBCONNECTIONSTRING="localhost/financeManagement"
-RUN ["mkdir","-p","/home/application/node_modules"]
+# RUN ["mkdir","-p","/home/application/node_modules"]
 ENV FMEXPRESSPORT=${FMEXPRESSPORT}
 ENV FMJWTSYMETRICKEY=${FMJWTSYMETRICKEY}
 ENV FMDBCONNECTIONSTRING=${FMDBCONNECTIONSTRING}
