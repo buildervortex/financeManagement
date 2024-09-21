@@ -1,8 +1,14 @@
 FROM node:latest
 # get build time properties
-ARG FMEXPRESSPORT=4040
-ARG FMJWTSYMETRICKEY="dfjalksfjkasfjkfjaksjflaksjflkasjfkasjfklasjfaksjflkasjfksfjkasf"
-ARG FMDBCONNECTIONSTRING="localhost/financeManagement"
+# ARG FMEXPRESSPORT=4040
+# ARG FMJWTSYMETRICKEY="dfjalksfjkasfjkfjaksjflaksjflkasjfkasjfklasjfaksjflkasjfksfjkasf"
+# ARG FMDBCONNECTIONSTRING="localhost/financeManagement"
+ARG FMEXPRESSPORT
+ARG FMJWTSYMETRICKEY
+ARG FMDBCONNECTIONSTRING
+RUN if [ -z "$FMEXPRESSPORT" ] || [ -z "$FMJWTSYMETRICKEY" ] || [ -z "$FMDBCONNECTIONSTRING" ]; then \
+        echo "Error: Required build arguments are missing." && exit 1; \
+    fi
 # RUN ["mkdir","-p","/home/application/node_modules"]
 ENV FMEXPRESSPORT=${FMEXPRESSPORT}
 ENV FMJWTSYMETRICKEY=${FMJWTSYMETRICKEY}
