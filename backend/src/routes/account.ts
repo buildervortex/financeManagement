@@ -8,6 +8,7 @@ import Account from "../model/account";
 import Cryptography from "../util/hashing";
 import SubscriptionService from "../services/subscription";
 import { accountNotification } from "../services/notificationService";
+import NotificationUtils from "../util/notification";
 
 const accountRouter = express.Router();
 const accountRespository = new AccountRepository();
@@ -74,6 +75,8 @@ accountRouter.post("/login", async (request: express.Request, response: express.
 
     // create the jwt token
     const token = account.generateAuthToken()
+
+    await accountNotification(account);
 
     response.header("x-auth-token", token);
 
