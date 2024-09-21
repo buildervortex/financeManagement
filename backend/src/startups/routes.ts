@@ -10,6 +10,7 @@ import expenseRouter from '../routes/expense';
 import subscriptionRouter from '../routes/subscription';
 import goalRouter from '../routes/goal';
 import notificationRouter from '../routes/notification';
+import HealthCheckRoute from '../routes/healthcheck';
 
 // uses dependency injection to get the express object to add the route handling middlewares
 export default function configRoute(app: Application) {
@@ -32,6 +33,8 @@ export default function configRoute(app: Application) {
     // add the logging middelware
     app.use(morgan("combined"));
 
+    // add health check route
+    app.use("/health", HealthCheckRoute)
 
     // config the routers
     app.use("/api/v1/accounts/notification", notificationRouter)
