@@ -2,7 +2,7 @@ import express from "express"
 
 const HealthCheckRoute = express.Router();
 
-HealthCheckRoute.get("/:id", async (request: express.Request | any, response: express.Response) => {
+HealthCheckRoute.get("/", async (request: express.Request | any, response: express.Response) => {
     response.send({
         "status": "ok"
     })
