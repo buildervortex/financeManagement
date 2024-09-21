@@ -43,8 +43,8 @@ jobs:
             cd /home/lahirukasunidilhara
 
             # down the docker compose if previous compose is up
-            docker compose down
+            docker compose-down
 
-            # run the docker compose file
+            # run the docker-compose file
             docker compose up -d
 
