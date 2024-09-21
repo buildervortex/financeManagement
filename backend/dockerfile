@@ -9,10 +9,11 @@ ENV FMJWTSYMETRICKEY=${FMJWTSYMETRICKEY}
 ENV FMDBCONNECTIONSTRING=${FMDBCONNECTIONSTRING}
 EXPOSE 4040
 EXPOSE 4050
-COPY ./dist /home/application
-COPY ./node_modules /home/application/node_modules
+COPY . /home/application
 WORKDIR /home/application
-ENTRYPOINT [ "node", "index.js" ]
+RUN ["npm","i"]
+ENTRYPOINT [ "npm", "run","start" ]
+# ENTRYPOINT [ "node", "index.js" ]
 
 
 # docker build --build-arg FMEXPRESSPORT=${FMEXPRESSPORT} --build-arg FMJWTSYMETRICKEY=${FMJWTSYMETRICKEY} --build-arg FMDBCONNECTIONSTRING=${FMDBCONNECTIONSTRING} -t backend .
