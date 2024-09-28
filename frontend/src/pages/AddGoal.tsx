@@ -40,7 +40,7 @@ const AddGoal: React.FC = () => {
 
     return (
         <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
-            <h2 className="text-2xl font-bold mb-6">Add New Goal</h2>
+            <h2 className="text-2xl font-bold mb-6 text-center">Add New Goal</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label htmlFor="name" className="block text-gray-700">Name</label>
