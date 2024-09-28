@@ -15,12 +15,16 @@ import ExpenseUpdate from './pages/ExpenseUpdate';
 import SusbcriptionDetails from './pages/subscriptionDetails';
 import SubscriptionUpdate from './pages/SubscriptionUpdate';
 import AddGoal from './pages/AddGoal';
+import ContactForm from './pages/ContactForm'; 
+
+
+
 
 function App() {
   return (
     <Router>
       <NavBar />
-      <div className="App mx-auto w-5/6">
+      <div className="w-5/6 mx-auto App">
       <ToastContainer />
         <Routes>
           <Route path="/" element={<AccountRegisterPage></AccountRegisterPage>}></Route>
@@ -35,6 +39,13 @@ function App() {
           <Route path="/Expense-details" element={<CheckoutExpensePage />} />
           <Route path="/updateSubscription" element={<SubscriptionUpdate />}></Route>
           <Route path="/addGoal" element={<AddGoal />}></Route>
+          <Route path="/contact-us" element={<ContactForm />} /> 
+
+
+          
+
+          
+
         </Routes>
       </div>
       <Footer/>
