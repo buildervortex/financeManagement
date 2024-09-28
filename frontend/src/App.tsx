@@ -15,6 +15,7 @@ import ExpenseUpdate from './pages/ExpenseUpdate';
 import SusbcriptionDetails from './pages/subscriptionDetails';
 import SubscriptionUpdate from './pages/SubscriptionUpdate';
 import AddGoal from './pages/AddGoal';
+import AddGoalPayment from './pages/AddGoalPayment';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/Expense-details" element={<CheckoutExpensePage />} />
           <Route path="/updateSubscription" element={<SubscriptionUpdate />}></Route>
           <Route path="/addGoal" element={<AddGoal />}></Route>
+          <Route path="/addGoalPayment" element={<AddGoalPayment />}></Route>
         </Routes>
       </div>
       <Footer/>
