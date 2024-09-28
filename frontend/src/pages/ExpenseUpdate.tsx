@@ -1,7 +1,7 @@
 import { FunctionComponent, useState, useEffect } from 'react';
 import InputForm from '../components/inputForm';
 import ExpenseViewModel from '../viewModels/ExpenseViewModel';
-import { handleErrorResult } from '../utils/errorMessage';
+import { handleErrorResult,handleSuccessResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
 import updateExpenseDto from '../dtos/expense/updateExpenseDto';
 import ExpenseDto from '../dtos/expense/expenseDto';
@@ -57,7 +57,9 @@ const ExpenseUpdatePage: FunctionComponent<updateExpensePageProps> = () => {
         const result = await new ExpenseViewModel().updateExpense(updateexpenseDto, expense.id || "");
         if (result instanceof ErrorMessage) {
             handleErrorResult(result);
-        }
+        }else {
+            handleSuccessResult('Expences Updated Successfully')
+          }
 
         // Clear the form fields
         setName("");

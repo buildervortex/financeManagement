@@ -1,8 +1,8 @@
-import { FunctionComponent, useState,useEffect } from 'react';
+import { FunctionComponent, useState, useEffect } from 'react';
 import InputForm from '../components/inputForm';
 import IncomeList from '../components/IncomeList';
 import IncomeViewModel from '../viewModels/IncomeViewModel';
-import { handleErrorResult } from '../utils/errorMessage';
+import { handleErrorResult, handleSuccessResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
 import addIncomeDto from '../dtos/income/addIncomeDto';
 import IncomeDto from '../dtos/income/incomeDto';
@@ -34,7 +34,7 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
       if (result instanceof ErrorMessage) {
         handleErrorResult(result);
       } else {
-        setIncomes(result); 
+        setIncomes(result);
       }
     };
     fetchIncomes();
@@ -54,7 +54,9 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
     const result = await new IncomeViewModel().addIncome(addincomeDto)
     if (result instanceof ErrorMessage) {
       handleErrorResult(result);
-  } 
+    } else {
+      handleSuccessResult('Income Added Successfully')
+    }
 
     setName("");
     setDescription("");
@@ -133,10 +135,10 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
         onSubmit={handleSubmit}
       />
 
-<div className="my-4">
-        <IncomeList 
-        description='No income added yet.'
-        incomeList={incomes} /> 
+      <div className="my-4">
+        <IncomeList
+          description='No income added yet.'
+          incomeList={incomes} />
       </div>
     </>
   );

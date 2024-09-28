@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FunctionComponent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ErrorMessage from '../viewModels/error';
-import { handleErrorResult } from '../utils/errorMessage';
+import { handleErrorResult,handleSuccessResult } from '../utils/errorMessage';
 import SubscriptionViewModel from '../viewModels/SubscriptionViewModel';
 import SubscriptionDto from '../dtos/subscription/subscriptionDto';
 
@@ -39,6 +39,7 @@ const SusbcriptionDetails = () => {
     if (result instanceof ErrorMessage) {
       handleErrorResult(result);
     } else {
+      handleSuccessResult('Subscription Deleted Successfully')
       navigate('/addSubscription');
     }
     closeModal();

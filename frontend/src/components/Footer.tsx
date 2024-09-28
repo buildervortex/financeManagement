@@ -11,14 +11,10 @@ const items = [
     { name: "Instagram", icon: <FaInstagram />, link: "https://www.instagram.com/" },
     { name: "Twitter", icon: <FaTwitter />, link: "https://twitter.com/" },
     { name: "Dicord", icon: <FaDiscord />, link: "https://discord.com/" },
-
   ];
    
-  
 const Footer: React.FC = () => {
   return (
-    
-
     <footer className="w-full max-h-screen py-10 overflow-hidden text-black bg-[#f7f7f7fe]">
       <div className="container px-6 mx-auto">
         {/* Top section */}
@@ -33,7 +29,7 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="mb-4 text-lg font-semibold">Quick Links</h4>
             <ul>
-              <li><a href="/" className="text-sm hover:text-orange-400">Dashboard</a></li>
+              <li><a href="/dashboard" className="text-sm hover:text-orange-400">Dashboard</a></li>
               <li><a href="/" className="text-sm hover:text-orange-400">Notifications</a></li>
               <li><a href="/contact" className="text-sm hover:text-orange-400">FAQ</a></li>
               <li><a href="/contact" className="text-sm hover:text-orange-400">Contact Us</a></li>
@@ -46,9 +42,9 @@ const Footer: React.FC = () => {
             <ul>
             <h4 className="mb-4 text-lg font-semibold">Explore</h4>
             <li><a href="/contact" className="text-sm hover:text-orange-400">Analysis</a></li>
-            <li><a href="/" className="text-sm hover:text-orange-400">Income Management</a></li>
-              <li><a href="/dashboard" className="text-sm hover:text-orange-400">Expenses Managment</a></li>
-              <li><a href="/faq" className="text-sm hover:text-orange-400">Goals Managment</a></li>
+            <li><a href="/addIncome" className="text-sm hover:text-orange-400">Income Management</a></li>
+              <li><a href="/addExpense" className="text-sm hover:text-orange-400">Expenses Managment</a></li>
+              <li><a href="/addGoal" className="text-sm hover:text-orange-400">Goals Managment</a></li>
               
            </ul>
           </div>   

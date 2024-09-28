@@ -1,7 +1,7 @@
 import { FunctionComponent, useState, useEffect } from 'react';
 import InputForm from '../components/inputForm';
 import SubscriptionViewModel from '../viewModels/SubscriptionViewModel';
-import { handleErrorResult } from '../utils/errorMessage';
+import { handleErrorResult,handleSuccessResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
 import UpdateSubscriptionDto, { validateUpdateSubscriptionDto } from '../dtos/subscription/updateSubscriptionDto';
 import SubscriptionDto from '../dtos/subscription/subscriptionDto';
@@ -71,6 +71,7 @@ const SubscriptionUpdatePage: FunctionComponent<UpdateSubscriptionPageProps> = (
             handleErrorResult(result);
         } else {
             // Clear the form after successful submission
+            handleSuccessResult('Subscription Updated Successfully')
             setName("");
             setDescription("");
             setAmount(0);

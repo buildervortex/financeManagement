@@ -4,6 +4,7 @@ import AccountViewModel from '../viewModels/AccountViewModel';
 import InputForm from '../components/inputForm';
 import ErrorMessage from '../viewModels/error';
 import { handleErrorResult } from '../utils/errorMessage';
+import { useNavigate } from 'react-router-dom';
 
 interface AccountLoginPageProps {
 }
@@ -11,7 +12,7 @@ interface AccountLoginPageProps {
 const LoginPage: FunctionComponent<AccountLoginPageProps> = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -21,8 +22,10 @@ const LoginPage: FunctionComponent<AccountLoginPageProps> = () => {
         const result = await new AccountViewModel().loginAccount(loginDto);
         if (result instanceof ErrorMessage) {
             handleErrorResult(result);
+        }else{
+            navigate('/dashboard')
         } 
-
+        
     }
 
     let inputElements = [

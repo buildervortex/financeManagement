@@ -17,6 +17,7 @@ import SubscriptionUpdate from './pages/SubscriptionUpdate';
 import AddGoal from './pages/AddGoal';
 import AddGoalPayment from './pages/AddGoalPayment';
 import UpdateGoal from './pages/UpdateGoal';
+import Dashboard from './pages/dashboard';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
       <div className="App mx-auto w-5/6">
       <ToastContainer />
         <Routes>
+          <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
           <Route path="/register" element={<AccountRegisterPage></AccountRegisterPage>}></Route>
           <Route path="/Subscription-details" element={<SusbcriptionDetails />}></Route>
           <Route path="/Login" element={<LoginPage></LoginPage>}></Route>

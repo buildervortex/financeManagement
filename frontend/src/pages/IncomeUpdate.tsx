@@ -1,7 +1,7 @@
 import { FunctionComponent, useState, useEffect } from 'react';
 import InputForm from '../components/inputForm';
 import IncomeViewModel from '../viewModels/IncomeViewModel';
-import { handleErrorResult } from '../utils/errorMessage';
+import { handleErrorResult, handleSuccessResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
 import updateIncomeDto from '../dtos/income/updateIncomeDto';
 import IncomeDto from '../dtos/income/incomeDto';
@@ -57,7 +57,9 @@ const IncomeupdatePage: FunctionComponent<updateIncomePageProps> = () => {
         const result = await new IncomeViewModel().updateIncome(updateincomeDto, income.id)
         if (result instanceof ErrorMessage) {
             handleErrorResult(result);
-        } 
+        }else {
+            handleSuccessResult('Income Updated Successfully')
+          } 
 
         // Clear the form fields
         setName("");
