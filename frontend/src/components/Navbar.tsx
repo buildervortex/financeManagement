@@ -18,7 +18,7 @@ const NavBar = () => {
 
   const Links = [
     { name: "Dashboard", link: "/" },
-    { name: "Profile", link: "/" },
+    { name: "Notifications", link: "/" },
     { name: "Contact & FAQ", link: "/contact" },
   ];
 
@@ -41,18 +41,18 @@ const NavBar = () => {
           <ul className={nav ? 'fixed left-0 top-0 w-[60%] h-full border-r border-r-gray-200 bg-white ease-in-out duration-500' : 'ease-in-out duration-500 fixed left-[-100%]'}>
             <h1 className='w-full text-3xl font-bold text-[#FF8343] m-4'>Finance Management</h1>
             <li className='p-4 border-b border-gray-200 hover:text-[#FF8343]'><a href='/'>Dashboard</a></li>
-            <li className='p-4 border-b border-gray-200 hover:text-[#FF8343]'><a href='/'>Profile</a></li>
+            <li className='p-4 border-b border-gray-200 hover:text-[#FF8343]'><a href='/'>Notifications</a></li>
             <li className='p-4 hover:text-[#FF8343]'><a href='/contact'>Contact & FAQ</a></li>
           </ul>
         </>
       ) : (
         <div className='flex ml-auto space-x-2 md:space-x-4'>
-          <button className="border border-[#FF8343] text-[#FF8343] py-1.5 md:py-2 px-2 md:px-4 rounded-3xl text-xs md:text-base font-sans">
+          <a href="/login" className="border border-[#FF8343] text-[#FF8343] py-1.5 md:py-2 px-2 md:px-4 rounded-3xl text-xs md:text-base font-sans">
             LOG IN
-          </button>
-          <button className="border border-[#FF8343] bg-[#FF8343] text-white py-3 md:py-2 px-2 md:px-4 rounded-3xl text-xs md:text-base font-sans">
+          </a>
+          <a href="/register" className="border border-[#FF8343] bg-[#FF8343] text-white py-3 md:py-2 px-2 md:px-4 rounded-3xl text-xs md:text-base font-sans">
             SIGN UP
-          </button>
+          </a>
         </div>
       )}
     </div>

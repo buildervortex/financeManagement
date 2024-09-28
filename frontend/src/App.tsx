@@ -26,7 +26,7 @@ function App() {
       <div className="App mx-auto w-5/6">
       <ToastContainer />
         <Routes>
-          <Route path="/" element={<AccountRegisterPage></AccountRegisterPage>}></Route>
+          <Route path="/register" element={<AccountRegisterPage></AccountRegisterPage>}></Route>
           <Route path="/Subscription-details" element={<SusbcriptionDetails />}></Route>
           <Route path="/Login" element={<LoginPage></LoginPage>}></Route>
           <Route path="/contact" element={<Contact></Contact>}></Route>
