@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FunctionComponent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ErrorMessage from '../viewModels/error';
-import { handleErrorResult } from '../utils/errorMessage';
+import { handleErrorResult, handleSuccessResult } from '../utils/errorMessage';
 import ExpenseViewModel from '../viewModels/ExpenseViewModel';
 import ExpenseDto from '../dtos/expense/expenseDto';
 
@@ -39,6 +39,7 @@ const CheckoutExpensePage: FunctionComponent = () => {
     if (result instanceof ErrorMessage) {
       handleErrorResult(result);
     } else {
+      handleSuccessResult('Expense Deleted Successfully')
       navigate('/addExpense');
     }
     closeModal();

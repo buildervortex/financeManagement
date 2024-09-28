@@ -3,7 +3,7 @@ import { FunctionComponent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import IncomeDto from '../dtos/income/incomeDto';
 import ErrorMessage from '../viewModels/error';
-import { handleErrorResult } from '../utils/errorMessage';
+import { handleErrorResult, handleSuccessResult } from '../utils/errorMessage';
 import IncomeViewModel from '../viewModels/IncomeViewModel';
 
 interface LocationState {
@@ -38,6 +38,7 @@ const CheckoutPage: FunctionComponent = () => {
     if (result instanceof ErrorMessage) {
       handleErrorResult(result);
     } else {
+      handleSuccessResult('Income Deleted Successfully')
       navigate('/addIncome');
     }
     closeModal();
