@@ -18,38 +18,51 @@ import AddGoal from './pages/AddGoal';
 import AddGoalPayment from './pages/AddGoalPayment';
 import UpdateGoal from './pages/UpdateGoal';
 import Dashboard from './pages/dashboard';
-
+import ContactForm from './pages/contact';
 
 function App() {
   return (
     <Router>
       <NavBar />
-      <div className="App mx-auto w-5/6">
-      <ToastContainer />
+      <div className="w-5/6 mx-auto App">
+        <ToastContainer />
         <Routes>
           <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
           <Route path="/register" element={<AccountRegisterPage></AccountRegisterPage>}></Route>
           <Route path="/Subscription-details" element={<SusbcriptionDetails />}></Route>
+          <Route
+            path="/register"
+            element={<AccountRegisterPage></AccountRegisterPage>}
+          ></Route>
+          <Route
+            path="/Subscription-details"
+            element={<SusbcriptionDetails />}
+          ></Route>
           <Route path="/Login" element={<LoginPage></LoginPage>}></Route>
           <Route path="/contact" element={<Contact></Contact>}></Route>
-          <Route path="/addIncome" element={<IncomeAddPage></IncomeAddPage>}></Route>
+          <Route
+            path="/addIncome"
+            element={<IncomeAddPage></IncomeAddPage>}
+          ></Route>
           <Route path="/updateIncome" element={<IncomeupdatePage />}></Route>
           <Route path="/Income-details" element={<CheckoutPage />} />
           <Route path="/addExpense" element={<ExpensePage />} />
           <Route path="/updateExpense" element={<ExpenseUpdate />}></Route>
           <Route path="/Expense-details" element={<CheckoutExpensePage />} />
-          <Route path="/updateSubscription" element={<SubscriptionUpdate />}></Route>
+          <Route
+            path="/updateSubscription"
+            element={<SubscriptionUpdate />}
+          ></Route>
           <Route path="/addGoal" element={<AddGoal />}></Route>
+          <Route path="/contact-us" element={<ContactForm />} />
+
           <Route path="/addGoalPayment" element={<AddGoalPayment />}></Route>
           <Route path="/updateGoal" element={<UpdateGoal />}></Route>
-
         </Routes>
       </div>
-      <Footer/>
+      <Footer />
     </Router>
   );
 }
-
-
 
 export default App;
