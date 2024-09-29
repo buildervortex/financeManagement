@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AddGoalDto, { validateAddGoalDto } from "../dtos/goal/addGoalDto";
+import GoalList from "../components/GoalList";
 
 const AddGoal: React.FC = () => {
     const [formData, setFormData] = useState<AddGoalDto>({
@@ -153,6 +154,11 @@ const AddGoal: React.FC = () => {
                     Add Goal
                 </button>
             </form>
+            {/* <div className="my-4">
+                <GoalList
+                description='No expense added yet.'
+                GoalList={goals} /> 
+            </div> */}
         </div>
     );
 };
