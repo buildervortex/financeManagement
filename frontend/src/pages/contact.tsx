@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from 'react';
+import ContactForm from "../components/ContactForm";
 
 
 interface FAQItem {
@@ -57,7 +58,7 @@ const Contact: React.FC = () => {
         ))}
       </div>
     </div>
-      
+    <ContactForm />
     </div>
     </>
   );
