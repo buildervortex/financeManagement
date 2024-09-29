@@ -6,8 +6,8 @@ const AddGoal: React.FC = () => {
         name: "",
         description: "",
         targetAmount: undefined,
-        startDate: new Date(),
-        deadline: undefined,
+        startDate: new Date(), 
+        deadline: undefined, 
         currencyType: "LKR",
         remindBeforeDays: undefined,
     });
@@ -16,10 +16,19 @@ const AddGoal: React.FC = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setFormData((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
+
+        // Handle date inputs as Date objects
+        if (name === "startDate" || name === "deadline") {
+            setFormData((prevState) => ({
+                ...prevState,
+                [name]: value ? new Date(value) : undefined, // Convert to Date object or set to undefined
+            }));
+        } else {
+            setFormData((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -90,7 +99,7 @@ const AddGoal: React.FC = () => {
                         id="startDate"
                         name="startDate"
                         className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-200"
-                        value={formData.startDate?.toISOString().split("T")[0] || ""}
+                        value={formData.startDate ? formData.startDate.toISOString().split("T")[0] : ""}
                         onChange={handleChange}
                     />
                     {errors.startDate && <span className="text-red-500 text-sm">{errors.startDate}</span>}
@@ -103,7 +112,7 @@ const AddGoal: React.FC = () => {
                         id="deadline"
                         name="deadline"
                         className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-200"
-                        value={formData.deadline?.toISOString().split("T")[0] || ""}
+                        value={formData.deadline ? formData.deadline.toISOString().split("T")[0] : ""}
                         onChange={handleChange}
                     />
                     {errors.deadline && <span className="text-red-500 text-sm">{errors.deadline}</span>}
@@ -149,18 +158,3 @@ const AddGoal: React.FC = () => {
 };
 
 export default AddGoal;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

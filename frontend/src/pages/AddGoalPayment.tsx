@@ -33,7 +33,7 @@ const AddGoalPayment: React.FC = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg mt-8 mb-8">
+        <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg mt-44 mb-48">
             <h2 className="text-2xl font-bold mb-6 text-center">Add Goal Payment</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
