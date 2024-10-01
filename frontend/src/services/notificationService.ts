@@ -10,18 +10,18 @@ export default class notificationService{
         return Cast.errorMessageCast(response);
     }
 
-    static async getNotification(getNotificationDto : NotificationDto, id : string): Promise<NotificationDto | ErrorMessage>{
+    static async getNotification( id : string): Promise<NotificationDto | ErrorMessage>{
         const response = await Api.get<NotificationDto | ErrorMessage>(`/accounts/notification/${id}`);
         return Cast.errorMessageCast(response);
     }
 
-    static async deleteNotification(deleteNotification : NotificationDto, id : String): Promise<NotificationDto | ErrorMessage>{
+    static async deleteNotification( id : String): Promise<NotificationDto | ErrorMessage>{
         const response = await Api.delete<NotificationDto | ErrorMessage>(`/accounts/notification/${id}`);
         return Cast.errorMessageCast(response);
     }
 
-    static async addNotification(addNotificationDto : NotificationDto) : Promise<NotificationDto | ErrorMessage>{
-        const response = await Api.post<NotificationDto | ErrorMessage>("/accounts/notification");
+    static async readNotification(id : string) : Promise<NotificationDto | ErrorMessage>{
+        const response = await Api.post<NotificationDto | ErrorMessage>(`/accounts/notification/${id}/read`);
         return Cast.errorMessageCast(response);
     }
 }
