@@ -2,8 +2,10 @@ import { FunctionComponent, useState, useEffect } from 'react';
 import InputForm from '../components/inputForm';
 import GoalViewModel from '../viewModels/GoalsViewModel';
 import AddGoalPaymentDto from "../dtos/goal/addGoalPaymentDto";
+import GoalDto from '../dtos/goal/goalDto';
 import { handleErrorResult,handleSuccessResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface AddGoalPaymentProps { }
 
@@ -17,15 +19,21 @@ interface InputElement {
     placeholder: string;
 }
 
+interface LocationState {
+    goal: GoalDto;
+  }
 
 const AddGoalPayment: FunctionComponent<AddGoalPaymentProps> = () => {
     const [amount, setAmount] = useState<number>(0);
-
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { goal } = location.state as LocationState || {};
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        const goalId = goal.id ?? ''; 
         const addGoalPaymentDto: AddGoalPaymentDto = new AddGoalPaymentDto();
         addGoalPaymentDto.amount = amount;
-        const result = await new GoalViewModel().addGoalPayment(addGoalPaymentDto, '1');
+        const result = await new GoalViewModel().addGoalPayment(addGoalPaymentDto, goalId);
         if (result instanceof ErrorMessage) {
             handleErrorResult(result);
         }else {
