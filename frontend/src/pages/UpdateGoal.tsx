@@ -1,108 +1,129 @@
-import React, { useState } from "react";
-import UpdateGoalDto, { validateUpdateGoalDto } from "../dtos/goal/updateGoalDto";
+import { FunctionComponent, useState, useEffect } from 'react';
+import InputForm from '../components/inputForm';
+import GoalsViewModel from '../viewModels/GoalsViewModel';
+import { handleErrorResult, handleSuccessResult } from '../utils/errorMessage';
+import ErrorMessage from '../viewModels/error';
+import UpdateGoalDto, { validateUpdateGoalDto } from '../dtos/goal/updateGoalDto';
+import GoalDto from '../dtos/goal/goalDto';
+import { useLocation } from 'react-router-dom';
 
-const UpdateGoal: React.FC = () => {
-    const [formData, setFormData] = useState<UpdateGoalDto>({
-        name: "",
-        description: "",
-        currencyType: "LKR",
-        remindBeforeDays: undefined,
-    });
+interface UpdateGoalPageProps {}
 
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+interface LocationState {
+    goal: GoalDto;
+}
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
+interface InputElement {
+    labelContent: string;
+    value?: any;
+    checked?: boolean;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    type: string;
+    name: string;
+    id: string;
+    className: string;
+    placeholder?: string;
+}
 
-    const handleSubmit = (e: React.FormEvent) => {
+const GoalUpdatePage: FunctionComponent<UpdateGoalPageProps> = () => {
+    const location = useLocation();
+    const { goal } = location.state as LocationState;
+
+    // State management for goal attributes
+    const [name, setName] = useState<string>(goal.name || "");
+    const [description, setDescription] = useState<string>(goal.description || "");
+    const [currencyType, setCurrencyType] = useState<string>(goal.currencyType || "LKR");
+    const [remindBeforeDays, setRemindBeforeDays] = useState<number | undefined>(goal.remindBeforeDays || undefined);
+
+    useEffect(() => {
+        setName(goal.name || "");
+        setDescription(goal.description || "");
+        setCurrencyType(goal.currencyType || "LKR");
+        setRemindBeforeDays(goal.remindBeforeDays || undefined);
+    }, [goal]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const { error } = validateUpdateGoalDto(formData);
+
+        const updateGoalDto: UpdateGoalDto = {
+            name,
+            description,
+            currencyType,
+            remindBeforeDays,
+        };
+
+        // Validate the data before submitting
+        const { error } = validateUpdateGoalDto(updateGoalDto);
         if (error) {
-            const errorMessages: { [key: string]: string } = {};
-            error.details.forEach((detail) => {
-                errorMessages[detail.path[0]] = detail.message;
-            });
-            setErrors(errorMessages);
-        } else {
-            setErrors({});
-            console.log("Valid form data:", formData);
-            // e.g., call API to update the goal
+            handleErrorResult(new ErrorMessage(error.details[0].message));
+            return;
         }
+
+        const result = await new GoalsViewModel().updateGoal(updateGoalDto, goal.id || "");
+        if (result instanceof ErrorMessage) {
+            handleErrorResult(result);
+        } else {
+            handleSuccessResult('Goal Updated Successfully');
+        }
+
+        // Clear the form fields
+        setName("");
+        setDescription("");
+        setCurrencyType("LKR");
+        setRemindBeforeDays(undefined);
     };
+
+    const inputElements: InputElement[] = [
+        {
+            labelContent: 'Goal Name',
+            value: name,
+            onChange: (e) => setName(e.target.value),
+            type: "text",
+            name: "name",
+            id: "name",
+            className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
+            placeholder: "Enter Goal Name"
+        },
+        {
+            labelContent: 'Description',
+            value: description,
+            onChange: (e) => setDescription(e.target.value),
+            type: "text",
+            name: "description",
+            id: "description",
+            className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
+            placeholder: "Enter Description"
+        },
+        {
+            labelContent: 'Currency Type',
+            value: currencyType,
+            onChange: (e) => setCurrencyType(e.target.value),
+            type: "text",
+            name: "currencyType",
+            id: "currencyType",
+            className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
+            placeholder: "Enter Currency Type"
+        },
+        {
+            labelContent: 'Remind Before Days',
+            value: remindBeforeDays ?? '',
+            onChange: (e) => setRemindBeforeDays(e.target.value ? parseInt(e.target.value) : undefined),
+            type: "number",
+            name: "remindBeforeDays",
+            id: "remindBeforeDays",
+            className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
+            placeholder: "Enter Days for Reminder"
+        }
+    ];
 
     return (
-        <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg mt-6 mb-6">
-            <h2 className="text-2xl font-bold mb-6 text-center">Update Goal</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                    <label htmlFor="name" className="block text-gray-700">Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Enter goal name"
-                        className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-200"
-                        value={formData.name || ""}
-                        onChange={handleChange}
-                    />
-                    {errors.name && <span className="text-red-500 text-sm">{errors.name}</span>}
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="description" className="block text-gray-700">Description</label>
-                    <textarea
-                        id="description"
-                        name="description"
-                        placeholder="Enter goal description"
-                        className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-200"
-                        value={formData.description || ""}
-                        onChange={handleChange}
-                    />
-                    {errors.description && <span className="text-red-500 text-sm">{errors.description}</span>}
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="currencyType" className="block text-gray-700">Currency Type</label>
-                    <input
-                        type="text"
-                        id="currencyType"
-                        name="currencyType"
-                        placeholder="Enter currency type"
-                        className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-200"
-                        value={formData.currencyType || "LKR"}
-                        onChange={handleChange}
-                    />
-                    {errors.currencyType && <span className="text-red-500 text-sm">{errors.currencyType}</span>}
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="remindBeforeDays" className="block text-gray-700">Remind Before (Days)</label>
-                    <input
-                        type="number"
-                        id="remindBeforeDays"
-                        name="remindBeforeDays"
-                        placeholder="Enter days before reminder"
-                        className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-200"
-                        value={formData.remindBeforeDays || ""}
-                        onChange={handleChange}
-                    />
-                    {errors.remindBeforeDays && <span className="text-red-500 text-sm">{errors.remindBeforeDays}</span>}
-                </div>
-
-                <button
-                    type="submit"
-                    className="w-full bg-orange-400 text-white py-2 px-4 rounded-md hover:bg-orange-300 transition duration-300 mt-4 mb-4"
-                >
-                    Update Goal
-                </button>
-            </form>
-        </div>
+        <InputForm
+            formName='Update Goal Information'
+            submitButton='Submit'
+            inputs={inputElements}
+            onSubmit={handleSubmit}
+        />
     );
 };
 
-export default UpdateGoal;
+export default GoalUpdatePage;

@@ -16,7 +16,7 @@ import SusbcriptionDetails from './pages/subscriptionDetails';
 import SubscriptionUpdate from './pages/SubscriptionUpdate';
 import AddGoal from './pages/AddGoal';
 import AddGoalPayment from './pages/AddGoalPayment';
-import UpdateGoal from './pages/UpdateGoal';
+import GoalUpdatePage from './pages/UpdateGoal';
 import Dashboard from './pages/dashboard';
 import ContactForm from './pages/contact';
 import GoalDetails from './pages/GoalDetails';
@@ -58,7 +58,7 @@ function App() {
           <Route path="/contact-us" element={<ContactForm />} />
 
           <Route path="/addGoalPayment" element={<AddGoalPayment />}></Route>
-          <Route path="/updateGoal" element={<UpdateGoal />}></Route>
+          <Route path="/updateGoal" element={<GoalUpdatePage />}></Route>
           <Route path="/Goal-details" element={<GoalDetails />}></Route>
         </Routes>
       </div>
