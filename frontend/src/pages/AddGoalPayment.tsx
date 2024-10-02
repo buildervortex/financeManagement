@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, useEffect } from 'react';
+import { FunctionComponent, useState} from 'react';
 import InputForm from '../components/inputForm';
 import GoalViewModel from '../viewModels/GoalsViewModel';
 import AddGoalPaymentDto from "../dtos/goal/addGoalPaymentDto";
@@ -38,6 +38,7 @@ const AddGoalPayment: FunctionComponent<AddGoalPaymentProps> = () => {
             handleErrorResult(result);
         }else {
             handleSuccessResult('Goal Added Successfully')
+            navigate('/addGoal')
           }
            setAmount(0);
     }

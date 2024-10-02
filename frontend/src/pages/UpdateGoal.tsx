@@ -55,7 +55,7 @@ const UpdateGoal: FunctionComponent<updateGoalPageProps> = () => {
             handleSuccessResult('Goal Updated Successfully')
           } 
 
-        // Clear the form fields
+        
         setName("");
         setDescription("");
         setCurrencyType("");

@@ -1,9 +1,8 @@
 import AddGoalDto from "../dtos/goal/addGoalDto";
 import AddGoalPaymentDto from "../dtos/goal/addGoalPaymentDto";
 import GoalDto from "../dtos/goal/goalDto";
+import GoalPaymentDto from "../dtos/goal/goalPaymentDto";
 import UpdateGoalDto from "../dtos/goal/updateGoalDto";
-import AddSubscriptionDto from "../dtos/subscription/addSubscriptionDto";
-import AddGoalPayment from "../pages/AddGoalPayment";
 import Cast from "../utils/cast";
 import ErrorMessage from "../viewModels/error";
 import Api from "./api";
@@ -14,7 +13,7 @@ export default class goalService{
         return Cast.errorMessageCast(response);
     }
 
-    static async  addGoalPayment (addGoalPaymentDto : AddGoalPaymentDto, id : string) : Promise<GoalDto | ErrorMessage>{
+    static async  addGoalPayment (addGoalPaymentDto : AddGoalPaymentDto, id : string) : Promise<GoalPaymentDto | ErrorMessage>{
         const response = await Api.post<GoalDto | ErrorMessage> (`/goals/${id}/pay`,addGoalPaymentDto);
         return Cast.errorMessageCast(response);
     }
