@@ -7,7 +7,7 @@ import { handleErrorResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
 import GoalList from '../components/GoalList';
 
-interface GoalAddProps { }
+interface AddGoalProps { }
 
 interface InputElement {
   labelContent: string;
@@ -19,7 +19,7 @@ interface InputElement {
   placeholder: string;
 }
 
-const GoalAdd: FunctionComponent<GoalAddProps> = () => {
+const AddGoal: FunctionComponent<AddGoalProps> = () => {
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [targetAmount, setTargetAmount] = useState<number>(0);
@@ -141,4 +141,4 @@ const GoalAdd: FunctionComponent<GoalAddProps> = () => {
   );
 };
 
-export default GoalAdd;
+export default AddGoal;
