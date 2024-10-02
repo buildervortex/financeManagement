@@ -17,8 +17,8 @@ const NavBar = () => {
   }, []);
 
   const Links = [
+    { name: "Home", link: "/" },
     { name: "Dashboard", link: "/dashboard" },
-    { name: "Notifications", link: "/" },
     { name: "Contact & FAQ", link: "/contact" },
   ];
 
@@ -40,8 +40,8 @@ const NavBar = () => {
           </div>
           <ul className={nav ? 'fixed left-0 top-0 w-[60%] h-full border-r border-r-gray-200 bg-white ease-in-out duration-500' : 'ease-in-out duration-500 fixed left-[-100%]'}>
             <h1 className='w-full text-3xl font-bold text-[#FF8343] m-4'>Finance Management</h1>
+            <li className='p-4 border-b border-gray-200 hover:text-[#FF8343]'><a href='/'>Home</a></li>
             <li className='p-4 border-b border-gray-200 hover:text-[#FF8343]'><a href='/dashboard'>Dashboard</a></li>
-            <li className='p-4 border-b border-gray-200 hover:text-[#FF8343]'><a href='/'>Notifications</a></li>
             <li className='p-4 hover:text-[#FF8343]'><a href='/contact'>Contact & FAQ</a></li>
           </ul>
         </>

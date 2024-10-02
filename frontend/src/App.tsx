@@ -20,6 +20,7 @@ import GoalUpdatePage from './pages/UpdateGoal';
 import Dashboard from './pages/dashboard';
 import ContactForm from './pages/contact';
 import GoalDetails from './pages/GoalDetails';
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <div className="w-5/6 mx-auto App">
         <ToastContainer />
         <Routes>
+        <Route path="/" element={<Home></Home>}></Route>
           <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
           <Route path="/register" element={<AccountRegisterPage></AccountRegisterPage>}></Route>
           <Route path="/Subscription-details" element={<SusbcriptionDetails />}></Route>
