@@ -3,7 +3,7 @@ import InputForm from '../components/inputForm';
 import GoalViewModel from '../viewModels/GoalsViewModel';
 import GoalDto from '../dtos/goal/goalDto';
 import AddGoalDto from '../dtos/goal/addGoalDto';
-import { handleErrorResult } from '../utils/errorMessage';
+import { handleErrorResult,handleSuccessResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
 import GoalList from '../components/GoalList';
 
@@ -20,10 +20,10 @@ interface InputElement {
 }
 
 const AddGoal: FunctionComponent<AddGoalProps> = () => {
-  const [name, setName] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [targetAmount, setTargetAmount] = useState<number>(0);
-  const [currencyType, setCurrencyType] = useState<string>('LKR');
+  const [currencyType, setCurrencyType] = useState<string>("LKR");
   const [deadline, setDeadline] = useState<Date | null>(null);
   const [remindBeforeDays, setRemindBeforeDays] = useState<number>(1);
   const [goals, setGoals] = useState<GoalDto[]>([]);
@@ -43,27 +43,27 @@ const AddGoal: FunctionComponent<AddGoalProps> = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newGoal: AddGoalDto = {
-      name,
-      description,
-      targetAmount,
-      startDate: new Date(),
-      deadline: deadline || undefined,
-      currencyType,
-      remindBeforeDays
-    };
-
-    const result = await new GoalViewModel().addGoal(newGoal);
+    const addGoalDto: AddGoalDto = new AddGoalDto();
+      addGoalDto.name = name;
+      addGoalDto.description = description;
+      addGoalDto.targetAmount = targetAmount;
+      addGoalDto.startDate = new Date();
+      addGoalDto.deadline = deadline || undefined;
+      addGoalDto.currencyType = currencyType;
+      addGoalDto.remindBeforeDays = remindBeforeDays;
+    const result = await new GoalViewModel().addGoal(addGoalDto);
     if (result instanceof ErrorMessage) {
       handleErrorResult(result);
     } else {
-      setName('');
+      handleSuccessResult('Goal Added Successfully')
+    }
+     setName('');
       setDescription('');
       setTargetAmount(0);
       setCurrencyType('LKR');
       setDeadline(null);
       setRemindBeforeDays(1);
-    }
+    
   };
 
   // Input elements configuration

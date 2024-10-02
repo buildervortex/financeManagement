@@ -10,12 +10,12 @@ import Api from "./api";
 
 export default class goalService{
     static async addGoal(addGoalDto : AddGoalDto) : Promise<GoalDto | ErrorMessage> {
-        const response = await Api.post<GoalDto | ErrorMessage> ("/goals", AddGoalDto);
+        const response = await Api.post<GoalDto | ErrorMessage> ("/goals", addGoalDto);
         return Cast.errorMessageCast(response);
     }
 
     static async  addGoalPayment (addGoalPaymentDto : AddGoalPaymentDto, id : string) : Promise<GoalDto | ErrorMessage>{
-        const response = await Api.post<GoalDto | ErrorMessage> (`/goals/${id}/pay`, AddGoalPaymentDto);
+        const response = await Api.post<GoalDto | ErrorMessage> (`/goals/${id}/pay`,addGoalPaymentDto);
         return Cast.errorMessageCast(response);
     }
 
@@ -30,7 +30,7 @@ export default class goalService{
     }
 
     static async updateGoal(updateGoalDto : UpdateGoalDto, id : string): Promise<UpdateGoalDto | ErrorMessage>{
-        const response = await Api.put<UpdateGoalDto | ErrorMessage> (`/goals/${id}`);
+        const response = await Api.put<UpdateGoalDto | ErrorMessage> (`/goals/${id}`,updateGoalDto);
         return Cast.errorMessageCast(response);
     }
 
