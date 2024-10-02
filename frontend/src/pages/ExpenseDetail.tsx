@@ -17,9 +17,6 @@ const CheckoutExpensePage: FunctionComponent = () => {
   
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat('en-US').format(new Date(date));
-  };
 
   const handleUpdateClick = () => {
     navigate('/updateExpense', { state: { expense } });

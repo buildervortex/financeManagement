@@ -21,6 +21,11 @@ const GoalDetails: FunctionComponent = () => {
     return date ? new Intl.DateTimeFormat('en-US').format(new Date(date)) : '-';
   };
 
+  const handlePaymentClick = () => {
+    navigate('/addGoalPayment', { state: { goal } });
+  };
+
+
   const handleUpdateClick = () => {
     navigate('/updateGoal', { state: { goal } });
   };
@@ -81,9 +86,14 @@ const GoalDetails: FunctionComponent = () => {
         </div>
         <div className="items-center mt-6">
           <div className='flex items-center gap-x-4'>
+          <button 
+              onClick={handlePaymentClick} 
+              className="my-2 px-4 py-2 border border-[#FF8343] bg-[#FF8343] text-white rounded-md hover:bg-[#fd8b53]">
+              Add Goal Payment
+            </button>
             <button 
               onClick={handleUpdateClick} 
-              className="my-2 px-4 py-2 border border-[#FF8343] bg-[#FF8343] text-white rounded-md hover:bg-[#fd8b53]"
+              className="px-5 py-2 border border-[#FF8343] text-[#FF8343] rounded-md hover:bg-gray-300"
             >
               Update Goal
             </button><br/>
@@ -92,6 +102,7 @@ const GoalDetails: FunctionComponent = () => {
               className="px-5 py-2 border border-[#FF8343] text-[#FF8343] rounded-md hover:bg-gray-300">
               Delete Goal
             </button>
+           
           </div>
         </div>
       </div>

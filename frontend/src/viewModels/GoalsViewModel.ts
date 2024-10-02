@@ -18,7 +18,7 @@ export default class GoalsViewModel{
         }
         return response;
     }
-    async addGoalPayment(addGoalPaymentDto:AddGoalPaymentDto,id:string): Promise<GoalDto | ErrorMessage>{
+    async addGoalPayment(addGoalPaymentDto:AddGoalPaymentDto,id:string): Promise<GoalPaymentDto | ErrorMessage>{
         const{error} = validateAddGoalPaymentDto(addGoalPaymentDto); 
         if(error)
             return ErrorMessage.errorMessageFromJoiError(error);

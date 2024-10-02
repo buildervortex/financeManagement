@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { FunctionComponent } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ErrorMessage from '../viewModels/error';
 import { handleErrorResult,handleSuccessResult } from '../utils/errorMessage';
