@@ -19,6 +19,7 @@ import AddGoalPayment from './pages/AddGoalPayment';
 import UpdateGoal from './pages/UpdateGoal';
 import Dashboard from './pages/dashboard';
 import ContactForm from './pages/contact';
+import GoalDetails from './pages/GoalDetails';
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
 
           <Route path="/addGoalPayment" element={<AddGoalPayment />}></Route>
           <Route path="/updateGoal" element={<UpdateGoal />}></Route>
+          <Route path="/Goal-details" element={<GoalDetails />}></Route>
         </Routes>
       </div>
       <Footer />
