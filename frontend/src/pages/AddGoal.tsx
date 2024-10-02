@@ -1,166 +1,144 @@
-import React, { useState } from "react";
-import AddGoalDto, { validateAddGoalDto } from "../dtos/goal/addGoalDto";
-import GoalList from "../components/GoalList";
+import { FunctionComponent, useState, useEffect } from 'react';
+import InputForm from '../components/inputForm';
+import GoalViewModel from '../viewModels/GoalsViewModel';
+import GoalDto from '../dtos/goal/goalDto';
+import AddGoalDto from '../dtos/goal/addGoalDto';
+import { handleErrorResult } from '../utils/errorMessage';
+import ErrorMessage from '../viewModels/error';
+import GoalList from '../components/GoalList';
 
-const AddGoal: React.FC = () => {
-    const [formData, setFormData] = useState<AddGoalDto>({
-        name: "",
-        description: "",
-        targetAmount: undefined,
-        startDate: new Date(), 
-        deadline: undefined, 
-        currencyType: "LKR",
-        remindBeforeDays: undefined,
-    });
+interface GoalAddProps { }
 
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+interface InputElement {
+  labelContent: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type: string;
+  name: string;
+  id: string;
+  className: string;
+  placeholder: string;
+}
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
+const GoalAdd: FunctionComponent<GoalAddProps> = () => {
+  const [name, setName] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [targetAmount, setTargetAmount] = useState<number>(0);
+  const [currencyType, setCurrencyType] = useState<string>('LKR');
+  const [deadline, setDeadline] = useState<Date | null>(null);
+  const [remindBeforeDays, setRemindBeforeDays] = useState<number>(1);
+  const [goals, setGoals] = useState<GoalDto[]>([]);
 
-        // Handle date inputs as Date objects
-        if (name === "startDate" || name === "deadline") {
-            setFormData((prevState) => ({
-                ...prevState,
-                [name]: value ? new Date(value) : undefined, // Convert to Date object or set to undefined
-            }));
-        } else {
-            setFormData((prevState) => ({
-                ...prevState,
-                [name]: value,
-            }));
-        }
+  useEffect(() => {
+    const fetchGoals = async () => {
+      const result: GoalDto[] | ErrorMessage = await new GoalViewModel().getGoals();
+      if (result instanceof ErrorMessage) {
+        handleErrorResult(result);
+      } else {
+        setGoals(result);
+      }
+    };
+    fetchGoals();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const newGoal: AddGoalDto = {
+      name,
+      description,
+      targetAmount,
+      startDate: new Date(),
+      deadline: deadline || undefined,
+      currencyType,
+      remindBeforeDays
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        const { error } = validateAddGoalDto(formData);
-        if (error) {
-            const errorMessages: { [key: string]: string } = {};
-            error.details.forEach((detail) => {
-                errorMessages[detail.path[0]] = detail.message;
-            });
-            setErrors(errorMessages);
-        } else {
-            setErrors({});
-            console.log("Valid form data:", formData);
-            // e.g., call API to save the goal
-        }
-    };
+    const result = await new GoalViewModel().addGoal(newGoal);
+    if (result instanceof ErrorMessage) {
+      handleErrorResult(result);
+    } else {
+      setName('');
+      setDescription('');
+      setTargetAmount(0);
+      setCurrencyType('LKR');
+      setDeadline(null);
+      setRemindBeforeDays(1);
+    }
+  };
 
-    return (
-        <div className="max-w-lg mx-auto mt-10 mb-10 p-6 bg-white shadow-md rounded-lg">
-            <h2 className="text-2xl font-bold mb-6 text-center">Add New Goal</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                    <label htmlFor="name" className="block text-gray-700">Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Enter goal name"
-                        className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-200"
-                        value={formData.name || ""}
-                        onChange={handleChange}
-                    />
-                    {errors.name && <span className="text-red-500 text-sm">{errors.name}</span>}
-                </div>
+  // Input elements configuration
+  const inputElements: InputElement[] = [
+    {
+      labelContent: 'Goal Name',
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value),
+      type: 'text',
+      name: 'name',
+      id: 'name',
+      className: 'bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5',
+      placeholder: 'Enter Goal Name'
+    },
+    {
+      labelContent: 'Description',
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value),
+      type: 'text',
+      name: 'description',
+      id: 'description',
+      className: 'bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5',
+      placeholder: 'Enter Description'
+    },
+    {
+      labelContent: 'Target Amount',
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setTargetAmount(parseFloat(e.target.value)),
+      type: 'number',
+      name: 'targetAmount',
+      id: 'targetAmount',
+      className: 'bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5',
+      placeholder: 'Enter Target Amount'
+    },
+    {
+      labelContent: 'Currency Type',
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setCurrencyType(e.target.value),
+      type: 'text',
+      name: 'currencyType',
+      id: 'currencyType',
+      className: 'bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5',
+      placeholder: 'Enter Currency Type'
+    },
+    {
+      labelContent: 'Deadline',
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setDeadline(new Date(e.target.value)),
+      type: 'date',
+      name: 'deadline',
+      id: 'deadline',
+      className: 'bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5',
+      placeholder: ''
+    },
+    {
+      labelContent: 'Remind Before Days',
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setRemindBeforeDays(parseInt(e.target.value)),
+      type: 'number',
+      name: 'remindBeforeDays',
+      id: 'remindBeforeDays',
+      className: 'bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5',
+      placeholder: 'Enter Reminder Days'
+    }
+  ];
 
-                <div className="mb-4">
-                    <label htmlFor="description" className="block text-gray-700">Description</label>
-                    <textarea
-                        id="description"
-                        name="description"
-                        placeholder="Enter goal description"
-                        className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-200"
-                        value={formData.description || ""}
-                        onChange={handleChange}
-                    />
-                    {errors.description && <span className="text-red-500 text-sm">{errors.description}</span>}
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="targetAmount" className="block text-gray-700">Target Amount</label>
-                    <input
-                        type="number"
-                        id="targetAmount"
-                        name="targetAmount"
-                        placeholder="Enter target amount"
-                        className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-200"
-                        value={formData.targetAmount || ""}
-                        onChange={handleChange}
-                    />
-                    {errors.targetAmount && <span className="text-red-500 text-sm">{errors.targetAmount}</span>}
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="startDate" className="block text-gray-700">Start Date</label>
-                    <input
-                        type="date"
-                        id="startDate"
-                        name="startDate"
-                        className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-200"
-                        value={formData.startDate ? formData.startDate.toISOString().split("T")[0] : ""}
-                        onChange={handleChange}
-                    />
-                    {errors.startDate && <span className="text-red-500 text-sm">{errors.startDate}</span>}
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="deadline" className="block text-gray-700">Deadline</label>
-                    <input
-                        type="date"
-                        id="deadline"
-                        name="deadline"
-                        className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-200"
-                        value={formData.deadline ? formData.deadline.toISOString().split("T")[0] : ""}
-                        onChange={handleChange}
-                    />
-                    {errors.deadline && <span className="text-red-500 text-sm">{errors.deadline}</span>}
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="currencyType" className="block text-gray-700">Currency Type</label>
-                    <input
-                        type="text"
-                        id="currencyType"
-                        name="currencyType"
-                        placeholder="Enter currency type"
-                        className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-200"
-                        value={formData.currencyType || "LKR"}
-                        onChange={handleChange}
-                    />
-                    {errors.currencyType && <span className="text-red-500 text-sm">{errors.currencyType}</span>}
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="remindBeforeDays" className="block text-gray-700">Remind Before (Days)</label>
-                    <input
-                        type="number"
-                        id="remindBeforeDays"
-                        name="remindBeforeDays"
-                        placeholder="Enter days before reminder"
-                        className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-200"
-                        value={formData.remindBeforeDays || ""}
-                        onChange={handleChange}
-                    />
-                    {errors.remindBeforeDays && <span className="text-red-500 text-sm">{errors.remindBeforeDays}</span>}
-                </div>
-
-                <button
-                    type="submit"
-                    className="w-full bg-orange-400 text-white py-2 px-4 rounded-md hover:bg-orange-300 transition duration-300"
-                >
-                    Add Goal
-                </button>
-            </form>
-            {/* <div className="my-4">
-                <GoalList
-                description='No expense added yet.'
-                GoalList={goals} /> 
-            </div> */}
-        </div>
-    );
+  return (
+    <>
+      <InputForm
+        formName='Add Goal Information'
+        submitButton='Submit'
+        inputs={inputElements}
+        onSubmit={handleSubmit}
+      />
+      <div className="my-4">
+        <GoalList 
+        description='No expense added yet.'
+        GoalList={goals} /> 
+      </div>
+    </>
+  );
 };
 
-export default AddGoal;
+export default GoalAdd;
