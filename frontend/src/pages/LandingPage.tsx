@@ -20,7 +20,7 @@ const LandingPage = () => {
         <div className="container mx-auto">
           <h1 className="text-5xl font-bold">Take Control of Your Finances</h1>
           <p className="mt-4 text-lg">Manage your budget, track expenses, and achieve financial goals with FinManage.</p>
-          <a href="#cta" className="inline-block px-6 py-3 mt-8 font-semibold text-blue-600 bg-white rounded-full shadow hover:bg-blue-100">Get Started</a>
+          <a href="/register" className="inline-block px-6 py-3 mt-8 font-semibold text-blue-600 bg-white rounded-full shadow hover:bg-blue-100">Get Started</a>
         </div>
       </section>
 
@@ -72,7 +72,7 @@ const LandingPage = () => {
         <div className="container mx-auto">
           <h2 className="text-4xl font-bold">Ready to take control?</h2>
           <p className="mt-4 text-lg">Sign up now and start managing your finances like a pro.</p>
-          <a href="#signup" className="inline-block px-6 py-3 mt-8 font-semibold text-blue-600 bg-white rounded-full shadow hover:bg-blue-100">Get Started Now</a>
+          <a href="/register" className="inline-block px-6 py-3 mt-8 font-semibold text-blue-600 bg-white rounded-full shadow hover:bg-blue-100">Get Started Now</a>
         </div>
       </section>
 
