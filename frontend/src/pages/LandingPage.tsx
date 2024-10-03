@@ -16,7 +16,7 @@ const LandingPage = () => {
       </header> */}
 
       {/* Hero Section */}
-      <section className="py-20 text-center text-white bg-blue-600">
+      <section className="py-20 text-center text-white bg-blue-950">
         <div className="container mx-auto">
           <h1 className="text-5xl font-bold">Take Control of Your Finances</h1>
           <p className="mt-4 text-lg">Manage your budget, track expenses, and achieve financial goals with FinManage.</p>
@@ -68,7 +68,7 @@ const LandingPage = () => {
       </section>
 
       {/* Call to Action */}
-      <section id="cta" className="py-16 text-center text-white bg-blue-600">
+      <section id="cta" className="py-16 text-center text-white bg-[#FF8343]">
         <div className="container mx-auto">
           <h2 className="text-4xl font-bold">Ready to take control?</h2>
           <p className="mt-4 text-lg">Sign up now and start managing your finances like a pro.</p>
