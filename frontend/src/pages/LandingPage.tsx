@@ -1,5 +1,5 @@
 import React from 'react';
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const lineData = [
   { month: 'Jan', savings: 1000 },
@@ -21,12 +21,12 @@ const COLORS = ['#FF8343', '#3B82F6'];
 const LandingPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
+
       <section className="bg-gradient-to-r from-blue-600 to-orange-500 text-white py-20 roun">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Take Control of Your Finances</h1>
-            <p className="text-xl mb-8">Manage your budget, track expenses, and achieve financial goals with FinManage.</p>
+            <p className="text-xl mb-8">Manage your budget, track expenses, and achieve financial goals with Finance Management.</p>
             <a href="/register" className="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-50 transition duration-300">
               Get Started
             </a>
@@ -34,7 +34,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
@@ -56,7 +55,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Charts Section */}
       <section className="bg-white py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Visualize Your Finances</h2>
@@ -93,7 +91,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">What Our Users Say</h2>
@@ -112,7 +109,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Call to Action */}
       <section className="bg-gradient-to-r from-blue-600 to-orange-500 text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to take control?</h2>
