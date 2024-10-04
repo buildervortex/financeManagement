@@ -162,5 +162,3 @@ goalRouter.post("/:id/pay", jwtAuth, async (request: express.Request | any, resp
 export default goalRouter;
 
 // income/expense for a given time range.
-// notification clear all unread to read.
-// notification delete all

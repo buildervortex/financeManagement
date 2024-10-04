@@ -7,6 +7,7 @@ import Expense from "../model/expense";
 import ExpenseMapper from "../mappers/expenseMapper";
 import AddExpenseDto, { validateAddExpenseDto } from "../dto/expense/addExpenseDto";
 import UpdateExpenseDto, { validateUpdateExpenseDto } from "../dto/expense/updateExpenseDto";
+import RangeExpenseDto, { validateDateRange } from "../dto/expense/expenseRangeDto";
 
 const expenseRouter = express.Router();
 const expenseRepository = new ExpenseRepository();
@@ -49,6 +50,29 @@ expenseRouter.get("/", jwtAuth, async (request: express.Request | any, response:
 
     response.send(expenses.map(expense => ExpenseMapper.ToExpenseDto(expense)));
 });
+
+expenseRouter.get("/range", jwtAuth, async (request: express.Request | any, response: express.Response) => {
+    const rangeExpenseDto: RangeExpenseDto = Object.assign(new RangeExpenseDto(), request.body);
+    const { error } = validateDateRange(rangeExpenseDto);
+
+    let expenses: Expense[];
+
+    if (error) {
+        return response.status(400).send(ErrorMessage.errorMessageFromJoiError(error));
+    }
+
+    try {
+        expenses = await expenseRepository.getExpensesInRange(request.account._id, new Date(rangeExpenseDto.startDate!), new Date(rangeExpenseDto.endDate!))
+    }
+    catch (error) {
+        if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
+        else return response.status(500).send(ErrorMessage.ServerError);
+    }
+    response.send(expenses.map(expense => ExpenseMapper.ToExpenseDto(expense)));
+})
+
+
+
 
 expenseRouter.post("/", jwtAuth, async (request: express.Request | any, response: express.Response) => {
     const addExpenseDtoObject: AddExpenseDto = Object.assign(new AddExpenseDto(), request.body);

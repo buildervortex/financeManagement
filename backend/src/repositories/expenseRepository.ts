@@ -24,7 +24,7 @@ export default class ExpenseRepository implements IExpenseRepository {
             throw new Error("Account not found")
         }
 
-        return existingAccount.expenses;
+        return existingAccount.expenses.sort((a, b) => a.paymentDate.getTime() - b.paymentDate.getTime());
     }
 
     async getExpense(expenseId: string, accountId: string): Promise<Expense> {
@@ -78,6 +78,16 @@ export default class ExpenseRepository implements IExpenseRepository {
         await existingAccount.save();
 
         return deleteExpense;
+    }
+
+    async getExpensesInRange(accountId: string, startDate: Date, endDate: Date): Promise<Expense[]> {
+        let existingAccount = await Account.findById(accountId);
+        if (!existingAccount) {
+            throw new Error("Account not found")
+        }
+
+        const expenses = existingAccount.expenses.filter(expense => (expense.paymentDate.getTime() >= startDate.getTime() && expense.paymentDate.getTime() <= endDate.getTime()));
+        return expenses.sort((a, b) => a.paymentDate.getTime() - b.paymentDate.getTime());
     }
 
 }
