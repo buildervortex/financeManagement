@@ -7,9 +7,32 @@ import Income from "../model/income";
 import IncomeMapper from "../mappers/incomeMapper";
 import addIncomeDto, { validateAddIncomeDto } from "../dto/income/addIncomeDto";
 import updateIncomeDto, { validateUpdateIncome } from "../dto/income/updateIncomeDto";
+import IncomeRangeDto, { validateIncomeRangeDto } from "../dto/income/incomeRangeDto";
 
 const incomeRouter = express.Router();
 const incomeRepository = new IncomeRepository();
+
+incomeRouter.post("/range", jwtAuth, async (request: express.Request | any, response: express.Response) => {
+    const incomeRangeDto: IncomeRangeDto = Object.assign(new IncomeRangeDto(), request.body)
+    const { error } = validateIncomeRangeDto(incomeRangeDto);
+
+    let incomes: Income[];
+
+    if (error) {
+        return response.status(400).send(ErrorMessage.errorMessageFromJoiError(error));
+    }
+
+    try {
+        incomes = await incomeRepository.getIncomeInRange(request.account._id, new Date(incomeRangeDto.startDate!), new Date(incomeRangeDto.endDate!))
+
+    }
+    catch (error) {
+        if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
+        else return response.status(500).send(ErrorMessage.ServerError);
+    }
+
+    response.send(incomes.map(income => IncomeMapper.ToIncomeDto(income)));
+});
 
 incomeRouter.get("/:id", jwtAuth, async (request: express.Request | any, response: express.Response) => {
     const incomeId = request.params.id;
@@ -76,7 +99,7 @@ incomeRouter.post("/", jwtAuth, async (request: express.Request | any, response:
 });
 
 incomeRouter.put("/:id", jwtAuth, async (request: express.Request | any, response: express.Response) => {
-    const updateIncomeDtoObject: updateIncomeDto = Object.assign(new updateIncomeDto(),request.body);
+    const updateIncomeDtoObject: updateIncomeDto = Object.assign(new updateIncomeDto(), request.body);
     const incomeId = request.params.id;
     if (!isObjectIdValid(incomeId)) {
         return response.status(400).send(ErrorMessage.ObjectIdError);

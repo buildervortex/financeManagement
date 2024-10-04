@@ -79,4 +79,14 @@ export default class IncomeRepository implements IIncomeRepository {
         return deleteIncome;
     }
 
+
+    async getIncomeInRange(accountId: string, startDate: Date, endDate: Date): Promise<Income[]> {
+        let existingAccount = await Account.findById(accountId);
+        if (!existingAccount) {
+            throw new Error("Account not found")
+        }
+
+        const incomes = existingAccount.incomes.filter(income => (income.incomeDate.getTime() >= startDate.getTime() && income.incomeDate.getTime() <= endDate.getTime()));
+        return incomes.sort((a, b) => a.incomeDate.getTime() - b.incomeDate.getTime());
+    }
 }

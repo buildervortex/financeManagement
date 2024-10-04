@@ -1,5 +1,6 @@
 import addIncomeDto, { validateAddIncomeDto } from "../dtos/income/addIncomeDto";
 import IncomeDto from "../dtos/income/incomeDto";
+import IncomeRangeDto, { validateIncomeRangeDto } from "../dtos/income/incomeRangeDto";
 import updateIncomeDto, { validateUpdateIncome } from "../dtos/income/updateIncomeDto";
 import IncomeService from "../services/incomeService";
 import ErrorMessage from "./error";
@@ -52,6 +53,17 @@ export default class IncomeViewModel {
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
+        return response;
+    }
+    async getIncomesInRange(incomeRangeDto: IncomeRangeDto): Promise<IncomeDto[] | ErrorMessage> {
+        const { error } = validateIncomeRangeDto(incomeRangeDto);
+        if (error)
+            return ErrorMessage.errorMessageFromJoiError(error);
+        const response = await IncomeService.getIncomeInRange(incomeRangeDto);
+        if (response && typeof response === 'object' && 'error' in response) {
+            return ErrorMessage.errorMessageFromString(response.error);
+        }
+
         return response;
     }
 }

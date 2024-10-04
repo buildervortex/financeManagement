@@ -85,7 +85,7 @@ export default class ExpenseRepository implements IExpenseRepository {
         if (!existingAccount) {
             throw new Error("Account not found")
         }
-
+        
         const expenses = existingAccount.expenses.filter(expense => (expense.paymentDate.getTime() >= startDate.getTime() && expense.paymentDate.getTime() <= endDate.getTime()));
         return expenses.sort((a, b) => a.paymentDate.getTime() - b.paymentDate.getTime());
     }

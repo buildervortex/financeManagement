@@ -8,8 +8,8 @@ class RangeExpenseDto {
 
 export function validateDateRange(rangeExpenseDto:RangeExpenseDto): Joi.ValidationResult {
     const schema = Joi.object({
-        startDate: Joi.date().required().less("now").less(Joi.ref("endDate")),
-        endDate: Joi.date().required().less("now")
+        startDate: Joi.date().required().less(Joi.ref("endDate")),
+        endDate: Joi.date().required()
     })
 
     return schema.validate(rangeExpenseDto);
