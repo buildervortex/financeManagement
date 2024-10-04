@@ -5,7 +5,7 @@ import ErrorMessage from "./error";
 import ExpenseService from "../services/expenseService";
 
 
-export default class ExpenseViewModel{
+export default class ExpenseViewModel {
     async addExpense(addExpense: addExpenseDto): Promise<ExpenseDto | ErrorMessage> {
         const { error } = validateAddExpenseDto(addExpense);
         if (error)
@@ -34,7 +34,7 @@ export default class ExpenseViewModel{
         return response;
     }
 
-    async getExpense(id : string): Promise<ExpenseDto | ErrorMessage> {
+    async getExpense(id: string): Promise<ExpenseDto | ErrorMessage> {
         const response = await ExpenseService.getExpense(id);
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
@@ -49,5 +49,13 @@ export default class ExpenseViewModel{
             return ErrorMessage.errorMessageFromString(response.error);
         }
         return response;
+    }
+
+    async getCategories(): Promise<String[] | ErrorMessage> {
+        const response = await ExpenseService.getCategories();
+        if (response && typeof response === 'object' && 'error' in response) {
+            return ErrorMessage.errorMessageFromString(response.error);
+        }
+        return response.categories!;
     }
 }

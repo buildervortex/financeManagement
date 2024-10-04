@@ -1,0 +1,3 @@
+class ExpenseCategoriesDto {
+    categories?: string[]
+}
