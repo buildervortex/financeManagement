@@ -12,26 +12,7 @@ import RangeExpenseDto, { validateDateRange } from "../dto/expense/expenseRangeD
 const expenseRouter = express.Router();
 const expenseRepository = new ExpenseRepository();
 
-expenseRouter.get("/:id", jwtAuth, async (request: express.Request | any, response: express.Response) => {
-    const expenseId = request.params.id;
-    if (!isObjectIdValid(expenseId)) {
-        return response.status(400).send(ErrorMessage.ObjectIdError);
-    }
 
-    let expense: Expense;
-
-    try {
-        expense = await expenseRepository.getExpense(expenseId, request.account._id);
-    }
-    catch (error) {
-        if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
-        else return response.status(500).send(ErrorMessage.ServerError);
-    }
-    if (!expense) {
-        return response.status(500).send(ErrorMessage.ServerError);
-    }
-    response.send(ExpenseMapper.ToExpenseDto(expense));
-});
 
 expenseRouter.get("/", jwtAuth, async (request: express.Request | any, response: express.Response) => {
     let expenses: Expense[];
@@ -71,6 +52,46 @@ expenseRouter.get("/range", jwtAuth, async (request: express.Request | any, resp
     response.send(expenses.map(expense => ExpenseMapper.ToExpenseDto(expense)));
 })
 
+expenseRouter.get("/categories", jwtAuth, async (request: express.Request | any, response: express.Response) => {
+
+    let expenses: Expense[];
+    try {
+        expenses = await expenseRepository.getAllExpenses(request.account._id);
+    }
+    catch (error) {
+        if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
+        else return response.status(500).send(ErrorMessage.ServerError);
+    }
+
+    if (!expenses) {
+        return response.status(500).send(ErrorMessage.ServerError);
+    }
+
+    let differentCategories: string[] = expenses.map(expense => expense.category).filter((category, index, self) => self.indexOf(category) === index);
+
+    response.send({ categories: differentCategories });
+});
+
+expenseRouter.get("/:id", jwtAuth, async (request: express.Request | any, response: express.Response) => {
+    const expenseId = request.params.id;
+    if (!isObjectIdValid(expenseId)) {
+        return response.status(400).send(ErrorMessage.ObjectIdError);
+    }
+
+    let expense: Expense;
+
+    try {
+        expense = await expenseRepository.getExpense(expenseId, request.account._id);
+    }
+    catch (error) {
+        if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
+        else return response.status(500).send(ErrorMessage.ServerError);
+    }
+    if (!expense) {
+        return response.status(500).send(ErrorMessage.ServerError);
+    }
+    response.send(ExpenseMapper.ToExpenseDto(expense));
+});
 
 
 
