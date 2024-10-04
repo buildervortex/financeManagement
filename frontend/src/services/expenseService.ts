@@ -1,5 +1,6 @@
 import AddExpenseDto from "../dtos/expense/addExpenseDto";
 import ExpenseDto from "../dtos/expense/expenseDto";
+import ExpenseRangeDto from "../dtos/expense/expenseRangeDto";
 import UpdateExpenseDto from "../dtos/expense/updateExpenseDto";
 import Cast from "../utils/cast";
 import ErrorMessage from "../viewModels/error";
@@ -34,6 +35,12 @@ export default class ExpenseService {
     static async getCategories(): Promise<ExpenseCategoriesDto | ErrorMessage> {
         const response = await Api.get<ExpenseCategoriesDto | ErrorMessage>(`/expenses/categories`);
         return Cast.errorMessageCast(response);
+    }
+
+    static async getExpensesInRange(expenseRangeDto: ExpenseRangeDto): Promise<ExpenseDto[] | ErrorMessage> {
+        const response = await Api.post<ExpenseDto[] | ErrorMessage>(`/expenses/range`, expenseRangeDto);
+        return Cast.errorMessageCast(response);
+
     }
 
 }

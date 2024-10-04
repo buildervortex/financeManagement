@@ -3,6 +3,7 @@ import updateExpenseDto, { validateUpdateExpenseDto } from "../dtos/expense/upda
 import ExpenseDto from "../dtos/expense/expenseDto";
 import ErrorMessage from "./error";
 import ExpenseService from "../services/expenseService";
+import ExpenseRangeDto, { validateDateRange } from "../dtos/expense/expenseRangeDto";
 
 
 export default class ExpenseViewModel {
@@ -58,4 +59,16 @@ export default class ExpenseViewModel {
         }
         return response.categories!;
     }
+
+    async getExpensesInRange(expenseRangeDto: ExpenseRangeDto): Promise<ExpenseDto[] | ErrorMessage> {
+        const { error } = validateDateRange(expenseRangeDto);
+        if (error)
+            return ErrorMessage.errorMessageFromJoiError(error);
+        const response = await ExpenseService.getExpensesInRange(expenseRangeDto);
+        if (response && typeof response === 'object' && 'error' in response) {
+            return ErrorMessage.errorMessageFromString(response.error);
+        }
+        return response;
+    }
+
 }

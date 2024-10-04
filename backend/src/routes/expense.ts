@@ -32,7 +32,7 @@ expenseRouter.get("/", jwtAuth, async (request: express.Request | any, response:
     response.send(expenses.map(expense => ExpenseMapper.ToExpenseDto(expense)));
 });
 
-expenseRouter.get("/range", jwtAuth, async (request: express.Request | any, response: express.Response) => {
+expenseRouter.post("/range", jwtAuth, async (request: express.Request | any, response: express.Response) => {
     const rangeExpenseDto: RangeExpenseDto = Object.assign(new RangeExpenseDto(), request.body);
     const { error } = validateDateRange(rangeExpenseDto);
 
