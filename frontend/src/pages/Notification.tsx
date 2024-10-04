@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 
 
-const Home: FunctionComponent = () => {
+const Notification: FunctionComponent = () => {
     return (
         <div>
             
@@ -9,4 +9,4 @@ const Home: FunctionComponent = () => {
     );
 }
 
-export default Home;
+export default Notification;
