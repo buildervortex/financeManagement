@@ -10,7 +10,7 @@ const socialItems = [
 
 const Footer = () => {
   return (
-    <footer className="w-full py-10 text-black bg-[#f7f7f7fe]">
+    <footer className="w-full py-10 text-black bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Information */}
@@ -25,13 +25,26 @@ const Footer = () => {
           <div>
             <h4 className="mb-4 text-lg font-semibold text-gray-700">Quick Links</h4>
             <ul className="space-y-2">
-              {["Dashboard", "Notifications", "FAQ", "Contact Us"].map((item) => (
-                <li key={item}>
-                  <a href={`/${item.toLowerCase().replace(' ', '-')}`} className="text-sm text-gray-500 hover:text-orange-400">
-                    {item}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <a href="/dashboard" className="text-sm text-gray-500 hover:text-orange-400">
+                  Dashboard
+                </a>
+              </li>
+              <li>
+                <a href="/notification" className="text-sm text-gray-500 hover:text-orange-400">
+                  Notifications
+                </a>
+              </li>
+              <li>
+                <a href="/contact-us" className="text-sm text-gray-500 hover:text-orange-400">
+                  FAQ
+                </a>
+              </li>
+              <li>
+                <a href="/contact-us" className="text-sm text-gray-500 hover:text-orange-400">
+                  Contact Us
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -39,13 +52,26 @@ const Footer = () => {
           <div>
             <h4 className="mb-4 text-lg font-semibold text-gray-700">Explore</h4>
             <ul className="space-y-2">
-              {["Analysis", "Income Management", "Expenses Management", "Goals Management"].map((item) => (
-                <li key={item}>
-                  <a href={`/${item.toLowerCase().replace(' ', '-')}`} className="text-sm text-gray-500 hover:text-orange-400">
-                    {item}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <a href="/analysis" className="text-sm text-gray-500 hover:text-orange-400">
+                  Analysis
+                </a>
+              </li>
+              <li>
+                <a href="/addincome" className="text-sm text-gray-500 hover:text-orange-400">
+                  Income Management
+                </a>
+              </li>
+              <li>
+                <a href="/addExpense" className="text-sm text-gray-500 hover:text-orange-400">
+                  Expenses Management
+                </a>
+              </li>
+              <li>
+                <a href="/addGoal" className="text-sm text-gray-500 hover:text-orange-400">
+                  Goals Management
+                </a>
+              </li>
             </ul>
           </div>
 
