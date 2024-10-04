@@ -97,6 +97,7 @@ export const subscriptionSchema = new mongoose.Schema<Subscription>({
         min: 0,
         validate: {
             validator: function (value) {
+                if(this.totalInstallments == null) return true;
                 return value <= this.totalInstallments;
             },
             message: "Completed installments cannot exceed total installments."

@@ -30,11 +30,11 @@ export function validateAddSubscriptionDto(addSubscriptionDto: AddSubscriptionDt
         }),
         remindBeforeDays: Joi.number().integer().min(1)
     }).custom((value, helpers) => {
-        if(value.remindBeforeDays >= value.installmentIntervalDays){
+        if (value.remindBeforeDays >= value.installmentIntervalDays) {
             return helpers.error("\"remindBeforeDays\" should be less than \"installmentIntervalDays\"");
         }
         return value;
-    },"Custom validation for remindBeforeDays")
+    }, "Custom validation for remindBeforeDays")
     return schema.validate(addSubscriptionDto);
 }
 
