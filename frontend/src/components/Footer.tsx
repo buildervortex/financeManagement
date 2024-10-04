@@ -26,18 +26,18 @@ const Footer = () => {
             <h4 className="mb-4 text-lg font-semibold text-gray-700">Quick Links</h4>
             <ul className="space-y-2">
               <li>
+                <a href="/" className="text-sm text-gray-500 hover:text-orange-400">
+                  Home
+                </a>
+              </li>
+              <li>
                 <a href="/dashboard" className="text-sm text-gray-500 hover:text-orange-400">
                   Dashboard
                 </a>
               </li>
               <li>
-                <a href="/notification" className="text-sm text-gray-500 hover:text-orange-400">
+                <a href="/Notification" className="text-sm text-gray-500 hover:text-orange-400">
                   Notifications
-                </a>
-              </li>
-              <li>
-                <a href="/contact-us" className="text-sm text-gray-500 hover:text-orange-400">
-                  FAQ
                 </a>
               </li>
               <li>
@@ -53,8 +53,8 @@ const Footer = () => {
             <h4 className="mb-4 text-lg font-semibold text-gray-700">Explore</h4>
             <ul className="space-y-2">
               <li>
-                <a href="/analysis" className="text-sm text-gray-500 hover:text-orange-400">
-                  Analysis
+                <a href="/register" className="text-sm text-gray-500 hover:text-orange-400">
+                  Account Managment
                 </a>
               </li>
               <li>
