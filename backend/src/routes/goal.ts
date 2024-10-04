@@ -1,14 +1,12 @@
 import express from "express"
 import jwtAuth from "../middleware/jwtAuth";
 import GoalRepository from "../repositories/goalRepository";
-import { request } from "http";
 import { isObjectIdValid } from "../util/validate";
 import ErrorMessage from "../model/error";
 import Goal from "../model/goal";
 import GoalMapper from "../mappers/goalMapper";
 import AddGoalDto, { validateAddGoalDto } from "../dto/goal/addGoalDto";
 import UpdateGoalDto, { validateUpdateGoalDto } from "../dto/goal/updateGoalDto";
-import Expense from "../model/expense";
 import GoalService from "../services/goalService";
 import AddGoalPaymentDto, { validateAddGoalPaymentDto } from "../dto/goal/addGoalPaymentDto";
 
@@ -162,3 +160,7 @@ goalRouter.post("/:id/pay", jwtAuth, async (request: express.Request | any, resp
 })
 
 export default goalRouter;
+
+// income/expense for a given time range.
+// notification clear all unread to read.
+// notification delete all

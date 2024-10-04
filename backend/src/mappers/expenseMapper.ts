@@ -24,7 +24,7 @@ export default class ExpenseMapper {
         const expense = new Expense();
 
         expense.amount = addExpenseDto.amount!;
-        expense.category = addExpenseDto.category!;
+        expense.category = addExpenseDto.category?.toLocaleLowerCase()!;
         expense.currencyType = addExpenseDto.currencyType!;
         expense.description = addExpenseDto.description!;
         expense.name = addExpenseDto.name!;
@@ -39,7 +39,7 @@ export default class ExpenseMapper {
         const expense = new Expense();
 
         expense.amount = updateExpenseDto.amount!;
-        expense.category = updateExpenseDto.category!;
+        expense.category = updateExpenseDto.category?.toLowerCase()!;
         expense.currencyType = updateExpenseDto.currencyType!;
         expense.description = updateExpenseDto.description!;
         expense.name = updateExpenseDto.name!;

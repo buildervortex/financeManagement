@@ -30,7 +30,7 @@ export default class SubscriptionMapper {
         const subscription = new Subscription();
 
         subscription.amount = addSubscriptionDto.amount!
-        subscription.category = addSubscriptionDto.category!
+        subscription.category = addSubscriptionDto.category?.toLowerCase()!
         subscription.currencyType = addSubscriptionDto.currencyType!
         subscription.description = addSubscriptionDto.description!
         subscription.installmentIntervalDays = addSubscriptionDto.installmentIntervalDays!
@@ -48,7 +48,7 @@ export default class SubscriptionMapper {
         const subscription = new Subscription();
 
         subscription.amount = updateSubscriptionDto.amount!
-        subscription.category = updateSubscriptionDto.category!
+        subscription.category = updateSubscriptionDto.category?.toLowerCase()!
         subscription.currencyType = updateSubscriptionDto.currencyType!
         subscription.description = updateSubscriptionDto.description!
         subscription.name = updateSubscriptionDto.name!

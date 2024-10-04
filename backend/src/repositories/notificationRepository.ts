@@ -3,6 +3,8 @@ import Account from "../model/account";
 import Notification from "../model/notification";
 
 export default class NotificationRepository implements INotificationRepository {
+
+
     async getNotifications(accountId: string): Promise<Notification[]> {
         let existingAccount = await Account.findById(accountId);
         if (!existingAccount)
@@ -53,5 +55,31 @@ export default class NotificationRepository implements INotificationRepository {
 
         return deletedNotification;
     }
+    async deleteReadNotifications(accountId: string): Promise<any> {
+        let existingAccount = await Account.findById(accountId);
+        if (!existingAccount)
+            throw new Error("Account not found");
 
+        if (existingAccount.notification.length == 0) throw new Error("There is no notifications");
+
+        const unReadNotifications = existingAccount.notification.filter(notification => notification.read === false);
+
+        existingAccount.notification = unReadNotifications;
+        await existingAccount.save();
+    }
+
+    async readNotifications(accountId: string): Promise<any> {
+        let existingAccount = await Account.findById(accountId);
+        if (!existingAccount)
+            throw new Error("Account not found");
+
+        if (existingAccount.notification.length == 0) throw new Error("There is no notifications");
+
+        const readNotifications = existingAccount.notification.map(notification => {
+            notification.read = true;
+            return notification;
+        });
+        existingAccount.notification = readNotifications;
+        await existingAccount.save();
+    }
 }

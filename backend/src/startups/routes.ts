@@ -37,7 +37,7 @@ export default function configRoute(app: Application) {
     app.use("/health", HealthCheckRoute)
 
     // config the routers
-    app.use("/api/v1/accounts/notification", notificationRouter)
+    app.use("/api/v1/accounts/notifications", notificationRouter)
     app.use("/api/v1/accounts", accountRouter);
     app.use("/api/v1/incomes", incomeRouter);
     app.use("/api/v1/expenses", expenseRouter)
