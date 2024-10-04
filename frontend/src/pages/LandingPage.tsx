@@ -96,9 +96,9 @@ const LandingPage = () => {
           <h2 className="mb-12 text-3xl font-bold text-center">What Our Users Say</h2>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             {[
-              { quote: "FinManage helped me get out of debt in just 6 months! Highly recommended.", author: "John Doe" },
-              { quote: "The budgeting tools are simple yet effective. A must-have for anyone managing their finances.", author: "Sarah Lee" },
-              { quote: "I love the expense tracking feature. It's intuitive and keeps me on track every day!", author: "Kevin Hart" },
+              { quote: "Finance Management helped me get out of debt in just 6 months! Highly recommended.", author: "Dhananjaya Wijesekara" },
+              { quote: "The user-friendly interface makes it easy to manage all my finances in one place without any confusion.", author: "Sarah De Silva" },
+              { quote: "I love the expense tracking feature. It's intuitive and keeps me on track every day!", author: "Ashfah Nazreen" },
             ].map((testimonial, index) => (
               <div key={index} className="p-6 bg-white rounded-lg shadow-md">
                 <p className="mb-4 text-gray-600">"{testimonial.quote}"</p>
