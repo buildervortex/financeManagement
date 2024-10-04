@@ -1,9 +1,7 @@
-import { FunctionComponent, useState,useEffect } from 'react';
-import InputForm from '../components/inputForm';
+import { FunctionComponent, useState} from 'react';
+import InputForm from './inputForm';
 import { handleErrorResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
-import SubscriptionDto  from '../dtos/subscription/subscriptionDto';
-import SubscriptionList from './SubscriptionList';
 import SubscriptionViewModel from '../viewModels/SubscriptionViewModel';
 import AddSubscriptionDto from '../dtos/subscription/addSubscriptionDto';
 
@@ -31,19 +29,6 @@ const SubscriptionAdd: FunctionComponent<AddExpenseProps> = () => {
   const [totalInstallments, setTotalInstallments] = useState<number>();
   const [isRecurringIndefinitely, setIsRecurringIndefinitely] = useState<boolean>(false);
   const [remindBeforeDays, setRemindBeforeDays] = useState<number>(1);
-  const [subscription, setSubscription] = useState<SubscriptionDto[]>([]);
-
-  useEffect(() => {
-    const fetchSubscription= async () => {
-      const result: SubscriptionDto[] | ErrorMessage = await new SubscriptionViewModel().getSubscriptions();
-      if (result instanceof ErrorMessage) {
-        handleErrorResult(result);
-      } else {
-        setSubscription(result); 
-      }
-    };
-    fetchSubscription();
-  }, []);
 
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -182,13 +167,6 @@ const SubscriptionAdd: FunctionComponent<AddExpenseProps> = () => {
         inputs={inputElements}
         onSubmit={handleSubmit}
       />
-
-      <div className="my-4">
-        <SubscriptionList 
-          description='No subscription added yet.'
-          SubscriptionList={subscription} 
-        /> 
-      </div>
     </>
   );
 };

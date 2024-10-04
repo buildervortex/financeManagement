@@ -40,6 +40,8 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
     fetchIncomes();
   }, []);
 
+  const [showForm, setShowForm] = useState<boolean>(false);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -127,20 +129,56 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
   ];
 
   return (
-    <>
-      <InputForm
-        formName='Add Income Information'
-        submitButton='Submit'
-        inputs={inputElements}
-        onSubmit={handleSubmit}
-      />
-
-      <div className="my-4">
+    <div className="w-full max-w-md mx-auto p-4">
+      <div className="mt-6 mb-4">
         <IncomeList
           description='No income added yet.'
-          incomeList={incomes} />
+          incomeList={incomes}
+        />
       </div>
-    </>
+      <button
+        onClick={() => setShowForm(!showForm)}
+        className="w-full mb-4 inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#FF8343] text-white rounded-lg hover:bg-[#E66D2C] transition-colors"
+      >
+        <span className="w-5 h-5 inline-flex items-center justify-center">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor" 
+            className="w-5 h-5"
+          >
+            {showForm ? (
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M19 9l-7 7-7-7" 
+              />
+            ) : (
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M12 4v16m8-8H4" 
+              />
+            )}
+          </svg>
+        </span>
+        {showForm ? '' : 'Add Income'}
+      </button>
+  
+      {showForm && (
+        <InputForm
+          formName='Add Income Information'
+          submitButton='Submit'
+          inputs={inputElements}
+          onSubmit={handleSubmit}
+        />
+      )}
+  
+      
+    </div>
   );
 };
 

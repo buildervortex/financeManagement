@@ -1,9 +1,32 @@
-import { useState } from 'react';
-import ExpenseAdd from '../components/ExpenseAdd';
-import SubscriptionAdd from '../components/SubscriptionAdd';
+import { useState, useEffect } from 'react';
+import SubscriptionAddForm from '../components/SubscriptionAddForm';
+import ExpenseAddForm from '../components/ExpenseAddForm';
+import ExpenseList from '../components/ExpenseList';
+import ExpenseViewModel from '../viewModels/ExpenseViewModel';
+import { handleErrorResult } from '../utils/errorMessage';
+import ErrorMessage from '../viewModels/error';
+import ExpenseDto from '../dtos/expense/expenseDto';
 
 const ExpensePage = () => {
   const [activeTab, setActiveTab] = useState('expense');
+  const [expenses, setExpenses] = useState<ExpenseDto[]>([]);
+  const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    const fetchExpenses = async () => {
+      const result: ExpenseDto[] | ErrorMessage = await new ExpenseViewModel().getExpenses();
+      if (result instanceof ErrorMessage) {
+        handleErrorResult(result);
+      } else {
+        setExpenses(result);
+      }
+    };
+    fetchExpenses();
+  }, []);
+
+  const toggleForm = () => {
+    setShowForm(!showForm);
+  };
 
   return (
     <div className="flex flex-col items-center w-full p-4">
@@ -43,10 +66,48 @@ const ExpensePage = () => {
           </button>
         </div>
       </div>
+
       <div className="w-full max-w-md">
-        {activeTab === 'expense' && <ExpenseAdd />}  
-        {activeTab === 'subscription' && <SubscriptionAdd />}
+        {showForm && activeTab === 'expense' && <ExpenseAddForm />}
+        {activeTab === 'expense' && (
+          <ExpenseList description="No expense added yet." ExpenseList={expenses} />
+        )}
+        {showForm && activeTab === 'subscription' && <SubscriptionAddForm />}
       </div>
+
+      <button
+        onClick={toggleForm}
+        className="mb-4 mt-10 inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#FF8343] text-white rounded-lg hover:bg-[#E66D2C] transition-colors"
+      >
+        <span className="w-5 h-5 inline-flex items-center justify-center">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor" 
+            className="w-5 h-5"
+          >
+            {showForm ? (
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M19 9l-7 7-7-7" 
+              />
+            ) : (
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M12 4v16m8-8H4" 
+              />
+            )}
+          </svg>
+        </span>
+        {showForm ? '' : `Add ${activeTab === 'expense' ? 'Expense' : 'Subscription'}`}
+      </button>
+
+
     </div>
   );
 };

@@ -40,6 +40,8 @@ const AddGoal: FunctionComponent<AddGoalProps> = () => {
     fetchGoals();
   }, []);
 
+  const [showForm, setShowForm] = useState<boolean>(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -125,19 +127,56 @@ const AddGoal: FunctionComponent<AddGoalProps> = () => {
   ];
 
   return (
-    <>
-      <InputForm
-        formName='Add Goal Information'
-        submitButton='Submit'
-        inputs={inputElements}
-        onSubmit={handleSubmit}
-      />
-      <div className="my-4">
+    <div className="w-full max-w-md mx-auto p-4">
+       <div className="mt-6 mb-4">
         <GoalList 
-        description='No expense added yet.'
-        GoalList={goals} /> 
+          description='No goals added yet.'
+          GoalList={goals}
+        />
       </div>
-    </>
+      <button
+        onClick={() => setShowForm(!showForm)}
+        className="w-full mb-4 inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#FF8343] text-white rounded-lg hover:bg-[#E66D2C] transition-colors"
+      >
+        <span className="w-5 h-5 inline-flex items-center justify-center">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor" 
+            className="w-5 h-5"
+          >
+            {showForm ? (
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M19 9l-7 7-7-7" 
+              />
+            ) : (
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M12 4v16m8-8H4" 
+              />
+            )}
+          </svg>
+        </span>
+        {showForm ? '' : 'Add Goal'}
+      </button>
+  
+      {showForm && (
+        <InputForm
+          formName='Add Goal Information'
+          submitButton='Submit'
+          inputs={inputElements}
+          onSubmit={handleSubmit}
+        />
+      )}
+  
+     
+    </div>
   );
 };
 
