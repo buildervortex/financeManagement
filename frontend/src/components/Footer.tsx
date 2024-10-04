@@ -1,79 +1,81 @@
 import React from 'react';
-import { 
-  FaFacebook, 
-  FaInstagram, 
-  FaTwitter,
-  FaDiscord
-} from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaTwitter, FaDiscord } from 'react-icons/fa';
 
-const items = [
-    { name: "Facebook", icon: <FaFacebook />, link: "https://www.facebook.com/" },
-    { name: "Instagram", icon: <FaInstagram />, link: "https://www.instagram.com/" },
-    { name: "Twitter", icon: <FaTwitter />, link: "https://twitter.com/" },
-    { name: "Dicord", icon: <FaDiscord />, link: "https://discord.com/" },
-  ];
-   
-const Footer: React.FC = () => {
+const socialItems = [
+  { name: "Facebook", icon: <FaFacebook />, link: "https://www.facebook.com/" },
+  { name: "Instagram", icon: <FaInstagram />, link: "https://www.instagram.com/" },
+  { name: "Twitter", icon: <FaTwitter />, link: "https://twitter.com/" },
+  { name: "Discord", icon: <FaDiscord />, link: "https://discord.com/" },
+];
+
+const Footer = () => {
   return (
-    <footer className="w-full max-h-screen py-10 overflow-hidden text-black bg-[#f7f7f7fe]">
-      <div className="container px-6 mx-auto">
-        {/* Top section */}
-        <div className="grid grid-cols-1 gap-8 mb-8 md:grid-cols-4">
-             {/* Company Information */}
+    <footer className="w-full py-10 text-black bg-[#f7f7f7fe]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Company Information */}
           <div>
-            <h4 className="mb-4 font-semibold text-gray-700 text-medium">About Us</h4>
+            <h4 className="mb-4 text-lg font-semibold text-gray-700">About Us</h4>
             <p className="text-sm text-gray-500">
-              We are a financial management system that offers a suite of tools and features to help you track expenses, create budgets, manage investments, and make informed financial decisions.</p>
+              We are a financial management system that offers a suite of tools and features to help you track expenses, create budgets, manage investments, and make informed financial decisions.
+            </p>
           </div>
-          {/* Navigation Links */}
-          <div>
-            <h4 className="mb-4 font-semibold text-gray-700 text-medium">Quick Links</h4>
-            <ul>
-              <li><a href="/dashboard" className="text-sm text-gray-500 hover:text-orange-400">Dashboard</a></li>
-              <li><a href="/" className="text-sm text-gray-500 hover:text-orange-400">Notifications</a></li>
-              <li><a href="/contact" className="text-sm text-gray-500 hover:text-orange-400">FAQ</a></li>
-              <li><a href="/contact" className="text-sm text-gray-500 hover:text-orange-400">Contact Us</a></li>
 
+          {/* Quick Links */}
+          <div>
+            <h4 className="mb-4 text-lg font-semibold text-gray-700">Quick Links</h4>
+            <ul className="space-y-2">
+              {["Dashboard", "Notifications", "FAQ", "Contact Us"].map((item) => (
+                <li key={item}>
+                  <a href={`/${item.toLowerCase().replace(' ', '-')}`} className="text-sm text-gray-500 hover:text-orange-400">
+                    {item}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          
+          {/* Explore */}
           <div>
-            <ul>
-            <h4 className="mb-4 font-semibold text-gray-700 text-medium">Explore</h4>
-            <li><a href="/contact" className="text-sm text-gray-500 hover:text-orange-400">Analysis</a></li>
-            <li><a href="/addIncome" className="text-sm text-gray-500 hover:text-orange-400">Income Management</a></li>
-              <li><a href="/addExpense" className="text-sm text-gray-500 hover:text-orange-400">Expenses Managment</a></li>
-              <li><a href="/addGoal" className="text-sm text-gray-500 hover:text-orange-400">Goals Managment</a></li>
-              
-           </ul>
-          </div>   
-        
+            <h4 className="mb-4 text-lg font-semibold text-gray-700">Explore</h4>
+            <ul className="space-y-2">
+              {["Analysis", "Income Management", "Expenses Management", "Goals Management"].map((item) => (
+                <li key={item}>
+                  <a href={`/${item.toLowerCase().replace(' ', '-')}`} className="text-sm text-gray-500 hover:text-orange-400">
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Social Media Links */}
           <div>
-            <h4 className="mb-4 font-semibold text-gray-700 text-medium">Follow Us on</h4>
+            <h4 className="mb-4 text-lg font-semibold text-gray-700">Follow Us on</h4>
             <div className="flex space-x-4">
-        {items.map((item, index) => (
-    <a key={index} href={item.link} target="_blank" rel="noopener noreferrer">
-      {item.icon}
-    </a>
- 
-    
-  ))}
-  
-  
-</div>
-</div>
-   </div>
+              {socialItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-500 hover:text-orange-400 transition-colors duration-300"
+                >
+                  {React.cloneElement(item.icon, { size: 24 })}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
 
         {/* Bottom section */}
-        <div className="pt-2 text-center border-t border-gray-300">
-          
-          <p className="pt-2 text-sm text-gray-600">© 2024 Finance Management System. All rights reserved.</p>
+        <div className="mt-8 pt-8 border-t border-gray-300">
+          <p className="text-center text-sm text-gray-600">
+            © {new Date().getFullYear()} Finance Management System. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
-
   );
 };
 
