@@ -127,20 +127,17 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
   ];
 
   return (
-    <>
-      <InputForm
-        formName='Add Income Information'
-        submitButton='Submit'
-        inputs={inputElements}
-        onSubmit={handleSubmit}
-      />
-
-      <div className="my-4">
-        <IncomeList
-          description='No income added yet.'
-          incomeList={incomes} />
+    <div className="flex flex-col md:flex-row w-full p-4">
+      {/* Left side - List of Incomes */}
+      <div className="w-full md:w-1/2 p-4">
+        <IncomeList description="No income added yet." incomeList={incomes} />
       </div>
-    </>
+
+      {/* Right side - Form */}
+      <div className="w-full md:w-1/2 p-4">
+        <InputForm formName="Add Income Information" submitButton="Submit" inputs={inputElements} onSubmit={handleSubmit} />
+      </div>
+    </div>
   );
 };
 
