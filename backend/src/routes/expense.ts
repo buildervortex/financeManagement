@@ -162,4 +162,6 @@ expenseRouter.post("/:id/pay", jwtAuth, async (request: express.Request | any, r
     response.send(ExpenseMapper.ToExpenseDto(expense));
 })
 
+
+
 export default expenseRouter

@@ -99,5 +99,29 @@ notificationRouter.post("/:id/read", jwtAuth, async (request: express.Request | 
     response.send(NotificationMapper.ToNotificationDto(notification));
 })
 
+notificationRouter.delete("/", jwtAuth, async (request: express.Request | any, response: express.Response) => {
+    try {
+        await notificationRepository.deleteReadNotifications(request.account._id);
+    }
+    catch (error) {
+        if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
+        else return response.status(500).send(ErrorMessage.ServerError);
+    }
+
+    return response.status(200).send();
+})
+
+notificationRouter.post("/read", jwtAuth, async (request: express.Request | any, response: express.Response) => {
+    try {
+        await notificationRepository.readNotifications(request.account._id);
+    }
+    catch (error) {
+        if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
+        else return response.status(500).send(ErrorMessage.ServerError);
+    }
+
+    return response.status(200).send();
+});
+
 
 export default notificationRouter;

@@ -31,4 +31,20 @@ export default class NotificationViewModel {
         }
         return response;
     }
+
+    async ReadAllNotifications(): Promise<any | ErrorMessage> {
+        const response = await notificationService.readNotifications();
+        if (response && typeof response === 'object' && 'error' in response) {
+            return ErrorMessage.errorMessageFromString(response.error);
+        }
+        return response;
+    }
+    async DeleteUnReadNotifications(): Promise<any | ErrorMessage> {
+        const response = await notificationService.deleteUnReadNotifications();
+        if (response && typeof response === 'object' && 'error' in response) {
+            return ErrorMessage.errorMessageFromString(response.error);
+        }
+        return response;
+    }
+
 }
