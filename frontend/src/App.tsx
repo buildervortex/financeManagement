@@ -1,4 +1,3 @@
-import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import AccountRegisterPage from './pages/AccountRegister';
@@ -20,20 +19,21 @@ import GoalUpdatePage from './pages/UpdateGoal';
 import Dashboard from './pages/dashboard';
 import ContactForm from './pages/contact';
 import GoalDetails from './pages/GoalDetails';
-import Home from './pages/Home';
+import Notification from './pages/Notification';
 import LandingPage from './pages/LandingPage';
 
 function App() {
   return (
     <Router>
       <NavBar />
-      <div className="w-5/6 mx-auto App">
+      <div className="w-11/12 mx-auto App">
         <ToastContainer />
         <Routes>
         <Route path="/" element={<LandingPage></LandingPage>}></Route>
           <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
           <Route path="/register" element={<AccountRegisterPage></AccountRegisterPage>}></Route>
           <Route path="/Subscription-details" element={<SusbcriptionDetails />}></Route>
+          <Route path="/notification" element={<Notification />}></Route>
           <Route
             path="/register"
             element={<AccountRegisterPage></AccountRegisterPage>}
