@@ -17,7 +17,7 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center min-h-screen p-6 bg-gray-500">
+    <div className="flex flex-col justify-center min-h-screen -mb-6 p-6">
       <div className="flex flex-col w-full max-w-6xl mx-auto space-y-6 md:flex-row md:items-center md:space-y-0 md:space-x-6">
         
         {/* Image Section */}

@@ -29,7 +29,7 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div className="max-w-5xl p-8 mx-auto my-16">
+    <div className="max-w-8xl p-8 mx-auto my-16">
       {/* FAQ Section */}
       <header className="mb-12">
         <h1 className="text-4xl font-bold text-center sm:text-left">FAQs</h1>
@@ -53,7 +53,7 @@ const Contact: React.FC = () => {
       </div>
 
       {/* Contact Form Section */}
-      <div className="px-4">
+      <div className="px-4 w-full">
         <ContactForm />
       </div>
     </div>

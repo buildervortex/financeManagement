@@ -2,14 +2,18 @@ import { useState, useEffect } from 'react';
 import SubscriptionAddForm from '../components/SubscriptionAddForm';
 import ExpenseAddForm from '../components/ExpenseAddForm';
 import ExpenseList from '../components/ExpenseList';
+import SubscriptionList from '../components/SubscriptionList';
 import ExpenseViewModel from '../viewModels/ExpenseViewModel';
+import SubscriptionViewModel from '../viewModels/SubscriptionViewModel';
 import { handleErrorResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
 import ExpenseDto from '../dtos/expense/expenseDto';
+import SubscriptionDto from '../dtos/subscription/subscriptionDto';
 
 const ExpensePage = () => {
   const [activeTab, setActiveTab] = useState('expense');
   const [expenses, setExpenses] = useState<ExpenseDto[]>([]);
+  const [subscriptions, setsubscriptions] = useState<SubscriptionDto[]>([]);
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
@@ -22,6 +26,17 @@ const ExpensePage = () => {
       }
     };
     fetchExpenses();
+
+    const fetchSubscriptions = async () => {
+      const result: SubscriptionDto[] | ErrorMessage = await new SubscriptionViewModel().getSubscriptions();
+      if (result instanceof ErrorMessage) {
+        handleErrorResult(result);
+      } else {
+        setsubscriptions(result);
+      }
+    };
+    fetchSubscriptions();
+
   }, []);
 
   const toggleForm = () => {
@@ -73,6 +88,9 @@ const ExpensePage = () => {
           <ExpenseList description="No expense added yet." ExpenseList={expenses} />
         )}
         {showForm && activeTab === 'subscription' && <SubscriptionAddForm />}
+        {activeTab === 'subscription' && (
+          <SubscriptionList description="No expense added yet." SubscriptionList={subscriptions} />
+        )}
       </div>
 
       <button
