@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import { useLocation } from 'react-router-dom'; // Import useLocation
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const location = useLocation(); // Get the current location
 
   const handleNav = () => {
     setNav(!nav);
@@ -19,7 +21,8 @@ const NavBar = () => {
   const Links = [
     { name: "Home", link: "/" },
     { name: "Dashboard", link: "/dashboard" },
-    { name: "Contact & FAQ", link: "/contact" },
+    { name: "Notifications", link: "/notification" },
+    { name: "Contact Us", link: "/contact" },
   ];
 
   return (
@@ -31,7 +34,12 @@ const NavBar = () => {
           <ul className='hidden text-gray-600 cursor-pointer md:flex'>
             {Links.map((link) => (
               <li key={link.name} className='mx-4'>
-                <a href={link.link} className='p-4 hover:text-[#FF8343]'>{link.name}</a>
+                <a
+                  href={link.link}
+                  className={`p-4 hover:text-[#FF8343] ${location.pathname === link.link ? 'text-[#FF8343]' : ''}`} // Highlight active link
+                >
+                  {link.name}
+                </a>
               </li>
             ))}
           </ul>
@@ -40,9 +48,16 @@ const NavBar = () => {
           </div>
           <ul className={nav ? 'fixed left-0 top-0 w-[60%] h-full border-r border-r-gray-200 bg-white ease-in-out duration-500' : 'ease-in-out duration-500 fixed left-[-100%]'}>
             <h1 className='w-full text-3xl font-bold text-[#FF8343] m-4'>Finance Management</h1>
-            <li className='p-4 border-b border-gray-200 hover:text-[#FF8343]'><a href='/'>Home</a></li>
-            <li className='p-4 border-b border-gray-200 hover:text-[#FF8343]'><a href='/dashboard'>Dashboard</a></li>
-            <li className='p-4 hover:text-[#FF8343]'><a href='/contact'>Contact & FAQ</a></li>
+            {Links.map((link) => (
+              <li key={link.name} className='p-4 border-b border-gray-200 hover:text-[#FF8343]'>
+                <a
+                  href={link.link}
+                  className={location.pathname === link.link ? 'text-[#FF8343]' : ''} // Highlight active link
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
           </ul>
         </>
       ) : (
