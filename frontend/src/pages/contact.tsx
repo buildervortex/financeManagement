@@ -31,12 +31,13 @@ const Contact: React.FC = () => {
   return (
     <div className="max-w-8xl p-8 mx-auto my-16">
       {/* FAQ Section */}
-      <header className="mb-12">
-        <h1 className="text-4xl font-bold text-center sm:text-left">FAQs</h1>
+      <header className="max-w-2xl mx-auto mb-12 text-left ">
+        <h1 className="text-4xl font-bold">FAQs</h1>
+        <p className="mt-2 text-gray-600">
+          Have questions? Here you'll find the answers most valued by our partners, along with access to step-by-step instructions and support.
+        </p>
       </header>
-      <p className="mt-4 mb-8 text-center text-gray-600 sm:text-left">
-        Have questions? Here you'll find the answers most valued by our partners, along with access to step-by-step instructions and support.
-      </p>
+
       <div className="max-w-2xl mx-auto mb-10 space-y-4 sm:space-y-6">
         {faqData.map((faq, index) => (
           <div key={index} className="pb-4 border-b border-gray-200">
@@ -44,10 +45,12 @@ const Contact: React.FC = () => {
               className="flex items-center justify-between w-full py-2 text-lg font-medium text-left text-gray-800 focus:outline-none"
               onClick={() => toggleFAQ(index)}
             >
-              {faq.question}
-              <span>{openIndex === index ? "-" : "+"}</span>
+              <span className="flex-1">{faq.question}</span>
+              <span className="ml-4 text-xl">{openIndex === index ? "-" : "+"}</span>
             </button>
-            {openIndex === index && <p className="mt-2 text-gray-600">{faq.answer}</p>}
+            {openIndex === index && (
+              <p className="mt-2 text-gray-600">{faq.answer}</p>
+            )}
           </div>
         ))}
       </div>
