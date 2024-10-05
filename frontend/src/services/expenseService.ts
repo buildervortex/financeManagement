@@ -2,6 +2,7 @@ import AddExpenseDto from "../dtos/expense/addExpenseDto";
 import ExpenseDto from "../dtos/expense/expenseDto";
 import ExpenseRangeDto from "../dtos/expense/expenseRangeDto";
 import UpdateExpenseDto from "../dtos/expense/updateExpenseDto";
+import ExpenseCategoriesDto from "../dtos/expense/expenseCategoriesDto";
 import Cast from "../utils/cast";
 import ErrorMessage from "../viewModels/error";
 import Api from "./api";
