@@ -61,7 +61,7 @@ const GoalDetails: FunctionComponent = () => {
     { name: 'Remaining', value: 100 - percentage },
   ];
 
-  const COLORS = ['#004d80', '#E0E0E0'];
+  const COLORS = ['#2563eb', '#E0E0E0'];
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {

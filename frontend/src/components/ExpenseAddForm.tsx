@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from "react";
 import InputForm from "./inputForm";
 import ExpenseViewModel from "../viewModels/ExpenseViewModel";
-import { handleErrorResult } from "../utils/errorMessage";
+import { handleErrorResult,handleSuccessResult } from "../utils/errorMessage";
 import ErrorMessage from "../viewModels/error";
 import addExpenseDto from "../dtos/expense/addExpenseDto";
 
@@ -38,6 +38,8 @@ const ExpenseAddForm: FunctionComponent<AddExpenseProps> = () => {
     const result = await new ExpenseViewModel().addExpense(AddExpenseDto);
     if (result instanceof ErrorMessage) {
       handleErrorResult(result);
+    }else{
+      handleSuccessResult('Expense Added Successfully')
     }
 
     setName("");

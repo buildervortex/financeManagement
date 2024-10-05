@@ -1,6 +1,6 @@
 import { FunctionComponent, useState} from 'react';
 import InputForm from './inputForm';
-import { handleErrorResult } from '../utils/errorMessage';
+import { handleErrorResult,handleSuccessResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
 import SubscriptionViewModel from '../viewModels/SubscriptionViewModel';
 import AddSubscriptionDto from '../dtos/subscription/addSubscriptionDto';
@@ -49,6 +49,8 @@ const SubscriptionAdd: FunctionComponent<AddExpenseProps> = () => {
     const result = await new SubscriptionViewModel().addSusbscription(addsubscriptionDto)
     if (result instanceof ErrorMessage) {
       handleErrorResult(result);
+  }else{
+    handleSuccessResult('Subscription Added Successfully')
   } 
 
   setName("");

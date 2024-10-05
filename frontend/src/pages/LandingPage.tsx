@@ -21,8 +21,7 @@ const COLORS = ['#FF8343', '#3B82F6'];
 const LandingPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-
-      <section className="py-20 text-white bg-gradient-to-r from-blue-600 to-orange-500 roun">
+      <section className="py-20 text-white bg-gradient-to-r from-blue-600 to-orange-500 rounded-xl">
         <div className="container px-4 mx-auto">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="mb-6 text-4xl font-bold md:text-5xl">Take Control of Your Finances</h1>
@@ -109,7 +108,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className="py-20 text-white bg-gradient-to-r from-blue-600 to-orange-500">
+      <section className="py-20 text-white bg-gradient-to-r from-blue-600 to-orange-500 rounded-xl">
         <div className="container px-4 mx-auto text-center">
           <h2 className="mb-4 text-3xl font-bold">Ready to take control?</h2>
           <p className="mb-8 text-xl">Sign up now and start managing your finances like a pro.</p>

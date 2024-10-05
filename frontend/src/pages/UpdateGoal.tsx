@@ -53,7 +53,7 @@ const UpdateGoal: FunctionComponent<updateGoalPageProps> = () => {
             handleErrorResult(result);
         }else {
             handleSuccessResult('Goal Updated Successfully')
-          } 
+        } 
 
         
         setName("");

@@ -89,7 +89,7 @@ const ExpensePage = () => {
         )}
         {showForm && activeTab === 'subscription' && <SubscriptionAddForm />}
         {activeTab === 'subscription' && (
-          <SubscriptionList description="No expense added yet." SubscriptionList={subscriptions} />
+          <SubscriptionList description="No subscription added yet." SubscriptionList={subscriptions} />
         )}
       </div>
 

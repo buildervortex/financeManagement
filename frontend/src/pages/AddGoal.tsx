@@ -59,7 +59,7 @@ const AddGoal: FunctionComponent<AddGoalProps> = () => {
     } else {
       handleSuccessResult('Goal Added Successfully')
     }
-     setName('');
+      setName('');
       setDescription('');
       setTargetAmount(0);
       setCurrencyType('LKR');
