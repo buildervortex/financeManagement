@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const lineData = [
@@ -18,7 +18,19 @@ const pieData = [
 
 const COLORS = ['#FF8343', '#3B82F6'];
 
+
+
 const LandingPage = () => {
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <section className="py-20 text-white bg-gradient-to-r from-blue-600 to-orange-500 rounded-xl">
@@ -26,9 +38,14 @@ const LandingPage = () => {
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="mb-6 text-4xl font-bold md:text-5xl">Take Control of Your Finances</h1>
             <p className="mb-8 text-xl">Manage your budget, track expenses, and achieve financial goals with Finance Management.</p>
-            <a href="/register" className="inline-block px-6 py-3 font-semibold text-blue-600 transition duration-300 bg-white rounded-lg shadow-md hover:bg-blue-50">
+            {isAuthenticated ? ( 
+            <a href="/dashboard" className="inline-block px-6 py-3 font-semibold text-blue-600 transition duration-300 bg-white rounded-lg shadow-md hover:bg-blue-50">
+              Get Started
+            </a>):(
+              <a href="/register" className="inline-block px-6 py-3 font-semibold text-blue-600 transition duration-300 bg-white rounded-lg shadow-md hover:bg-blue-50">
               Get Started
             </a>
+            )}
           </div>
         </div>
       </section>
@@ -112,9 +129,14 @@ const LandingPage = () => {
         <div className="container px-4 mx-auto text-center">
           <h2 className="mb-4 text-3xl font-bold">Ready to take control?</h2>
           <p className="mb-8 text-xl">Sign up now and start managing your finances like a pro.</p>
-          <a href="/register" className="inline-block px-6 py-3 font-semibold text-blue-600 transition duration-300 bg-white rounded-lg shadow-md hover:bg-blue-50">
-            Get Started Now
-          </a>
+          {isAuthenticated ? ( 
+            <a href="/dashboard" className="inline-block px-6 py-3 font-semibold text-blue-600 transition duration-300 bg-white rounded-lg shadow-md hover:bg-blue-50">
+              Get Started Now
+            </a>):(
+              <a href="/register" className="inline-block px-6 py-3 font-semibold text-blue-600 transition duration-300 bg-white rounded-lg shadow-md hover:bg-blue-50">
+              Get Started Now
+            </a>
+            )}
         </div>
       </section>
     </div>
