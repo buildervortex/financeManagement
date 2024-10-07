@@ -104,30 +104,31 @@ const Dashboard = () => {
                 if (
                     subscription.initialPaymentDate &&
                     subscription.amount &&
-                    subscription.installmentIntervalDays &&
-                    subscription.isRecurringIndefinitely !== undefined &&
-                    subscription.totalInstallments !== undefined
+                    subscription.installmentIntervalDays
                 ) {
                     const initialDate = new Date(subscription.initialPaymentDate);
                     if (isNaN(initialDate.getTime())) {
                         console.error(`Invalid date for subscription: ${subscription.id}`);
                         return total;
                     }
-
-                    const daysSinceInitial = Math.floor((today.getTime() - initialDate.getTime()) / (1000 * 60 * 60 * 24));
-                    const installmentsPaid = Math.floor(daysSinceInitial / subscription.installmentIntervalDays) + 1;
-
+                    
+                    const completedInstallments = subscription.completedInstallments ?? 0;
+          
                     if (subscription.isRecurringIndefinitely) {
-                        return total + subscription.amount * installmentsPaid;
+                      return total + subscription.amount * (completedInstallments + 1);
                     } else {
-                        const installmentsToPay = Math.min(installmentsPaid, subscription.totalInstallments);
-                        return total + subscription.amount * installmentsToPay;
+                      const totalInstallments = subscription.totalInstallments ?? 0;
+                      if (completedInstallments >= totalInstallments) {
+                        return total + subscription.amount * totalInstallments;
+                      } else {
+                        return total + subscription.amount * (completedInstallments + 1);
+                      }
                     }
-                }
-                return total;
-            }, 0);
-        };
-
+                  }
+                  return total;
+                }, 0);
+              };
+              
         const calculateTotalGoalExpenses = () => {
             return goals.reduce(
                 (total, goal) => total + (goal.currentAmount || 0),
