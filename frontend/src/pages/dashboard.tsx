@@ -4,7 +4,6 @@ import {
     FaMoneyBillWave,
     FaFileInvoiceDollar,
     FaBullseye,
-    FaNewspaper,
 } from "react-icons/fa";
 import {
     PieChart,
@@ -18,15 +17,12 @@ import {
     XAxis,
     YAxis,
     CartesianGrid,
-    LineChart,
-    Line,
+
 } from "recharts";
 import IncomeViewModel from "../viewModels/IncomeViewModel";
 import ExpenseViewModel from "../viewModels/ExpenseViewModel";
 import GoalViewModel from "../viewModels/GoalsViewModel";
-import NotificationViewModel from "../viewModels/NotificationViewModel";
 import SubscriptionViewModel from "../viewModels/SubscriptionViewModel";
-import NotificationDto from "../dtos/notification/notification";
 import SubscriptionDto from "../dtos/subscription/subscriptionDto";
 import ExpenseDto from "../dtos/expense/expenseDto";
 import GoalDto from "../dtos/goal/goalDto";
@@ -39,7 +35,7 @@ const Dashboard = () => {
     const [goals, setGoals] = useState<GoalDto[]>([]);
     const [expenses, setExpenses] = useState<ExpenseDto[]>([]);
     const [subscriptions, setSubscriptions] = useState<SubscriptionDto[]>([]);
-    const [notifications, setNotifications] = useState<NotificationDto[]>([]);
+
 
     const [totalIncome, setTotalIncome] = useState(0);
     const [totalExpenses, setTotalExpenses] = useState(0);
@@ -70,10 +66,7 @@ const Dashboard = () => {
                     new SubscriptionViewModel().getSubscriptions,
                     setSubscriptions
                 ),
-                fetchAndSetData(
-                    new NotificationViewModel().getNotifications,
-                    setNotifications
-                ),
+                
             ]);
         };
 
@@ -106,26 +99,30 @@ const Dashboard = () => {
         };
 
         const calculateTotalSubscriptions = () => {
+            const today = new Date();
             return subscriptions.reduce((total, subscription) => {
                 if (
-                    subscription.lastPaymentDate &&
                     subscription.initialPaymentDate &&
-                    subscription.amount
+                    subscription.amount &&
+                    subscription.installmentIntervalDays &&
+                    subscription.isRecurringIndefinitely !== undefined &&
+                    subscription.totalInstallments !== undefined
                 ) {
-                    const lastPaymentDate = new Date(subscription.lastPaymentDate);
-                    const initialPaymentDate = new Date(subscription.initialPaymentDate);
-                    if (
-                        isNaN(lastPaymentDate.getTime()) ||
-                        isNaN(initialPaymentDate.getTime())
-                    ) {
+                    const initialDate = new Date(subscription.initialPaymentDate);
+                    if (isNaN(initialDate.getTime())) {
                         console.error(`Invalid date for subscription: ${subscription.id}`);
                         return total;
                     }
-                    const monthsDiff =
-                        (lastPaymentDate.getFullYear() - initialPaymentDate.getFullYear()) *
-                        12 +
-                        (lastPaymentDate.getMonth() - initialPaymentDate.getMonth());
-                    return total + subscription.amount * (monthsDiff + 1);
+
+                    const daysSinceInitial = Math.floor((today.getTime() - initialDate.getTime()) / (1000 * 60 * 60 * 24));
+                    const installmentsPaid = Math.floor(daysSinceInitial / subscription.installmentIntervalDays) + 1;
+
+                    if (subscription.isRecurringIndefinitely) {
+                        return total + subscription.amount * installmentsPaid;
+                    } else {
+                        const installmentsToPay = Math.min(installmentsPaid, subscription.totalInstallments);
+                        return total + subscription.amount * installmentsToPay;
+                    }
                 }
                 return total;
             }, 0);
