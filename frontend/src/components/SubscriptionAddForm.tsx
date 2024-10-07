@@ -133,15 +133,6 @@ const SubscriptionAdd: FunctionComponent<AddExpenseProps> = () => {
       placeholder: "Installment Interval Days"
     },
     {
-      labelContent: 'Total Installments',
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setTotalInstallments(parseInt(e.target.value)),
-      type: "number",
-      name: "totalInstallments",
-      id: "totalInstallments",
-      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-      placeholder: "Total Installments"
-    },
-    {
       labelContent: 'Recurring Indefinitely',
       onChange: (e: React.ChangeEvent<HTMLInputElement>) => setIsRecurringIndefinitely(e.target.checked),
       type: "checkbox",
@@ -150,6 +141,17 @@ const SubscriptionAdd: FunctionComponent<AddExpenseProps> = () => {
       className: "mx-3 mr-2 leading-tight",
       placeholder: ""
     },
+    ...(!isRecurringIndefinitely ? [
+      
+    {
+      labelContent: 'Total Installments',
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setTotalInstallments(parseInt(e.target.value)),
+      type: "number",
+      name: "totalInstallments",
+      id: "totalInstallments",
+      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
+      placeholder: "Total Installments"
+    }] : []),
     {
       labelContent: 'Remind Before Days',
       onChange: (e: React.ChangeEvent<HTMLInputElement>) => setRemindBeforeDays(parseInt(e.target.value)),
