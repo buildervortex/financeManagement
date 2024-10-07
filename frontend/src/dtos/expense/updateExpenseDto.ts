@@ -2,10 +2,10 @@ import Joi from "joi";
 
 class UpdateExpenseDto {
     name?: string
-    category?: string = "simpleExpense";
+    category?: string;
     description?: string
     amount?: number
-    currencyType?: string = "LKR";
+    currencyType?: string;
     paid?: boolean
 }
 

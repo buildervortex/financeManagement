@@ -3,7 +3,7 @@ import Joi from "joi";
 class UpdateGoalDto {
     name?: string;
     description?: string;
-    currencyType?: string = "LKR";
+    currencyType?: string;
     remindBeforeDays?: number;
 }
 

@@ -4,7 +4,7 @@ class updateIncomeDto {
     name?: string
     description?: string
     amount?: number
-    currencyType?: string = "LKR";
+    currencyType?: string;
     monthly?: boolean = false;
     monthlyDate?: number;
 }

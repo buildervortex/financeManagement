@@ -2,11 +2,11 @@ import Joi from "joi";
 
 class UpdateSubscriptionDto {
     name?: string
-    category?: string = "subscription";
+    category?: string;
     description?: string
     amount?: number
-    currencyType?: string = "LKR";
-    remindBeforeDays?: number = 1;
+    currencyType?: string;
+    remindBeforeDays?: number;
     
 }
 
