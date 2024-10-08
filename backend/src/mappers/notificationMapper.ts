@@ -6,10 +6,10 @@ export default class NotificationMapper {
         const notificationDto: NotificationDto = new NotificationDto();
 
         notificationDto._id = notification.id;
-        notification.content = notification.content;
-        notification.date = notification.date;
-        notification.read = notification.read;
-        notification.type = notification.type;
+        notificationDto.content = notification.content;
+        notificationDto.date = notification.date;
+        notificationDto.read = notification.read;
+        notificationDto.type = notification.type;
 
         return notificationDto;
     }
