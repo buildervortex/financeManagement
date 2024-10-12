@@ -4,7 +4,6 @@ class SubscriptionDto {
     category?: string
     description?: string
     amount?: number
-    currencyType?: string
     nextInstallmentDate?: Date;
     lastPaymentDate?: Date;
     initialPaymentDate?: Date

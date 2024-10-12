@@ -9,7 +9,6 @@ class GoalDto {
     startDate?: Date;
     deadline?: Date;
     lastPaymentDate?: Date;
-    currencyType?: string;
     isAchieved?: boolean;
     remindBeforeDays?: number;
     goalPayments?: Array<GoalPaymentDto>;

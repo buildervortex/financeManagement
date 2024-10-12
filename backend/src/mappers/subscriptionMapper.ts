@@ -9,7 +9,6 @@ export default class SubscriptionMapper {
 
         subscriptionDto.amount = subscription.amount;
         subscriptionDto.category = subscription.category;
-        subscriptionDto.currencyType = subscription.currencyType;
         subscriptionDto.description = subscription.description;
         subscriptionDto.installmentIntervalDays = subscription.installmentIntervalDays;
         subscriptionDto.id = subscription.id;
@@ -31,7 +30,6 @@ export default class SubscriptionMapper {
 
         subscription.amount = addSubscriptionDto.amount!
         subscription.category = addSubscriptionDto.category?.toLowerCase()!
-        subscription.currencyType = addSubscriptionDto.currencyType!
         subscription.description = addSubscriptionDto.description!
         subscription.installmentIntervalDays = addSubscriptionDto.installmentIntervalDays!
         subscription.initialPaymentDate = addSubscriptionDto.initialPaymentDate!
@@ -49,7 +47,6 @@ export default class SubscriptionMapper {
 
         subscription.amount = updateSubscriptionDto.amount!
         subscription.category = updateSubscriptionDto.category?.toLowerCase()!
-        subscription.currencyType = updateSubscriptionDto.currencyType!
         subscription.description = updateSubscriptionDto.description!
         subscription.name = updateSubscriptionDto.name!
         subscription.remindBeforeDays = updateSubscriptionDto.remindBeforeDays!

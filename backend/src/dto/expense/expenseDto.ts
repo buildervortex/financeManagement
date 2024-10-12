@@ -6,7 +6,6 @@ class ExpenseDto {
     category?: string
     description?: string
     amount?: number
-    currencyType?: string;
     paymentDate?: Date
     type?: string;
     paid?: boolean

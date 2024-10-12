@@ -17,7 +17,6 @@ export default class GoalMapper {
         goalDto.startDate = goal.startDate;
         goalDto.deadline = goal.deadline;
         goalDto.lastPaymentDate = goal.lastPaymentDate;
-        goalDto.currencyType = goal.currencyType;
         goalDto.isAchieved = goal.isAchieved;
         goalDto.remindBeforeDays = goal.deadline && !goal.remindBeforeDays ? 1 : goal.remindBeforeDays;
         goalDto.goalPayments = goal.goalPayments.map(goalPayment => GoalMapper.ToGoalPaymentDto(goalPayment));
@@ -33,7 +32,6 @@ export default class GoalMapper {
         goal.targetAmount = addGoalDto.targetAmount!;
         goal.startDate = addGoalDto.startDate!;
         goal.deadline = addGoalDto.deadline;
-        goal.currencyType = addGoalDto.currencyType!;
         goal.remindBeforeDays = addGoalDto.remindBeforeDays;
         goal.currentAmount = 0;
         goal.isAchieved = false;
@@ -45,7 +43,6 @@ export default class GoalMapper {
         const goal = new Goal();
         goal.name = updateGoalDto.name!;
         goal.description = updateGoalDto.description;
-        goal.currencyType = updateGoalDto.currencyType!;
         goal.remindBeforeDays = updateGoalDto.remindBeforeDays;
         return goal;
     }

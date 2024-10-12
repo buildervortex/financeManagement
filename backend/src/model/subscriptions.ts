@@ -6,7 +6,6 @@ interface Subscription extends mongoose.Document {
     category: string;
     description?: string;
     amount: number;
-    currencyType: string;
     nextInstallmentDate?: Date;
     lastPaymentDate: Date;
     initialPaymentDate: Date;
@@ -42,11 +41,6 @@ export const subscriptionSchema = new mongoose.Schema<Subscription>({
         type: Number,
         min: 1,
         required: true
-    },
-    currencyType: {
-        type: String,
-        minLength: 2,
-        maxLength: 10,
     },
     nextInstallmentDate: {
         type: Date

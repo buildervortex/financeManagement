@@ -15,7 +15,6 @@ interface Goal extends mongoose.Document {
     startDate: Date;
     deadline?: Date;
     lastPaymentDate?: Date;
-    currencyType: string;
     isAchieved: boolean;
     remindBeforeDays?: number;
     goalPayments: Array<GoalPayment>;
@@ -74,11 +73,6 @@ export const goalSchema = new mongoose.Schema<Goal>({
     },
     lastPaymentDate: {
         type: Date
-    },
-    currencyType: {
-        type: String,
-        minLength: 2,
-        maxLength: 10
     },
     isAchieved: {
         type: Boolean,

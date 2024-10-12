@@ -25,4 +25,12 @@ export default class AccountRepository implements IAccountRepository {
         return await Account.find();
     }
 
+    async deleteAccount(accountId: string): Promise<Account> {
+        let existingAccount = await Account.findByIdAndDelete(accountId);
+        if (!existingAccount) {
+            throw new Error("Account not found")
+        }
+
+        return existingAccount;
+    }
 }

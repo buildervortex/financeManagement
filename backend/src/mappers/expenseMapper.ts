@@ -9,7 +9,6 @@ export default class ExpenseMapper {
 
         expenseDto.amount = expense.amount;
         expenseDto.category = expense.category;
-        expenseDto.currencyType = expense.currencyType;
         expenseDto.description = expense.description;
         expenseDto.id = expense.id;
         expenseDto.name = expense.name;
@@ -25,7 +24,6 @@ export default class ExpenseMapper {
 
         expense.amount = addExpenseDto.amount!;
         expense.category = addExpenseDto.category?.toLocaleLowerCase()!;
-        expense.currencyType = addExpenseDto.currencyType!;
         expense.description = addExpenseDto.description!;
         expense.name = addExpenseDto.name!;
         expense.paid = addExpenseDto.paid!;
@@ -40,7 +38,6 @@ export default class ExpenseMapper {
 
         expense.amount = updateExpenseDto.amount!;
         expense.category = updateExpenseDto.category?.toLowerCase()!;
-        expense.currencyType = updateExpenseDto.currencyType!;
         expense.description = updateExpenseDto.description!;
         expense.name = updateExpenseDto.name!;
         expense.paid = updateExpenseDto.paid!;

@@ -6,7 +6,6 @@ interface Income extends mongoose.Document {
     description: string;
     amount: number;
     incomeDate: Date;
-    currencyType: string;
     monthly: boolean;
     monthlyDate: number;
 }
@@ -33,11 +32,6 @@ export const incomeSchema = new mongoose.Schema<Income>({
     },
     incomeDate: {
         type: Date,
-    },
-    currencyType: {
-        type: String,
-        minLength: 2,
-        maxLength: 10
     },
     monthly: {
         type: Boolean,

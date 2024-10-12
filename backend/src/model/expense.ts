@@ -6,7 +6,6 @@ interface Expense extends mongoose.Document {
     category: string;
     description: string;
     amount: number;
-    currencyType: string;
     paymentDate: Date;
     type: string;
     paid: boolean;
@@ -35,11 +34,6 @@ export const expenseSchema = new mongoose.Schema<Expense>({
     amount: {
         type: Number,
         min: 1
-    },
-    currencyType: {
-        type: String,
-        minLength: 2,
-        maxLength: 10,
     },
     paymentDate: {
         type: Date,

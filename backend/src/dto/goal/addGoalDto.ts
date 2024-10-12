@@ -6,7 +6,6 @@ class AddGoalDto {
     targetAmount?: number;
     startDate?: Date = new Date();
     deadline?: Date;
-    currencyType?: string = "LKR";
     remindBeforeDays?: number;
 }
 
@@ -17,7 +16,6 @@ export function validateAddGoalDto(addGoalDto: AddGoalDto): Joi.ValidationResult
         targetAmount: Joi.number().min(1).required(),
         startDate: Joi.date().required(),
         deadline: Joi.date().greater(Joi.ref("startDate")),
-        currencyType: Joi.string().min(2).max(10),
         remindBeforeDays: Joi.number().integer().min(1).default(1).when("deadline", {
             is: Joi.exist(),
             then: Joi.custom((value, helper) => {

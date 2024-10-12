@@ -7,6 +7,9 @@ export default class SubscriptionUtils {
         if (subscription.totalInstallments) {
             if (subscription.completedInstallments < subscription.totalInstallments) return true;
         }
+        if (subscription.isRecurringIndefinitely) {
+            return true;
+        }
         return false;
     }
 
@@ -35,7 +38,6 @@ export default class SubscriptionUtils {
         expense.category = subscription.category!;
         expense.description = subscription.description!;
         expense.amount = subscription.amount;
-        expense.currencyType = subscription.currencyType;
         expense.type = "subscription";
         expense.paid = paid;
         expense.addtionalIdentifiers?.push(subscription._id);
