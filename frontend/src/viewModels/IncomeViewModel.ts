@@ -2,6 +2,7 @@ import addIncomeDto, { validateAddIncomeDto } from "../dtos/income/addIncomeDto"
 import IncomeDto from "../dtos/income/incomeDto";
 import IncomeRangeDto, { validateIncomeRangeDto } from "../dtos/income/incomeRangeDto";
 import updateIncomeDto, { validateUpdateIncome } from "../dtos/income/updateIncomeDto";
+import GetAllIncomeQueryParams, { validateGetAllIncomeQueryParams } from "../query/income/getAllIncomeQueryParams";
 import IncomeService from "../services/incomeService";
 import ErrorMessage from "./error";
 
@@ -39,8 +40,13 @@ export default class IncomeViewModel {
         return response;
     }
 
-    async getIncomes(): Promise<IncomeDto[] | ErrorMessage> {
-        const response = await IncomeService.getIncomes();
+    async getIncomes(getAllIncomeQueryParams: GetAllIncomeQueryParams): Promise<IncomeDto[] | ErrorMessage> {
+        if (getAllIncomeQueryParams) {
+            const { error } = validateGetAllIncomeQueryParams(getAllIncomeQueryParams);
+            if (error)
+                return ErrorMessage.errorMessageFromJoiError(error);
+        }
+        const response = await IncomeService.getIncomes(getAllIncomeQueryParams);
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
