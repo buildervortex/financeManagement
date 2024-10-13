@@ -8,6 +8,7 @@ import IncomeMapper from "../mappers/incomeMapper";
 import addIncomeDto, { validateAddIncomeDto } from "../dto/income/addIncomeDto";
 import updateIncomeDto, { validateUpdateIncome } from "../dto/income/updateIncomeDto";
 import IncomeRangeDto, { validateIncomeRangeDto } from "../dto/income/incomeRangeDto";
+import GetAllIncomeQueryParams, { validateGetAllIncomeQueryParams } from "../query/incomes/getAllIncomes";
 
 const incomeRouter = express.Router();
 const incomeRepository = new IncomeRepository();
@@ -57,10 +58,17 @@ incomeRouter.get("/:id", jwtAuth, async (request: express.Request | any, respons
 });
 
 incomeRouter.get("/", jwtAuth, async (request: express.Request | any, response: express.Response) => {
+    const getAllIncomeQueryParams: GetAllIncomeQueryParams = Object.assign(new GetAllIncomeQueryParams(), request.query)
+    const { error, value } = validateGetAllIncomeQueryParams(getAllIncomeQueryParams);
+
+    if (error) {
+        return response.status(400).send(ErrorMessage.errorMessageFromJoiError(error));
+    }
+
     let incomes: Income[];
 
     try {
-        incomes = await incomeRepository.getAllIncomes(request.account._id);
+        incomes = await incomeRepository.getAllIncomes(request.account._id, value);
     }
     catch (error) {
         if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));

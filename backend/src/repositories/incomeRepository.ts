@@ -1,6 +1,8 @@
+import mongoose from "mongoose";
 import IIncomeRepository from "../interfaces/incomeRepository";
 import Account from "../model/account";
 import Income from "../model/income";
+import GetAllIncomeQueryParams from "../query/incomes/getAllIncomes";
 
 export default class IncomeRepository implements IIncomeRepository {
     async addIncome(income: Income, accountId: string): Promise<Income> {
@@ -18,13 +20,15 @@ export default class IncomeRepository implements IIncomeRepository {
         return addedIncome;
     }
 
-    async getAllIncomes(accountId: string): Promise<Income[]> {
+    async getAllIncomes(accountId: string, getAllIncomeQuery: GetAllIncomeQueryParams): Promise<Income[]> {
         let existingAccount = await Account.findById(accountId);
         if (!existingAccount) {
             throw new Error("Account not found")
         }
 
-        return existingAccount.incomes;
+        const filteredIncomes = await Account.aggregate(createGetAllIncomeAggregationPipeline(accountId, getAllIncomeQuery));
+
+        return filteredIncomes;
     }
 
     async getIncome(incomeId: string, accountId: string): Promise<Income> {
@@ -89,4 +93,78 @@ export default class IncomeRepository implements IIncomeRepository {
         const incomes = existingAccount.incomes.filter(income => (income.incomeDate.getTime() >= startDate.getTime() && income.incomeDate.getTime() <= endDate.getTime()));
         return incomes.sort((a, b) => a.incomeDate.getTime() - b.incomeDate.getTime());
     }
+}
+
+/* db.Account.aggregate([{ $match: { _id: ObjectId('66d42d227ca71966868a43d0') } }, { $unwind: "$incomes" }, { $match: { $and: [{ "incomes.incomeDate": { $gte: ISODate('2024-09-01T08:35:12.196Z') } }, { "incomes.incomeDate": { $lte: ISODate('2024-10-10T08:39:12.196Z') } }] } }, { $project: { "incomes": 1, "_id": 0 } },{$replaceRoot:{newRoot: "$incomes"}},{$sort:{"incomes.amount":-1}},{$skip:0},{$limit:100}])
+*/
+
+function createGetAllIncomeAggregationPipeline(accountId: string, getAllIncomeQueryParams: GetAllIncomeQueryParams): any {
+    const pipeline: any[] = [];
+
+    // select the account
+    pipeline.push({
+        $match: {
+            _id: new mongoose.Types.ObjectId(accountId),
+        }
+    })
+
+    // unwind incomes
+    pipeline.push({
+        $unwind: "$incomes"
+    })
+
+    // filter the incomes by startDate and endDate
+    if (getAllIncomeQueryParams.startDate || getAllIncomeQueryParams.endDate) {
+        const dateFilters: any[] = [];
+
+        if (getAllIncomeQueryParams.startDate) {
+            dateFilters.push({
+                "incomes.incomeDate": { $gte: getAllIncomeQueryParams.startDate }
+            });
+        }
+
+        if (getAllIncomeQueryParams.endDate) {
+            dateFilters.push({
+                "incomes.incomeDate": { $lte: getAllIncomeQueryParams.endDate }
+            })
+        }
+        pipeline.push({
+            $match: {
+                $and: dateFilters
+            }
+        });
+    }
+
+    // project only the incomes
+    pipeline.push({
+        $project: { "incomes": 1, "_id": 0 }
+    })
+
+    // replace the root
+    pipeline.push(
+        { $replaceRoot: { newRoot: "$incomes" } }
+    )
+
+    // add sorting
+    let sorting: any = {}
+    sorting[getAllIncomeQueryParams.sortBy] = getAllIncomeQueryParams.order;
+    pipeline.push({
+        $sort: sorting
+    })
+
+    // add skip
+    if (getAllIncomeQueryParams.skip) {
+        pipeline.push({
+            $skip: getAllIncomeQueryParams.skip
+        })
+    }
+
+    // add limit
+    if (getAllIncomeQueryParams.limit) {
+        pipeline.push({
+            $limit: getAllIncomeQueryParams.limit
+        })
+    }
+
+    return pipeline;
 }
