@@ -21,6 +21,7 @@ import ContactForm from './pages/contact';
 import GoalDetails from './pages/GoalDetails';
 import Notification from './pages/Notification';
 import LandingPage from './pages/LandingPage';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -63,7 +64,7 @@ function App() {
           <Route path="/addGoalPayment" element={<AddGoalPayment />}></Route>
           <Route path="/updateGoal" element={<GoalUpdatePage />}></Route>
           <Route path="/Goal-details" element={<GoalDetails />}></Route>
-
+          <Route path="/Profile" element={<Profile />}></Route>
         </Routes>
       </div>
       <Footer />

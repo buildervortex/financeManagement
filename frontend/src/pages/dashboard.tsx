@@ -99,7 +99,6 @@ const Dashboard = () => {
         };
 
         const calculateTotalSubscriptions = () => {
-            const today = new Date();
             return subscriptions.reduce((total, subscription) => {
                 if (
                     subscription.initialPaymentDate &&

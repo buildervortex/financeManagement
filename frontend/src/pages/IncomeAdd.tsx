@@ -1,5 +1,4 @@
-import { FunctionComponent, useState, useEffect } from 'react';
-import InputForm from '../components/inputForm';
+import React, { useState, useEffect } from 'react';
 import IncomeList from '../components/IncomeList';
 import IncomeViewModel from '../viewModels/IncomeViewModel';
 import { handleErrorResult, handleSuccessResult } from '../utils/errorMessage';
@@ -7,26 +6,14 @@ import ErrorMessage from '../viewModels/error';
 import addIncomeDto from '../dtos/income/addIncomeDto';
 import IncomeDto from '../dtos/income/incomeDto';
 
-interface AddIncomePageProps { }
-
-interface InputElement {
-  labelContent: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type: string;
-  name: string;
-  id: string;
-  className: string;
-  placeholder: string;
-}
-
-const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
+const IncomeAddPage: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [amount, setAmount] = useState<number>(0);
   const [monthly, setMonthly] = useState<boolean>(false);
   const [incomeDate, setIncomeDate] = useState<number>();
-  const [currencyType, setCurrencyType] = useState<string>("");
   const [incomes, setIncomes] = useState<IncomeDto[]>([]);
+  const [showForm, setShowForm] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchIncomes = async () => {
@@ -40,9 +27,6 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
     fetchIncomes();
   }, []);
 
-  const [showForm, setShowForm] = useState<boolean>(false);
-
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -52,7 +36,6 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
     addincomeDto.amount = amount;
     addincomeDto.monthly = monthly;
     addincomeDto.monthlyDate = incomeDate;
-    addincomeDto.currencyType = currencyType;
     const result = await new IncomeViewModel().addIncome(addincomeDto)
     if (result instanceof ErrorMessage) {
       handleErrorResult(result);
@@ -64,69 +47,8 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
     setDescription("");
     setAmount(0);
     setMonthly(false);
-    setCurrencyType("");
 
   };
-
-  // Input elements configuration
-  const inputElements: InputElement[] = [
-    {
-      labelContent: 'Income',
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value),
-      type: "text",
-      name: "name",
-      id: "name",
-      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-      placeholder: "Enter Your Income"
-    },
-    {
-      labelContent: 'Description',
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value),
-      type: "text",
-      name: "description",
-      id: "description",
-      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-      placeholder: "Enter Description"
-    },
-    {
-      labelContent: 'Amount',
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setAmount(parseFloat(e.target.value)),
-      type: "number",
-      name: "amount",
-      id: "amount",
-      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-      placeholder: "Enter Amount"
-    },
-    {
-      labelContent: 'Monthly',
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setMonthly(e.target.checked),
-      type: "checkbox",
-      name: "monthly",
-      id: "monthly",
-      className: "mx-3 mr-2 leading-tight",
-      placeholder: ""
-    },
-    ...(monthly ? [
-      {
-        labelContent: 'Income Date',
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => setIncomeDate(parseInt(e.target.value)),
-        type: "number",
-        name: "incomeDate",
-        id: "incomeDate",
-        className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-        placeholder: "Enter Income date"
-      }
-    ] : []),
-    {
-      labelContent: 'Currency Type',
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setCurrencyType(e.target.value),
-      type: "text",
-      name: "currencyType",
-      id: "currencyType",
-      className: "bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5",
-      placeholder: "Enter Currency Type"
-    }
-  ];
 
   return (
     <div className="w-full max-w-md mx-auto p-4">
@@ -169,15 +91,82 @@ const IncomeAddPage: FunctionComponent<AddIncomePageProps> = () => {
       </button>
   
       {showForm && (
-        <InputForm
-          formName='Add Income Information'
-          submitButton='Submit'
-          inputs={inputElements}
-          onSubmit={handleSubmit}
-        />
+        <form onSubmit={handleSubmit} className="space-y-4 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <h2 className="text-2xl font-bold mb-4">Add Income Information</h2>
+          
+          <div>
+            <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">Income</label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5"
+              placeholder="Enter Your Income"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2">Description</label>
+            <input
+              type="text"
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5"
+              placeholder="Enter Description"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="amount" className="block text-gray-700 text-sm font-bold mb-2">Amount</label>
+            <input
+              type="number"
+              id="amount"
+              value={amount}
+              onChange={(e) => setAmount(parseFloat(e.target.value))}
+              className="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5"
+              placeholder="Enter Amount"
+              required
+            />
+          </div>
+
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="monthly"
+              checked={monthly}
+              onChange={(e) => setMonthly(e.target.checked)}
+              className="mx-3 mr-2 leading-tight"
+            />
+            <label htmlFor="monthly" className="text-sm font-bold text-gray-700">Monthly</label>
+          </div>
+
+          {monthly && (
+            <div>
+              <label htmlFor="incomeDate" className="block text-gray-700 text-sm font-bold mb-2">Income Date</label>
+              <input
+                type="number"
+                id="incomeDate"
+                value={incomeDate}
+                onChange={(e) => setIncomeDate(parseInt(e.target.value))}
+                className="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5"
+                placeholder="Enter Income date"
+              />
+            </div>
+          )}
+
+        
+
+          <button
+            type="submit"
+            className="w-full bg-[#FF8343] hover:bg-[#E66D2C] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Submit
+          </button>
+        </form>
       )}
-  
-      
     </div>
   );
 };
