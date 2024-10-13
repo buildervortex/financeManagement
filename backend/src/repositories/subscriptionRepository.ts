@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import ISubscryptionRepository from "../interfaces/subscriptionRepository";
 import Account from "../model/account";
 import Subscription from "../model/subscriptions";
@@ -35,6 +36,16 @@ export default class SubscrpitionRepository implements ISubscryptionRepository {
             throw new Error("Subscription not found");
         }
         return subscription;
+    }
+
+    async getAllCategories(accountId: string): Promise<String[]> {
+        let existingAccount = await Account.findById(accountId);
+        if (!existingAccount) {
+            throw new Error("Account not found")
+        }
+
+        const categories = await Account.aggregate(createGetAllCategoriesAggregationPipeline(accountId));
+        return categories[0]["categories"];
     }
     async updateSubscription(newSubscription: Subscription, subscriptionId: string, accountId: string): Promise<Subscription> {
         let existingAccount = await Account.findById(accountId);
@@ -74,4 +85,33 @@ export default class SubscrpitionRepository implements ISubscryptionRepository {
         return deletedSubscription;
     }
 
+}
+
+// db.Account.aggregate([{ $match: { _id: ObjectId('66e527d92ac79c820aeaedb3') } },{$unwind: "$subscriptions"}, {$group: {_id:null, categories:{$addToSet:"$subscriptions.category"}}},{$project: {_id:0, categories:1}}])
+function createGetAllCategoriesAggregationPipeline(accountId: string): any {
+    const pipeline: any[] = [];
+
+    // select the account
+    pipeline.push({
+        $match: {
+            _id: new mongoose.Types.ObjectId(accountId),
+        },
+    });
+
+    // unwind expenses
+    pipeline.push({
+        $unwind: "$subscriptions"
+    });
+
+    // group the expenses
+    pipeline.push({
+        $group: { _id: null, categories: { $addToSet: "$subscriptions.category" } }
+    })
+
+    // project the categories
+    pipeline.push({
+        $project: { _id: 0, categories: 1 }
+    })
+
+    return pipeline;
 }

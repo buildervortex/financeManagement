@@ -16,6 +16,19 @@ const subscriptionRouter = express.Router();
 const subscriptionRepository = new SubscrpitionRepository();
 const subscriptionService = new SubscriptionService();
 
+subscriptionRouter.get("/categories", jwtAuth, async (request: express.Request | any, response: express.Response) => {
+    let categories: String[];
+    try {
+        categories = await subscriptionRepository.getAllCategories(request.account._id);
+    }
+    catch (error) {
+        if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
+        else return response.status(500).send(ErrorMessage.ServerError);
+    }
+
+    response.send(categories);
+})
+
 subscriptionRouter.get("/:id", jwtAuth, async (request: express.Request | any, response: express.Response) => {
     const subscriptionId = request.params.id;
     if (!isObjectIdValid(subscriptionId)) {
@@ -54,6 +67,8 @@ subscriptionRouter.get("/", jwtAuth, async (request: express.Request | any, resp
 
     response.send(subscriptions.map(subscription => SubscriptionMapper.ToSubscriptionDto(subscription)));
 })
+
+
 
 
 subscriptionRouter.post("/", jwtAuth, async (request: express.Request | any, response: express.Response) => {
