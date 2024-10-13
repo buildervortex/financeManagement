@@ -8,17 +8,24 @@ import ExpenseMapper from "../mappers/expenseMapper";
 import AddExpenseDto, { validateAddExpenseDto } from "../dto/expense/addExpenseDto";
 import UpdateExpenseDto, { validateUpdateExpenseDto } from "../dto/expense/updateExpenseDto";
 import RangeExpenseDto, { validateDateRange } from "../dto/expense/expenseRangeDto";
+import GetAllExpenseQueryParams, { validateGetAllExpenseQueryParams } from "../query/expenses/getAll";
 
 const expenseRouter = express.Router();
 const expenseRepository = new ExpenseRepository();
 
 
-
 expenseRouter.get("/", jwtAuth, async (request: express.Request | any, response: express.Response) => {
+    const getAllExpenseQueryParameter: GetAllExpenseQueryParams = Object.assign(new GetAllExpenseQueryParams(), request.query);
+    const { error,value } = validateGetAllExpenseQueryParams(getAllExpenseQueryParameter);
+
+    if (error) {
+        return response.status(400).send(ErrorMessage.errorMessageFromJoiError(error));
+    }
+
     let expenses: Expense[];
 
     try {
-        expenses = await expenseRepository.getAllExpenses(request.account._id);
+        expenses = await expenseRepository.getAllExpenses(request.account._id, value);
     }
     catch (error) {
         if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
@@ -32,44 +39,19 @@ expenseRouter.get("/", jwtAuth, async (request: express.Request | any, response:
     response.send(expenses.map(expense => ExpenseMapper.ToExpenseDto(expense)));
 });
 
-expenseRouter.post("/range", jwtAuth, async (request: express.Request | any, response: express.Response) => {
-    const rangeExpenseDto: RangeExpenseDto = Object.assign(new RangeExpenseDto(), request.body);
-    const { error } = validateDateRange(rangeExpenseDto);
-
-    let expenses: Expense[];
-
-    if (error) {
-        return response.status(400).send(ErrorMessage.errorMessageFromJoiError(error));
-    }
-
-    try {
-        expenses = await expenseRepository.getExpensesInRange(request.account._id, new Date(rangeExpenseDto.startDate!), new Date(rangeExpenseDto.endDate!))
-    }
-    catch (error) {
-        if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
-        else return response.status(500).send(ErrorMessage.ServerError);
-    }
-    response.send(expenses.map(expense => ExpenseMapper.ToExpenseDto(expense)));
-})
 
 expenseRouter.get("/categories", jwtAuth, async (request: express.Request | any, response: express.Response) => {
 
-    let expenses: Expense[];
+    let categories: String[];
     try {
-        expenses = await expenseRepository.getAllExpenses(request.account._id);
+        categories = await expenseRepository.getAllCategories(request.account._id);
     }
     catch (error) {
         if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
         else return response.status(500).send(ErrorMessage.ServerError);
     }
 
-    if (!expenses) {
-        return response.status(500).send(ErrorMessage.ServerError);
-    }
-
-    let differentCategories: string[] = expenses.map(expense => expense.category).filter((category, index, self) => self.indexOf(category) === index);
-
-    response.send({ categories: differentCategories });
+    response.send(categories);
 });
 
 expenseRouter.get("/:id", jwtAuth, async (request: express.Request | any, response: express.Response) => {

@@ -9,6 +9,7 @@ class ExpenseDto {
     paymentDate?: Date
     type?: string;
     paid?: boolean
+
 }
 
 
