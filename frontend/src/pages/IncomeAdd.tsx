@@ -17,7 +17,7 @@ const IncomeAddPage: React.FC = () => {
 
   useEffect(() => {
     const fetchIncomes = async () => {
-      const result: IncomeDto[] | ErrorMessage = await new IncomeViewModel().getIncomes();
+      const result: IncomeDto[] | ErrorMessage = await new IncomeViewModel().getIncomes({sortBy:"incomeDate"});
       if (result instanceof ErrorMessage) {
         handleErrorResult(result);
       } else {
