@@ -1,17 +1,17 @@
-import Goal, { GoalPayment } from "../model/goal";
+import Goal from "../model/goal";
 import { getDifferenceInDays } from "./dates";
 
 
 export default class GoalUtils {
-    static payGoal(goal: Goal, goalPayment: GoalPayment): Goal {
-        let totalPayment: number = goal.goalPayments.length !== 0 ? goal.goalPayments.map(payment => payment.amount).reduce((acc, next) => acc += next) : 0;
+    static payGoal(goal: Goal, amount: number): Goal {
+        if (goal.isAchieved) throw new Error("The goal is already achived");
 
-        if (totalPayment + goalPayment.amount >= goal.targetAmount) {
+        if (Number(goal.currentAmount) + Number(amount) >= Number(goal.targetAmount)) {
             goal.isAchieved = true;
         }
-        goal.goalPayments.push(goalPayment);
-        goal.lastPaymentDate = goalPayment.paymentDate;
-        goal.currentAmount += goalPayment.amount;
+
+        goal.lastPaymentDate = new Date();
+        goal.currentAmount = Number(goal.currentAmount) + Number(amount);
 
         return goal;
     }

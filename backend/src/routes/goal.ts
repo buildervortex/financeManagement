@@ -9,6 +9,8 @@ import AddGoalDto, { validateAddGoalDto } from "../dto/goal/addGoalDto";
 import UpdateGoalDto, { validateUpdateGoalDto } from "../dto/goal/updateGoalDto";
 import GoalService from "../services/goalService";
 import AddGoalPaymentDto, { validateAddGoalPaymentDto } from "../dto/goal/addGoalPaymentDto";
+import Income from "../model/income";
+import IncomeMapper from "../mappers/incomeMapper";
 
 const goalRouter = express.Router();
 const goalRepository = new GoalRepository();
@@ -144,21 +146,19 @@ goalRouter.post("/:id/pay", jwtAuth, async (request: express.Request | any, resp
         return response.status(400).send(ErrorMessage.errorMessageFromJoiError(error));
     }
 
-    let goal: Goal;
+    let income: Income
 
     try {
-        goal = await goalService.payGoal(goalId, request.account._id, GoalMapper.ToGoalPaymentDtoFromAddGoalPaymentDto(addGoalPaymentDtoObject));
+        income = await goalService.payGoal(goalId, request.account._id, addGoalPaymentDtoObject.amount);
     }
     catch (error) {
         if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
         else return response.status(500).send(ErrorMessage.ServerError);
     }
-    if (!goal) {
+    if (!income) {
         return response.status(500).send(ErrorMessage.ServerError);
     }
-    response.send(GoalMapper.ToGoalDto(goal));
+    response.send(IncomeMapper.ToIncomeDto(income));
 })
 
 export default goalRouter;
-
-// income/expense for a given time range.

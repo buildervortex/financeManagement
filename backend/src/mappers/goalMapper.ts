@@ -1,9 +1,7 @@
 import AddGoalDto from "../dto/goal/addGoalDto";
-import AddGoalPaymentDto from "../dto/goal/addGoalPaymentDto";
 import GoalDto from "../dto/goal/goalDto";
-import GoalPaymentDto from "../dto/goal/goalPaymentDto";
 import UpdateGoalDto from "../dto/goal/updateGoalDto";
-import Goal, { GoalPayment } from "../model/goal";
+import Goal from "../model/goal";
 
 export default class GoalMapper {
     static ToGoalDto(goal: Goal): GoalDto {
@@ -19,7 +17,6 @@ export default class GoalMapper {
         goalDto.lastPaymentDate = goal.lastPaymentDate;
         goalDto.isAchieved = goal.isAchieved;
         goalDto.remindBeforeDays = goal.deadline && !goal.remindBeforeDays ? 1 : goal.remindBeforeDays;
-        goalDto.goalPayments = goal.goalPayments.map(goalPayment => GoalMapper.ToGoalPaymentDto(goalPayment));
 
         return goalDto;
     }
@@ -45,23 +42,5 @@ export default class GoalMapper {
         goal.description = updateGoalDto.description;
         goal.remindBeforeDays = updateGoalDto.remindBeforeDays;
         return goal;
-    }
-
-    static ToGoalPaymentDto(goalPayment: GoalPayment): GoalPaymentDto {
-        const goalPaymentDto = new GoalPaymentDto();
-
-        goalPaymentDto.amount = goalPayment.amount;
-        goalPaymentDto.paymentDate = goalPayment.paymentDate;
-
-        return goalPaymentDto;
-    }
-
-    static ToGoalPaymentDtoFromAddGoalPaymentDto(addGoalPaymentDto: AddGoalPaymentDto): GoalPayment {
-        const goalPayment = new GoalPayment();
-
-        goalPayment.amount = addGoalPaymentDto.amount!;
-        goalPayment.paymentDate = new Date();
-
-        return goalPayment;
     }
 }

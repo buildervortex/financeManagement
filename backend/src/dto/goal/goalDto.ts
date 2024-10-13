@@ -11,7 +11,6 @@ class GoalDto {
     lastPaymentDate?: Date;
     isAchieved?: boolean;
     remindBeforeDays?: number;
-    goalPayments?: Array<GoalPaymentDto>;
 }
 
 export default GoalDto;

@@ -26,6 +26,7 @@ export default class IncomeMapper {
         income.monthlyDate = addIncomeDto.monthlyDate!;
         income.name = addIncomeDto.name!;
         income.incomeDate = new Date();
+        income.type = "direct";
 
         return income;
     }

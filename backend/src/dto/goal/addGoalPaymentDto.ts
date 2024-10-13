@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 class AddGoalPaymentDto {
-    amount?: number;
+    amount: number = 0;
 }
 
 export function validateAddGoalPaymentDto(addGoalPaymentDto: AddGoalPaymentDto): Joi.ValidationResult {

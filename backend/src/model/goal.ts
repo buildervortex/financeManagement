@@ -1,11 +1,5 @@
 import mongoose from "mongoose";
 
-interface GoalPayment extends mongoose.Document {
-    _id: mongoose.ObjectId;
-    paymentDate: Date;
-    amount: number;
-}
-
 interface Goal extends mongoose.Document {
     _id: mongoose.ObjectId;
     name: string;
@@ -17,20 +11,9 @@ interface Goal extends mongoose.Document {
     lastPaymentDate?: Date;
     isAchieved: boolean;
     remindBeforeDays?: number;
-    goalPayments: Array<GoalPayment>;
+    incomesIds: Array<mongoose.ObjectId>;
 }
 
-
-const goalPaymentSchema = new mongoose.Schema({
-    paymentDate: {
-        type: Date,
-        required:true
-    },
-    amount: {
-        type: Number,
-        required:true
-    }
-})
 
 export const goalSchema = new mongoose.Schema<Goal>({
     _id: {
@@ -55,6 +38,7 @@ export const goalSchema = new mongoose.Schema<Goal>({
     },
     currentAmount: {
         type: Number,
+        required: true,
         min: 0
     },
     startDate: {
@@ -92,15 +76,13 @@ export const goalSchema = new mongoose.Schema<Goal>({
             message: "remindBeforeDays should be less than or equal to the difference between deadline and startDate."
         }
     },
-    goalPayments: {
-        type: [goalPaymentSchema]
+    incomesIds: {
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Income" }]
     }
 })
 
 goalSchema.index({ targetAmount: 1 })
 const Goal = mongoose.model<Goal & mongoose.Document>("Goal", goalSchema, "Goal");
-const GoalPayment = mongoose.model<GoalPayment & mongoose.Document>("GoalPayment", goalPaymentSchema, "GoalPayment");
 
-export { GoalPayment };
 
 export default Goal;

@@ -8,6 +8,7 @@ interface Income extends mongoose.Document {
     incomeDate: Date;
     monthly: boolean;
     monthlyDate: number;
+    type: string;
 }
 
 export const incomeSchema = new mongoose.Schema<Income>({
@@ -53,6 +54,11 @@ export const incomeSchema = new mongoose.Schema<Income>({
             },
             message: "Invalid monthlyDate value"
         }
+    },
+    type: {
+        type: String,
+        required: true,
+        default: "direct"
     }
 })
 
