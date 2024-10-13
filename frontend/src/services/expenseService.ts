@@ -1,11 +1,11 @@
 import AddExpenseDto from "../dtos/expense/addExpenseDto";
 import ExpenseDto from "../dtos/expense/expenseDto";
-import ExpenseRangeDto from "../dtos/expense/expenseRangeDto";
 import UpdateExpenseDto from "../dtos/expense/updateExpenseDto";
 import ExpenseCategoriesDto from "../dtos/expense/expenseCategoriesDto";
 import Cast from "../utils/cast";
 import ErrorMessage from "../viewModels/error";
 import Api from "./api";
+import GetAllExpenseQueryParams from "../query/expense/getAllExpenseQueryParams";
 
 export default class ExpenseService {
     static async addExpense(addExpenseDto: AddExpenseDto): Promise<ExpenseDto | ErrorMessage> {
@@ -23,8 +23,10 @@ export default class ExpenseService {
         return Cast.errorMessageCast(response);
     }
 
-    static async getExpenses(): Promise<ExpenseDto[] | ErrorMessage> {
-        const response = await Api.get<ExpenseDto[] | ErrorMessage>(`/expenses/`);
+    static async getExpenses(getAllExpenseQueryParams?: GetAllExpenseQueryParams): Promise<ExpenseDto[] | ErrorMessage> {
+        const response = await Api.get<ExpenseDto[] | ErrorMessage>(`/expenses/`, {
+            params: getAllExpenseQueryParams
+        });
         return Cast.errorMessageCast(response);
     }
 
@@ -33,15 +35,9 @@ export default class ExpenseService {
         return Cast.errorMessageCast(response);
     }
 
-    static async getCategories(): Promise<ExpenseCategoriesDto | ErrorMessage> {
-        const response = await Api.get<ExpenseCategoriesDto | ErrorMessage>(`/expenses/categories`);
+    static async getCategories(): Promise<String[] | ErrorMessage> {
+        const response = await Api.get<String[] | ErrorMessage>(`/expenses/categories`);
         return Cast.errorMessageCast(response);
-    }
-
-    static async getExpensesInRange(expenseRangeDto: ExpenseRangeDto): Promise<ExpenseDto[] | ErrorMessage> {
-        const response = await Api.post<ExpenseDto[] | ErrorMessage>(`/expenses/range`, expenseRangeDto);
-        return Cast.errorMessageCast(response);
-
     }
 
 }

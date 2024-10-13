@@ -3,7 +3,7 @@ import updateExpenseDto, { validateUpdateExpenseDto } from "../dtos/expense/upda
 import ExpenseDto from "../dtos/expense/expenseDto";
 import ErrorMessage from "./error";
 import ExpenseService from "../services/expenseService";
-import ExpenseRangeDto, { validateDateRange } from "../dtos/expense/expenseRangeDto";
+import GetAllExpenseQueryParams, { validateGetAllExpenseQueryParams } from "../query/expense/getAllExpenseQueryParams";
 
 
 export default class ExpenseViewModel {
@@ -37,6 +37,7 @@ export default class ExpenseViewModel {
 
     async getExpense(id: string): Promise<ExpenseDto | ErrorMessage> {
         const response = await ExpenseService.getExpense(id);
+
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
@@ -44,8 +45,13 @@ export default class ExpenseViewModel {
 
     }
 
-    async getExpenses(): Promise<ExpenseDto[] | ErrorMessage> {
-        const response = await ExpenseService.getExpenses();
+    async getExpenses(getAllExpensesQueryParams?: GetAllExpenseQueryParams): Promise<ExpenseDto[] | ErrorMessage> {
+        if (getAllExpensesQueryParams) {
+            const { error } = validateGetAllExpenseQueryParams(getAllExpensesQueryParams);
+            if (error)
+                return ErrorMessage.errorMessageFromJoiError(error);
+        }
+        const response = await ExpenseService.getExpenses(getAllExpensesQueryParams);
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
@@ -57,18 +63,7 @@ export default class ExpenseViewModel {
         if (response && typeof response === 'object' && 'error' in response) {
             return ErrorMessage.errorMessageFromString(response.error);
         }
-        return response.categories!;
+        return response!;
     }
-
-    async getExpensesInRange(expenseRangeDto: ExpenseRangeDto): Promise<ExpenseDto[] | ErrorMessage> {
-        const { error } = validateDateRange(expenseRangeDto);
-        if (error)
-            return ErrorMessage.errorMessageFromJoiError(error);
-        const response = await ExpenseService.getExpensesInRange(expenseRangeDto);
-        if (response && typeof response === 'object' && 'error' in response) {
-            return ErrorMessage.errorMessageFromString(response.error);
-        }
-        return response;
-    }
-
 }
+
