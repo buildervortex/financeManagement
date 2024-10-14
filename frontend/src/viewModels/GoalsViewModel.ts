@@ -5,6 +5,7 @@ import GoalPaymentDto from "../dtos/goal/goalPaymentDto";
 import UpdateGoalDto, { validateUpdateGoalDto } from "../dtos/goal/updateGoalDto";
 import ErrorMessage from "./error";
 import goalService from "../services/goalService";
+import IncomeDto from "../dtos/income/incomeDto";
 
 export default class GoalsViewModel{
     
@@ -58,7 +59,13 @@ export default class GoalsViewModel{
             return ErrorMessage.errorMessageFromString(response.error);
         }
         return response;
-
+    }
+    async getGoalPayments(id: string): Promise<IncomeDto[] | ErrorMessage> {
+        const response = await goalService.getGoalPayments(id);
+        if (response && typeof response === 'object' && 'error' in response) {
+            return ErrorMessage.errorMessageFromString(response.error);
+        }
+        return response;
     }
 
 }
