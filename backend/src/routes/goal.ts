@@ -16,6 +16,7 @@ const goalRouter = express.Router();
 const goalRepository = new GoalRepository();
 const goalService = new GoalService();
 
+
 goalRouter.get("/:id", jwtAuth, async (request: express.Request | any, response: express.Response) => {
     const goalId = request.params.id;
     if (!isObjectIdValid(goalId)) {
@@ -37,6 +38,25 @@ goalRouter.get("/:id", jwtAuth, async (request: express.Request | any, response:
     response.send(GoalMapper.ToGoalDto(goal));
 })
 
+goalRouter.get("/:id/incomes", jwtAuth, async (request: express.Request | any, response: express.Response) => {
+    const goalId = request.params.id;
+    if (!isObjectIdValid(goalId)) {
+        return response.status(400).send(ErrorMessage.ObjectIdError);
+    }
+
+    let incomes: Income[];
+
+    try {
+        incomes = await goalRepository.getGoalIncomes(goalId, request.account._id);
+    }
+    catch (error) {
+        if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
+        else return response.status(500).send(ErrorMessage.ServerError);
+    }
+
+    response.send(incomes.map(income => IncomeMapper.ToIncomeDto(income)));
+})
+
 goalRouter.get("/", jwtAuth, async (request: express.Request | any, response: express.Response) => {
     let goals: Goal[];
 
@@ -54,6 +74,9 @@ goalRouter.get("/", jwtAuth, async (request: express.Request | any, response: ex
 
     response.send(goals.map(goal => GoalMapper.ToGoalDto(goal)));
 })
+
+
+
 
 
 goalRouter.post("/", jwtAuth, async (request: express.Request | any, response: express.Response) => {
