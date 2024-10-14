@@ -32,12 +32,12 @@ export default class SubscriptionMapper {
         subscription.category = addSubscriptionDto.category?.toLowerCase()!
         subscription.description = addSubscriptionDto.description!
         subscription.installmentIntervalDays = addSubscriptionDto.installmentIntervalDays!
-        subscription.initialPaymentDate = addSubscriptionDto.initialPaymentDate!
         subscription.name = addSubscriptionDto.name!
         subscription.remindBeforeDays = addSubscriptionDto.remindBeforeDays!
         subscription.isRecurringIndefinitely = addSubscriptionDto.isRecurringIndefinitely!
         subscription.totalInstallments = addSubscriptionDto.totalInstallments!
         subscription.completedInstallments = 0;
+        subscription.initialPaymentDate = new Date();
 
         return subscription;
     }
