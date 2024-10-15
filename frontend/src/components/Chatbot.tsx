@@ -68,9 +68,10 @@ const Chatbot: React.FC = () => {
       fetchData();
       setTooltipVisible(true);
     } else {
+      fetchData();
       setTooltipVisible(false);
     }
-  }, []);
+  }, [location]);
 
   useEffect(() => {
     const calculateTotalsAndSavings = () => {
@@ -162,15 +163,21 @@ const Chatbot: React.FC = () => {
     }, 0);
     const totalGoalExpenses = goals.reduce((total, goal) => total + (goal.currentAmount || 0), 0);
     
-    const prompt = `You are a professional financial manager. Here are the details of my finances:\n\n` +
-    `Total Income: $${totalIncome.toFixed(2)}\n` +
-    `Total Expenses: $${totalExpenses.toFixed(2)}\n` +
-    `Total Subscriptions: $${totalSubscriptions.toFixed(2)}\n` +
-    `Total Goal Expenses: $${totalGoalExpenses.toFixed(2)}\n` +
-    `Expense Percentage: ${expensePercentage.toFixed(2)}%\n\n` +
-    `Please provide suggestions on how to improve my financial situation without asking any question 
-    or denying give any information.don't suggest other apps.also send reply using markdown format using point architecture
-    only send the point without any other text.`;
+    const prompt = `You are a personal financial advisor. Analyze the following financial data for your client:
+
+    Total Income: $${totalIncome.toFixed(2)}
+    Total Expenses: $${totalExpenses.toFixed(2)}
+    Total Subscriptions: $${totalSubscriptions.toFixed(2)}
+    Total Goal Expenses: $${totalGoalExpenses.toFixed(2)}
+    Expense vs income ratio Percentage: ${expensePercentage.toFixed(2)}%
+    
+    Based solely on these specific numbers:
+    1. Identify potential areas of concern or imbalance in the client's financial situation.
+    2. Suggest 3-5 actionable steps to improve their financial health, addressing the unique aspects of their income-expense ratio and savings goals.
+    3. Provide tailored advice on budgeting, considering the proportion of expenses and subscriptions to income.
+    4. If applicable, recommend strategies for better aligning their current spending with their financial goals.
+    
+    Format your response in Markdown, using bullet points for clarity. Focus exclusively on insights derivable from the provided data, avoiding generic financial advice or assumptions about the client's situation beyond what's presented.`;
 
     try {
       const response = await Api.post<AiResponse>('ai/suggestions', {
