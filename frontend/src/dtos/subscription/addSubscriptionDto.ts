@@ -5,7 +5,6 @@ class AddSubscriptionDto {
     category?: string = "subscription";
     description?: string
     amount?: number
-    currencyType?: string = "LKR";
     installmentIntervalDays?: number = 1
     totalInstallments?: number
     isRecurringIndefinitely?: boolean = false
@@ -18,7 +17,6 @@ export function validateAddSubscriptionDto(addSubscriptionDto: AddSubscriptionDt
         category: Joi.string().min(2).max(50),
         description: Joi.string().min(5).max(250),
         amount: Joi.number().min(1).required(),
-        currencyType: Joi.string().min(2).max(10),
         installmentIntervalDays: Joi.number().integer().min(1),
         isRecurringIndefinitely: Joi.boolean(),
         totalInstallments: Joi.number().min(1).when("isRecurringIndefinitely", {
