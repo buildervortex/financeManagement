@@ -22,6 +22,7 @@ import GoalDetails from './pages/GoalDetails';
 import Notification from './pages/Notification';
 import LandingPage from './pages/LandingPage';
 import Profile from './pages/Profile';
+import Chatbot from './components/Chatbot';
 
 function App() {
   return (
@@ -65,7 +66,9 @@ function App() {
           <Route path="/updateGoal" element={<GoalUpdatePage />}></Route>
           <Route path="/Goal-details" element={<GoalDetails />}></Route>
           <Route path="/Profile" element={<Profile />}></Route>
+          
         </Routes>
+        <Chatbot />
       </div>
       <Footer />
     </Router>
