@@ -36,8 +36,8 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="/Notification" className="text-sm text-gray-500 hover:text-orange-400">
-                  Notifications
+                <a href="/Profile" className="text-sm text-gray-500 hover:text-orange-400">
+                  Profile
                 </a>
               </li>
               <li>
@@ -53,8 +53,8 @@ const Footer = () => {
             <h4 className="mb-4 text-lg font-semibold text-gray-700">Explore</h4>
             <ul className="space-y-2">
               <li>
-                <a href="/register" className="text-sm text-gray-500 hover:text-orange-400">
-                  Account Managment
+                <a href="/history" className="text-sm text-gray-500 hover:text-orange-400">
+                  History Managment
                 </a>
               </li>
               <li>
