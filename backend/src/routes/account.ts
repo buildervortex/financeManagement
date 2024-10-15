@@ -104,4 +104,21 @@ accountRouter.delete("/me", jwtAuth, async (request: express.Request | any, resp
     return response.send(AccountMapper.ToAccountDto(account));
 })
 
+accountRouter.get("/me", jwtAuth, async (request: express.Request | any, response: express.Response) => {
+    let account: Account;
+
+    try {
+        account = await accountRespository.getAccount(request.account._id);
+    }
+    catch (error) {
+        if (error instanceof Error) return response.status(400).send(ErrorMessage.errorMessageFromString(error.message));
+        else return response.status(500).send(ErrorMessage.ServerError);
+    }
+    if (!account) {
+        return response.status(500).send(ErrorMessage.ServerError);
+    }
+
+    return response.send(AccountMapper.ToAccountDto(account));
+})
+
 export default accountRouter;

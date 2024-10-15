@@ -1,8 +1,9 @@
 import Groq from 'groq-sdk';
+import c from "config";
 
 const fetchSuggestionsFromGroq = async (prompt: string): Promise<string> => {
   const groq = new Groq({
-    apiKey: process.env.GROQ_API_KEY,
+    apiKey: c.get("grogApiKey"),
   });
 
   try {

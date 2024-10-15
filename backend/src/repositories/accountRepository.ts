@@ -2,6 +2,14 @@ import IAccountRepository from "../interfaces/accountRepository";
 import Account from "../model/account";
 
 export default class AccountRepository implements IAccountRepository {
+    async getAccount(accountId: string): Promise<Account> {
+        let account = await Account.findById(accountId);
+        if (!account) {
+            throw new Error("Account not found")
+        }
+
+        return account
+    }
 
     async createAccount(account: Account): Promise<Account> {
         let existingUser = await Account.findOne({ email: account.email });
@@ -33,4 +41,6 @@ export default class AccountRepository implements IAccountRepository {
 
         return existingAccount;
     }
+
+
 }
