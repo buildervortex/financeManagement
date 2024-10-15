@@ -11,6 +11,11 @@ import IncomeDto from "../dtos/income/incomeDto";
 import ErrorMessage from "../viewModels/error";
 import { handleErrorResult } from "../utils/errorMessage";
 import { FaRobot } from "react-icons/fa";
+import Api from "../services/api";
+
+interface AiResponse {
+  message: string;
+}
 
 const Chatbot: React.FC = () => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
@@ -184,25 +189,21 @@ const Chatbot: React.FC = () => {
     `Total Goal Expenses: $${totalGoalExpenses.toFixed(2)}\n` +
     `Expense Percentage: ${expensePercentage.toFixed(2)}%\n\n` +
     `Expense Categories:\n` +
-    Object.entries(expenseCategoryData).map(([category, amount]) => `${category}: $${amount}`).join('\n') + `\n\n` +
+    expenseCategoryData.map(({ name, value }) => `${name}: $${value}`).join('\n') + `\n\n` +
     `Subscription Categories:\n` +
-    Object.entries(subscriptionCategoryData).map(([category, amount]) => `${category}: $${amount}`).join('\n') + `\n\n` +
+    subscriptionCategoryData.map(({ name, value }) => `${name}: $${value}`).join('\n') + `\n\n` +
     `Please provide suggestions on how to improve my financial situation.`;
 
     try {
-      const response = await fetch('/api/v1/ai/suggestions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ prompt }),
+      const response = await Api.post<AiResponse>('ai/suggestions', {
+        prompt
       });
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error("Failed to fetch suggestions");
       }
-
-      const data = await response.json();
+    
+      const data = response.data;
       setAiResponse(data.message || "No suggestions available");
       setModalVisible(true);
     } catch (error) {
