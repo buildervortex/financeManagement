@@ -4,6 +4,7 @@ import { handleErrorResult, handleSuccessResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
 import NotificationViewModel from '../viewModels/NotificationViewModel';
 import { useNavigate } from 'react-router-dom';
+import { FaUserCircle } from 'react-icons/fa';
 
 const Notification: FunctionComponent = () => {
   const [notifications, setNotifications] = useState<NotificationDto[]>([]);
@@ -34,7 +35,7 @@ const Notification: FunctionComponent = () => {
       handleErrorResult(result);
     } else {
       handleSuccessResult('Operation Completed Successfully');
-      fetchNotifications(); // Refetch to update the list
+      fetchNotifications(); 
     }
   };
 
@@ -45,12 +46,12 @@ const Notification: FunctionComponent = () => {
       handleErrorResult(result);
     } else {
       handleSuccessResult('Notification Deleted Successfully');
-      fetchNotifications(); // Refetch to update the list
+      fetchNotifications(); 
     }
   };
 
   const clearAllNotifications = async () => {
-    // Clear all logic (not implemented in the original)
+    // Add functionality for clearing all notifications
   };
 
   const formatDate = (date: Date | undefined) => {
@@ -61,13 +62,30 @@ const Notification: FunctionComponent = () => {
     });
   };
 
-  // Filter notifications into two categories
   const unreadNotifications = notifications.filter((notification) => !notification.read);
   const readNotifications = notifications.filter((notification) => notification.read);
 
   return (
     <div className="max-w-4xl mx-auto p-8 mb-16">
-      {/* Unread Notifications Section */}
+      {/* Header with Enhanced Profile Button */}
+      <div className="flex justify-between items-center mb-6">
+        <button
+          onClick={() => navigate('/profile')} // Navigate to profile page
+          className="flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200 rounded-lg border-2 border-transparent p-2"
+        >
+          <div className="relative flex items-center justify-center bg-gray-200 rounded-full w-10 h-10 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <FaUserCircle size={24} className="text-gray-600" />
+            {/* Optional Badge for Notifications */}
+            {unreadNotifications.length > 0 && (
+              <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
+                {unreadNotifications.length}
+              </span>
+            )}
+          </div>
+          <span className="ml-2">Profile</span>
+        </button>
+      </div>
+
       <div className="mt-8 w-full max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
         <div className="flex justify-between items-center mb-6 border-b pb-4">
           <h2 className="text-xl font-semibold text-gray-800">Your Notifications</h2>
@@ -85,9 +103,7 @@ const Notification: FunctionComponent = () => {
               <li
                 key={notification._id}
                 onClick={() => handleItemClick(notification)}
-                className={`bg-gray-50 rounded-md p-4 hover:bg-gray-100 transition-colors duration-200 cursor-pointer border-l-4 ${
-                  notification.read ? 'border-gray-300' : 'border-blue-500'
-                }`}
+                className={`bg-gray-50 rounded-md p-4 hover:bg-gray-100 transition-colors duration-200 cursor-pointer border-l-4 ${notification.read ? 'border-gray-300' : 'border-blue-500'}`}
               >
                 <div className="flex justify-between items-center">
                   <div>
