@@ -1,7 +1,7 @@
 import express from "express"
 import jwtAuth from "../middleware/jwtAuth";
 import ErrorMessage from "../model/error";
-import fetchSuggestionsFromGemini from "../services/aiServices";
+import fetchSuggestionsFromGroq from "../services/aiServices";
 
 const aiRouter = express.Router();
 aiRouter.post("/suggestions", jwtAuth, async (request, response) => {
@@ -12,7 +12,7 @@ aiRouter.post("/suggestions", jwtAuth, async (request, response) => {
     }
 
     try {
-        const suggestion = await fetchSuggestionsFromGemini(prompt);
+        const suggestion = await fetchSuggestionsFromGroq(prompt);
         response.send(suggestion);
     } catch (error) {
         if (error instanceof Error){
