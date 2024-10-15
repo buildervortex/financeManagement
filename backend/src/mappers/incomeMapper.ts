@@ -7,7 +7,7 @@ export default class IncomeMapper {
     static ToIncomeDto(income: Income): IncomeDto {
         const incomeDto = new IncomeDto();
 
-        incomeDto.id = income.id;
+        incomeDto.id = income._id.toString();
         incomeDto.description = income.description;
         incomeDto.amount = income.amount;
         incomeDto.monthly = income.monthly;

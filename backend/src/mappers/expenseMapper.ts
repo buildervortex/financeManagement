@@ -10,7 +10,7 @@ export default class ExpenseMapper {
         expenseDto.amount = expense.amount;
         expenseDto.category = expense.category;
         expenseDto.description = expense.description;
-        expenseDto.id = expense.id;
+        expenseDto.id = expense._id.toString();
         expenseDto.name = expense.name;
         expenseDto.paymentDate = expense.paymentDate;
         expenseDto.paid = expense.paid;
