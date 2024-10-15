@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import ReactMarkdown from 'react-markdown';
+import { FaRobot } from "react-icons/fa";
 import IncomeViewModel from "../viewModels/IncomeViewModel";
 import ExpenseViewModel from "../viewModels/ExpenseViewModel";
 import GoalViewModel from "../viewModels/GoalsViewModel";
@@ -10,7 +12,6 @@ import GoalDto from "../dtos/goal/goalDto";
 import IncomeDto from "../dtos/income/incomeDto";
 import ErrorMessage from "../viewModels/error";
 import { handleErrorResult } from "../utils/errorMessage";
-import { FaRobot } from "react-icons/fa";
 import Api from "../services/api";
 
 interface AiResponse {
@@ -30,7 +31,6 @@ const Chatbot: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [aiResponse, setAiResponse] = useState("");
 
-  // Timer ID state
   const [tooltipTimer, setTooltipTimer] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -70,7 +70,7 @@ const Chatbot: React.FC = () => {
     } else {
       setTooltipVisible(false);
     }
-  }, [location]);
+  }, []);
 
   useEffect(() => {
     const calculateTotalsAndSavings = () => {
@@ -144,33 +144,13 @@ const Chatbot: React.FC = () => {
 
   const getButtonColor = () => {
     if (expensePercentage > 60) {
-      return "bg-red-500"; // Danger color
+      return "bg-red-500";
     } else if (expensePercentage > 30) {
-      return "bg-orange-500"; // Warning color
+      return "bg-orange-500";
     } else {
-      return "bg-blue-500"; // Safe color
+      return "bg-blue-500";
     }
   };
-
-  const expenseCategories = expenses.reduce((acc, expense) => {
-    const category = expense.category || "Uncategorized";
-    acc[category] = (acc[category] || 0) + (expense.amount || 0);
-    return acc;
-  }, {} as Record<string, number>);
-
-  const subscriptionCategories = subscriptions.reduce((acc, subscription) => {
-    const category = subscription.category || "Uncategorized";
-    acc[category] = (acc[category] || 0) + (subscription.amount || 0);
-    return acc;
-  }, {} as Record<string, number>);
-
-  const subscriptionCategoryData = Object.entries(subscriptionCategories).map(
-    ([name, value]) => ({ name, value })
-  );
-
-  const expenseCategoryData = Object.entries(expenseCategories).map(
-    ([name, value]) => ({ name, value })
-  );
 
   const handleAskAi = async () => {
     const totalIncome = incomes.reduce((total, income) => total + income.amount, 0);
@@ -188,23 +168,15 @@ const Chatbot: React.FC = () => {
     `Total Subscriptions: $${totalSubscriptions.toFixed(2)}\n` +
     `Total Goal Expenses: $${totalGoalExpenses.toFixed(2)}\n` +
     `Expense Percentage: ${expensePercentage.toFixed(2)}%\n\n` +
-    `Expense Categories:\n` +
-    expenseCategoryData.map(({ name, value }) => `${name}: $${value}`).join('\n') + `\n\n` +
-    `Subscription Categories:\n` +
-    subscriptionCategoryData.map(({ name, value }) => `${name}: $${value}`).join('\n') + `\n\n` +
-    `Please provide suggestions on how to improve my financial situation.`;
+    `Please provide suggestions on how to improve my financial situation without asking any question 
+    or denying give any information.don't suggest other apps.also send reply using markdown format using point architecture
+    only send the point without any other text.`;
 
     try {
       const response = await Api.post<AiResponse>('ai/suggestions', {
-        prompt
+        prompt: prompt
       });
-
-      if (response.status !== 200) {
-        throw new Error("Failed to fetch suggestions");
-      }
-    
-      const data = response.data;
-      setAiResponse(data.message || "No suggestions available");
+      setAiResponse(response.data.message || "No suggestions available");
       setModalVisible(true);
     } catch (error) {
       console.error("Error fetching AI suggestions:", error);
@@ -231,7 +203,7 @@ const Chatbot: React.FC = () => {
         <div
           onMouseEnter={() => setTooltipVisible(true)}
           onMouseLeave={handleMouseLeaveButton} 
-          className={`${getButtonColor()} text-white rounded-full p-3 shadow-lg focus:outline-none transition duration-300 hover:shadow-xl`}
+          className={`${getButtonColor()} text-white rounded-full p-3 shadow-lg focus:outline-none transition duration-300 hover:shadow-xl cursor-pointer`}
         >
           <FaRobot className="text-2xl" />
         </div>
@@ -254,16 +226,31 @@ const Chatbot: React.FC = () => {
       </div>
 
       {modalVisible && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white rounded-lg p-6 shadow-lg max-w-md w-full">
-            <h2 className="text-xl font-semibold mb-4">AI Suggestions</h2>
-            <p>{aiResponse}</p>
-            <button
-              onClick={() => setModalVisible(false)}
-              className="mt-4 w-full bg-red-500 text-white rounded-md px-4 py-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300"
-            >
-              Close
-            </button>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
+            <div className="flex justify-between items-center p-4 border-b">
+              <h2 className="text-xl font-semibold">AI Financial Suggestions</h2>
+              <button 
+                onClick={() => setModalVisible(false)} 
+                className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
+              >
+                &times;
+              </button>
+            </div>
+            <div className="overflow-y-auto p-4 flex-grow">
+              
+              <div className="mt-4 prose prose-sm max-w-none">
+                <ReactMarkdown>{aiResponse}</ReactMarkdown>
+              </div>
+            </div>
+            <div className="p-4 border-t">
+              <button
+                onClick={() => setModalVisible(false)}
+                className="w-full bg-blue-500 text-white rounded-md px-4 py-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
