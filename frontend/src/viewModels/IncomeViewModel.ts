@@ -61,6 +61,7 @@ export default class IncomeViewModel {
         }
         return response;
     }
+    
     async getIncomesInRange(incomeRangeDto: IncomeRangeDto): Promise<IncomeDto[] | ErrorMessage> {
         const { error } = validateIncomeRangeDto(incomeRangeDto);
         if (error)

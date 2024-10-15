@@ -11,7 +11,6 @@ const SubscriptionAdd: FunctionComponent<AddSubscriptionProps> = () => {
   const [category, setCategory] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [amount, setAmount] = useState<number>(0);
-  const [initialPaymentDate, setInitialPaymentDate] = useState<Date>();
   const [installmentIntervalDays, setInstallmentIntervalDays] = useState<number>(1);
   const [totalInstallments, setTotalInstallments] = useState<number>();
   const [isRecurringIndefinitely, setIsRecurringIndefinitely] = useState<boolean>(false);
@@ -25,7 +24,6 @@ const SubscriptionAdd: FunctionComponent<AddSubscriptionProps> = () => {
     addSubscriptionDto.category = category;
     addSubscriptionDto.description = description;
     addSubscriptionDto.amount = amount;
-    addSubscriptionDto.initialPaymentDate = initialPaymentDate;
     addSubscriptionDto.installmentIntervalDays = installmentIntervalDays;
     addSubscriptionDto.totalInstallments = totalInstallments;
     addSubscriptionDto.isRecurringIndefinitely = isRecurringIndefinitely;
@@ -43,7 +41,6 @@ const SubscriptionAdd: FunctionComponent<AddSubscriptionProps> = () => {
     setCategory("");
     setDescription("");
     setAmount(0);
-    setInitialPaymentDate(undefined);
     setInstallmentIntervalDays(1);
     setTotalInstallments(undefined);
     setIsRecurringIndefinitely(false);
@@ -107,19 +104,6 @@ const SubscriptionAdd: FunctionComponent<AddSubscriptionProps> = () => {
                 placeholder="Enter Amount"
                 value={amount}
                 onChange={(e) => setAmount(parseFloat(e.target.value))}
-                required
-              />
-            </div>
-
-            <div>
-              <label htmlFor="initialPaymentDate" className="block mb-2 text-sm font-medium text-gray-900">Initial Payment Date</label>
-              <input
-                type="date"
-                name="initialPaymentDate"
-                id="initialPaymentDate"
-                className="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5"
-                value={initialPaymentDate?.toISOString().split('T')[0]}
-                onChange={(e) => setInitialPaymentDate(new Date(e.target.value))}
                 required
               />
             </div>

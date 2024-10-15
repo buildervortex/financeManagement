@@ -12,6 +12,7 @@
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.5",
+    "date-fns": "^4.1.0",
     "joi": "^17.13.3",
     "postcss": "^8.4.41",
     "react": "^18.3.1",
