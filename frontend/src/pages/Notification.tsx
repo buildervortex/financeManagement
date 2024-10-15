@@ -1,15 +1,31 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaSignOutAlt } from 'react-icons/fa';
 import NotificationDto from '../dtos/notification/notification';
+import AccountDto from '../dtos/account/accountDto';
+import AccountViewModel from '../viewModels/AccountViewModel';
 import { handleErrorResult, handleSuccessResult } from '../utils/errorMessage';
 import ErrorMessage from '../viewModels/error';
 import NotificationViewModel from '../viewModels/NotificationViewModel';
-import { useNavigate } from 'react-router-dom';
-import { FaUserCircle } from 'react-icons/fa';
 
 const Notification: FunctionComponent = () => {
   const [notifications, setNotifications] = useState<NotificationDto[]>([]);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [account, setAccount] = useState<AccountDto | ErrorMessage>();
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchAccount = async () => {
+      const result: AccountDto | ErrorMessage = await new AccountViewModel().getAccount();
+      if (result instanceof ErrorMessage) {
+        handleErrorResult(result);
+      } else {
+        setAccount(result);
+      }
+    }
+    fetchAccount();
+  }, []);
 
   useEffect(() => {
     fetchNotifications();
@@ -62,31 +78,47 @@ const Notification: FunctionComponent = () => {
     });
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('jwtToken');
+    navigate('/login');
+  };
+
   const unreadNotifications = notifications.filter((notification) => !notification.read);
   const readNotifications = notifications.filter((notification) => notification.read);
 
+  // Type guard to check if account is an AccountDto
+  const isAccountDto = (account: AccountDto | ErrorMessage | undefined): account is AccountDto => {
+    return account !== undefined && (account as AccountDto).userName !== undefined;
+  };
+  
   return (
     <div className="max-w-4xl mx-auto p-8 mb-16">
-      {/* Header with Enhanced Profile Button */}
-      <div className="flex justify-between items-center mb-6">
-        <button
-          onClick={() => navigate('/profile')} // Navigate to profile page
-          className="flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200 rounded-lg border-2 border-transparent p-2"
-        >
-          <div className="relative flex items-center justify-center bg-gray-200 rounded-full w-10 h-10 shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <FaUserCircle size={24} className="text-gray-600" />
-            {/* Optional Badge for Notifications */}
-            {unreadNotifications.length > 0 && (
-              <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
-                {unreadNotifications.length}
-              </span>
-            )}
+      {/* Header with Enhanced Profile Section */}
+      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <img
+              src={`https://ui-avatars.com/api/?name=${encodeURIComponent(isAccountDto(account) ? account.userName : 'User Name')}&size=64`}
+              alt="User Avatar"
+              className="w-16 h-16 rounded-full"
+            />
+            <div>
+              <h2 className="text-xl font-semibold text-gray-800">{isAccountDto(account) ? account.userName : 'User Name'}</h2>
+              <p className="text-sm text-gray-600">{isAccountDto(account) ? account.email : 'user@example.com'}</p>
+            </div>
           </div>
-          <span className="ml-2">Profile</span>
-        </button>
+          <button
+            onClick={handleLogout}
+            className="flex items-center space-x-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition-colors duration-200"
+          >
+            <FaSignOutAlt />
+            <span>Logout</span>
+          </button>
+        </div>
       </div>
 
-      <div className="mt-8 w-full max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
+      {/* Notifications Section */}
+      <div className="bg-white rounded-lg shadow-md p-6">
         <div className="flex justify-between items-center mb-6 border-b pb-4">
           <h2 className="text-xl font-semibold text-gray-800">Your Notifications</h2>
           <button
@@ -144,7 +176,7 @@ const Notification: FunctionComponent = () => {
       </div>
 
       {/* Read Notifications Section (History) */}
-      <div className="mt-12 w-full max-w-3xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
+      <div className="mt-8 bg-gray-100 rounded-lg shadow-md p-6">
         <h2 className="text-xl font-semibold text-gray-800 mb-6">History</h2>
         {readNotifications.length > 0 ? (
           <ul className="space-y-4">
@@ -152,7 +184,7 @@ const Notification: FunctionComponent = () => {
               <li
                 key={notification._id}
                 onClick={() => handleItemClick(notification)}
-                className="bg-gray-50 rounded-md p-4 hover:bg-gray-100 transition-colors duration-200 cursor-pointer border-l-4 border-gray-300"
+                className="bg-white rounded-md p-4 hover:bg-gray-50 transition-colors duration-200 cursor-pointer border-l-4 border-gray-300"
               >
                 <div className="flex justify-between items-center">
                   <div>

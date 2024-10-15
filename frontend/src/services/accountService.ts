@@ -14,4 +14,9 @@ export default class AccountService {
         const response = await Api.post<any>("/accounts/login", loginAccountDto);
         return Cast.errorMessageCast(response);
     }
+
+    static async getAccount(): Promise<AccountDto | ErrorMessage> {
+        const response = await Api.get<AccountDto | ErrorMessage>("/accounts/me");
+        return Cast.errorMessageCast(response);
+    }
 }

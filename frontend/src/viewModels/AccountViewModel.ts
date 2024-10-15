@@ -28,4 +28,12 @@ export default class AccountViewModel {
         }
         return response;
     }
+
+    async getAccount(): Promise<AccountDto | ErrorMessage> {
+        const response = await AccountService.getAccount();
+        if (response && typeof response === 'object' && 'error' in response) {
+            return ErrorMessage.errorMessageFromString(response.error);
+        }
+        return response;
+    }
 }

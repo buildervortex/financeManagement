@@ -21,7 +21,7 @@ const NavBar = () => {
   const Links = [
     { name: "Home", link: "/" },
     { name: "Dashboard", link: "/dashboard" },
-    { name: "Notifications", link: "/notification" },
+    { name: "Profile", link: "/Profile" },
     { name: "Contact Us", link: "/contact" },
   ];
 

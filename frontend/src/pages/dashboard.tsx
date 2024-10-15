@@ -447,7 +447,8 @@ const Dashboard = () => {
       </div>
 
       {/* Line Chart takes full 3 columns */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 mb-2">
+      <div className="grid grid-cols-1 lg:grid-cols-3 mb-2 gap-6">
+
       <div className="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
       <h2 className="text-xl font-semibold mb-4 text-gray-800">
           {activeSlide === 0 

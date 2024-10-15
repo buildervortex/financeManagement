@@ -21,7 +21,6 @@ import ContactForm from './pages/contact';
 import GoalDetails from './pages/GoalDetails';
 import Notification from './pages/Notification';
 import LandingPage from './pages/LandingPage';
-import Profile from './pages/Profile';
 import Chatbot from './components/Chatbot';
 import History from './pages/History';
 
@@ -36,7 +35,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
           <Route path="/register" element={<AccountRegisterPage></AccountRegisterPage>}></Route>
           <Route path="/Subscription-details" element={<SusbcriptionDetails />}></Route>
-          <Route path="/notification" element={<Notification />}></Route>
+          <Route path="/Profile" element={<Notification />}></Route>
           <Route
             path="/register"
             element={<AccountRegisterPage></AccountRegisterPage>}
@@ -66,7 +65,6 @@ function App() {
           <Route path="/addGoalPayment" element={<AddGoalPayment />}></Route>
           <Route path="/updateGoal" element={<GoalUpdatePage />}></Route>
           <Route path="/Goal-details" element={<GoalDetails />}></Route>
-          <Route path="/Profile" element={<Profile />}></Route>
           <Route path='/History' element={<History />}></Route>
         </Routes>
         <Chatbot />
