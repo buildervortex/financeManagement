@@ -143,9 +143,9 @@ const Chatbot: React.FC = () => {
   }, [incomes, expenses, subscriptions, goals]);
 
   const getButtonColor = () => {
-    if (expensePercentage > 60) {
+    if (expensePercentage > 80) {
       return "bg-red-500";
-    } else if (expensePercentage > 30) {
+    } else if (expensePercentage > 60) {
       return "bg-orange-500";
     } else {
       return "bg-blue-500";
