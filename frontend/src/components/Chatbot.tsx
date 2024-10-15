@@ -139,11 +139,11 @@ const Chatbot: React.FC = () => {
 
   const getButtonColor = () => {
     if (expensePercentage > 60) {
-      return "bg-red-600"; // Danger color
+      return "bg-red-500"; // Danger color
     } else if (expensePercentage > 30) {
-      return "bg-yellow-400"; // Warning color
+      return "bg-orange-500"; // Warning color
     } else {
-      return "bg-green-500"; // Safe color
+      return "bg-blue-500"; // Safe color
     }
   };
 
@@ -170,11 +170,11 @@ const Chatbot: React.FC = () => {
   const handleAskAi = async () => {
     const totalIncome = incomes.reduce((total, income) => total + income.amount, 0);
     const totalExpenses = expenses.reduce((total, expense) => {
-        return total + (expense.paid ? (expense.amount ?? 0) : 0);
-      }, 0);      
+      return total + (expense.paid ? (expense.amount ?? 0) : 0);
+    }, 0);      
     const totalSubscriptions = subscriptions.reduce((total, subscription) => {
-        return total + (subscription.amount ?? 0);
-      }, 0);
+      return total + (subscription.amount ?? 0);
+    }, 0);
     const totalGoalExpenses = goals.reduce((total, goal) => total + (goal.currentAmount || 0), 0);
     
     const prompt = `You are a professional financial manager. Here are the details of my finances:\n\n` +
@@ -213,13 +213,11 @@ const Chatbot: React.FC = () => {
   };
 
   const handleMouseLeaveButton = () => {
-    // Set a timer to hide the tooltip after 1 second
     const timer = setTimeout(() => setTooltipVisible(false), 1000);
     setTooltipTimer(timer);
   };
 
   const handleMouseEnterTooltip = () => {
-    // If the mouse enters the tooltip, clear the timer
     if (tooltipTimer) {
       clearTimeout(tooltipTimer);
       setTooltipTimer(null);
@@ -227,31 +225,29 @@ const Chatbot: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-14 right-14">
+    <div className="fixed bottom-14 right-14 z-50">
       <div className="relative">
         <div
           onMouseEnter={() => setTooltipVisible(true)}
-          onMouseLeave={handleMouseLeaveButton} // Change this line to use the new handler
-          className={`${getButtonColor()} text-white rounded-full p-4 shadow-lg focus:outline-none transition duration-300`}
+          onMouseLeave={handleMouseLeaveButton} 
+          className={`${getButtonColor()} text-white rounded-full p-3 shadow-lg focus:outline-none transition duration-300 hover:shadow-xl`}
         >
-          <FaRobot />
+          <FaRobot className="text-2xl" />
         </div>
 
         {tooltipVisible && (
           <div 
-            onMouseEnter={handleMouseEnterTooltip} // Add this handler for the tooltip
-            onMouseLeave={() => setTooltipVisible(false)} // Hide tooltip when not hovering
-            className="absolute bottom-14 left-0 bg-white text-black rounded-lg p-4 shadow-lg transition-opacity duration-200"
+            onMouseEnter={handleMouseEnterTooltip} 
+            onMouseLeave={() => setTooltipVisible(false)} 
+            className="absolute bottom-14 right-0 bg-white text-black rounded-lg p-3 shadow-lg transition-opacity duration-200 w-64"
           >
-            <div className="relative">
-              <p className="font-semibold">{savingsMessage}</p>
-              <button
-                onClick={handleAskAi}
-                className="mt-2 bg-blue-500 text-white rounded px-2 py-1 transition hover:bg-blue-700"
-              >
-                Ask AI
-              </button>
-            </div>
+            <p className="font-semibold text-lg">{savingsMessage}</p>
+            <button
+              onClick={handleAskAi}
+              className="mt-2 w-full bg-gray-600 text-white rounded-md p-2 transition hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
+            >
+              AI Suggestions
+            </button>
           </div>
         )}
       </div>
@@ -263,7 +259,7 @@ const Chatbot: React.FC = () => {
             <p>{aiResponse}</p>
             <button
               onClick={() => setModalVisible(false)}
-              className="mt-4 bg-red-500 text-white rounded px-4 py-2 hover:bg-red-700"
+              className="mt-4 w-full bg-red-500 text-white rounded-md px-4 py-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300"
             >
               Close
             </button>
