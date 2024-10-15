@@ -4,6 +4,7 @@ import compression from 'compression';
 import morgan from 'morgan';
 import cors from 'cors'
 
+import aiRouter from '../routes/ai';
 import incomeRouter from '../routes/income';
 import accountRouter from '../routes/account';
 import expenseRouter from '../routes/expense';
@@ -43,4 +44,5 @@ export default function configRoute(app: Application) {
     app.use("/api/v1/expenses", expenseRouter)
     app.use("/api/v1/subscriptions", subscriptionRouter)
     app.use("/api/v1/goals", goalRouter)
+    app.use("/api/v1/ai", aiRouter)
 }
