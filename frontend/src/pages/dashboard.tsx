@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {
   FaMoneyBillWave,
   FaFileInvoiceDollar,
@@ -27,7 +29,8 @@ import {
   endOfMonth,
   isValid,
   subDays,
-  isBefore
+  isBefore,
+  isAfter,
 } from "date-fns";
 import IncomeViewModel from "../viewModels/IncomeViewModel";
 import ExpenseViewModel from "../viewModels/ExpenseViewModel";
@@ -59,6 +62,17 @@ const Dashboard = () => {
       subscription: number;
     }>
   >([]);
+
+  const [filteredMonthlyChartData, setFilteredMonthlyChartData] = useState<
+    Array<{
+      date: string;
+      income: number;
+      expense: number;
+      subscription: number;
+    }>
+  >([]);
+
+  const [activeSlide, setActiveSlide] = useState(0);
 
   const navigate = useNavigate();
 
@@ -243,7 +257,6 @@ const Dashboard = () => {
   }, [incomes, expenses, subscriptions, goals]);
 
   const COLORS = ["#007BFF", "#FFA500", "#0056b3", "#CC7A00"];
-  
 
   const overviewData = [
     { name: "Expenses", value: totalExpenses },
@@ -309,8 +322,8 @@ const Dashboard = () => {
   const needle = (value: number) => {
     const length = (iR + 2 * oR) / 3;
     const angle = 180 - value * 1.8;
-    const sin = Math.sin(-angle * Math.PI / 180);
-    const cos = Math.cos(-angle * Math.PI / 180);
+    const sin = Math.sin((-angle * Math.PI) / 180);
+    const cos = Math.cos((-angle * Math.PI) / 180);
     const x0 = cx;
     const y0 = cy;
     const xEnd = x0 + length * cos;
@@ -319,7 +332,14 @@ const Dashboard = () => {
     return (
       <>
         <circle cx={x0} cy={y0} r={5} fill="#333" />
-        <line x1={x0} y1={y0} x2={xEnd} y2={yEnd} stroke="#333" strokeWidth={2} />
+        <line
+          x1={x0}
+          y1={y0}
+          x2={xEnd}
+          y2={yEnd}
+          stroke="#333"
+          strokeWidth={2}
+        />
       </>
     );
   };
@@ -335,10 +355,33 @@ const Dashboard = () => {
   ];
 
   const today = new Date();
-  const filteredMonthlyChartData = monthlyChartData.filter(data => {
-    const dataDate = new Date(today.getFullYear(), today.getMonth(), parseInt(data.date));
+  const pastChartData = monthlyChartData.filter((data) => {
+    const dataDate = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      parseInt(data.date)
+    );
     return isBefore(dataDate, today) || dataDate.getDate() === today.getDate();
   });
+
+  const futureChartData = monthlyChartData.filter((data) => {
+    const dataDate = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      parseInt(data.date)
+    );
+    return isAfter(dataDate, today);
+  });
+
+  // Handle chart data changes based on carousel item
+  const handleCarouselChange = (index: number) => {
+    setActiveSlide(index);
+    if (index === 0) {
+      setFilteredMonthlyChartData(pastChartData);
+    } else if (index === 1) {
+      setFilteredMonthlyChartData(futureChartData);
+    }
+  };
 
   return (
     <div className="px-12 py-6 min-h-screen bg-light-blue">
@@ -397,73 +440,136 @@ const Dashboard = () => {
 
       {/* Line Chart takes full 3 columns */}
       <div className="grid grid-cols-1 lg:grid-cols-3 mb-2">
-        <div className="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800">
-        Financial Overview - {format(new Date(), 'MMMM')}
-    </h2>
-          <ResponsiveContainer width="100%" height={300}>
-           <LineChart
-              data={filteredMonthlyChartData}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="income"
-                stroke="#007BFF"
-                name="Income"
-              />
-              <Line
-                type="monotone"
-                dataKey="expense"
-                stroke="#FFA500"
-                name="Expense"
-              />
-              <Line
-                type="monotone"
-                dataKey="subscription"
-                stroke="#0056b3"
-                name="Subscription"
-              />
-            </LineChart>
-          </ResponsiveContainer>
+      <div className="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
+      <h2 className="text-xl font-semibold mb-4 text-gray-800">
+          {activeSlide === 0 
+            ? `Financial Overview - ${format(new Date(), "MMMM yyyy")}`
+            : "Financial Overview - Upcoming"}
+        </h2>
+        <div className="relative">
+        <style>
+            {`
+              .carousel .control-dots .dot {
+                background: black !important;
+                box-shadow: none !important;
+                opacity: 0.5;
+              }
+              .carousel .control-dots .dot.selected {
+                opacity: 1;
+              }
+            `}
+          </style>
+          <Carousel
+            showThumbs={false}
+            onChange={handleCarouselChange}
+            showStatus={false}
+            infiniteLoop={true}
+            autoPlay={false}
+           
+          >
+            {/* First Slide: Past Data (1 to Today) */}
+            <div className="pb-10">
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart
+                  data={pastChartData}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="income"
+                    stroke="#007BFF"
+                    name="Income"
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="expense"
+                    stroke="#FFA500"
+                    name="Expense"
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="subscription"
+                    stroke="#0056b3"
+                    name="Subscription"
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Second Slide: Future Data (Tomorrow to End of Month) */}
+            <div className="pb-10">
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart
+                  data={futureChartData}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="income"
+                    stroke="#007BFF"
+                    name="Income"
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="expense"
+                    stroke="#FFA500"
+                    name="Expense"
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="subscription"
+                    stroke="#0056b3"
+                    name="Subscription"
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </Carousel>
         </div>
-      </div>
+      </div></div>
 
       {/* Single-column layout for pie and bar charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         {/* Pie Chart with Needle */}
         <div className="bg-white rounded-lg shadow-md p-6">
-  <h2 className="text-xl font-semibold text-center mb-4">Expense vs. Income Ratio</h2>
-  <ResponsiveContainer width="100%" height={250}>
-    <PieChart>
-      <Pie
-        data={expenseVsIncomeData}
-        cx={cx}
-        cy={cy}
-        innerRadius={iR}
-        outerRadius={oR}
-        startAngle={180}
-        endAngle={0}
-        fill="#8884d8"
-        dataKey="value"
-      >
-        {expenseVsIncomeData.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={entry.color} />
-        ))}
-      </Pie>
-      <Tooltip />
-      {needle(expensePercentage)}
-    </PieChart>
-  </ResponsiveContainer>
-  <div className="text-center mt-4">
-    <p>Expense Ratio: {expensePercentage.toFixed(2)}%</p>
-  </div>
-</div>
+          <h2 className="text-xl font-semibold text-center mb-4">
+            Expense vs. Income Ratio
+          </h2>
+          <ResponsiveContainer width="100%" height={250}>
+            <PieChart>
+              <Pie
+                data={expenseVsIncomeData}
+                cx={cx}
+                cy={cy}
+                innerRadius={iR}
+                outerRadius={oR}
+                startAngle={180}
+                endAngle={0}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {expenseVsIncomeData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+              <Tooltip />
+              {needle(expensePercentage)}
+            </PieChart>
+          </ResponsiveContainer>
+          <div className="text-center mt-4">
+            <p>Expense Ratio: {expensePercentage.toFixed(2)}%</p>
+          </div>
+        </div>
 
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-semibold mb-4 text-gray-800">
