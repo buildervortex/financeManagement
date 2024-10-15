@@ -292,7 +292,7 @@ const Dashboard = () => {
   }));
 
   const saving =
-    totalIncome > 0 ? totalIncome - totalExpenses - totalSubscriptions : 0;
+    totalIncome > 0 ? totalIncome - totalExpenses - totalSubscriptions -totalGoalExpenses : 0;
 
   const handleNavigation = (url: string) => {
     navigate(url);
@@ -430,11 +430,11 @@ const Dashboard = () => {
           <h3 className="text-lg font-semibold mb-2 text-dark-orange">
             Total Expenses
           </h3>
-          <p className="text-2xl font-bold">${totalExpenses.toFixed(2)}</p>
+          <p className="text-2xl font-bold">${(totalExpenses + totalSubscriptions).toFixed(2)}</p>
         </div>
         <div className="bg-light-orange shadow-md rounded-lg p-6 flex flex-col items-center justify-center">
           <h3 className="text-lg font-semibold mb-2 text-dark-orange">
-            Total Subscriptions
+            Total Goal Allocation
           </h3>
           <p className="text-2xl font-bold">${totalSubscriptions.toFixed(2)}</p>
         </div>
