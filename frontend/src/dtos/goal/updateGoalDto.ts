@@ -3,7 +3,6 @@ import Joi from "joi";
 class UpdateGoalDto {
     name?: string;
     description?: string;
-    currencyType?: string;
     remindBeforeDays?: number;
 }
 
@@ -11,7 +10,6 @@ export function validateUpdateGoalDto(updateGoalDto: UpdateGoalDto): Joi.Validat
     const schema = Joi.object({
         name: Joi.string().min(2).max(50).required(),
         description: Joi.string().min(5).max(250),
-        currencyType: Joi.string().min(2).max(10),
         remindBeforeDays: Joi.number().integer().min(1)
     })
     return schema.validate(updateGoalDto);

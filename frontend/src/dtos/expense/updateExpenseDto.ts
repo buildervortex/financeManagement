@@ -5,7 +5,6 @@ class UpdateExpenseDto {
     category?: string;
     description?: string
     amount?: number
-    currencyType?: string;
     paid?: boolean
 }
 
@@ -15,7 +14,6 @@ export function validateUpdateExpenseDto(updateExpenseDto: UpdateExpenseDto): Jo
         category: Joi.string().min(2).max(50),
         description: Joi.string().min(5).max(250),
         amount: Joi.number().min(1).required(),
-        currencyType: Joi.string().min(2).max(10),
         paid: Joi.boolean().required()
     })
 
