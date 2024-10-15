@@ -2,5 +2,6 @@
     "port": "4040",
     "name": "Finance Management Application",
     "jwtSymerticKey": "aksdjflkasjdfkajsdkfjaskdjfkasdjf",
-    "jwtEnable": true
+    "jwtEnable": true,
+    "grogApiKey": "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"
 }
