@@ -16,7 +16,6 @@ const ExpenseUpdatePage: FunctionComponent<updateExpensePageProps> = () => {
     const location = useLocation();
     const { expense } = location.state as LocationState;
 
-    // Provide default values to prevent issues when the fields are undefined
     const [name, setName] = useState<string>(expense.name || "");
     const [description, setDescription] = useState<string>(expense.description || "");
     const [amount, setAmount] = useState<number>(expense.amount || 0);
