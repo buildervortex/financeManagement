@@ -126,7 +126,7 @@ const History = () => {
 
     const savings = totalIncome - totalExpenses - totalSubscriptions - totalGoalExpenses;
 
-    return { totalIncome, totalExpenses, totalSubscriptions, savings };
+    return { totalIncome, totalExpenses, totalSubscriptions,totalGoalExpenses, savings };
   };
 
   const generateChartData = () => {
@@ -183,7 +183,7 @@ const History = () => {
     setSelectedDate(new Date(parseInt(year), parseInt(month) - 1, 1));
   };
 
-  const { totalIncome, totalExpenses, totalSubscriptions, savings } = calculateTotalsAndSavings();
+  const { totalIncome, totalExpenses, totalSubscriptions, totalGoalExpenses,savings } = calculateTotalsAndSavings();
 
   return (
     <>
@@ -218,7 +218,7 @@ const History = () => {
           <h3 className="text-lg font-semibold mb-2 text-dark-orange">
             Total Goal Allocation
           </h3>
-          <p className="text-2xl font-bold">${totalSubscriptions.toFixed(2)}</p>
+          <p className="text-2xl font-bold">${totalGoalExpenses.toFixed(2)}</p>
         </div>
         <div className="bg-light-blue shadow-md rounded-lg p-6 flex flex-col items-center justify-center">
           <h3 className="text-lg font-semibold mb-2 text-dark-blue">

@@ -436,7 +436,7 @@ const Dashboard = () => {
           <h3 className="text-lg font-semibold mb-2 text-dark-orange">
             Total Goal Allocation
           </h3>
-          <p className="text-2xl font-bold">${totalSubscriptions.toFixed(2)}</p>
+          <p className="text-2xl font-bold">${totalGoalExpenses.toFixed(2)}</p>
         </div>
         <div className="bg-light-blue shadow-md rounded-lg p-6 flex flex-col items-center justify-center">
           <h3 className="text-lg font-semibold mb-2 text-dark-blue">
@@ -596,7 +596,7 @@ const Dashboard = () => {
                 dataKey="value"
               >
                 {incomeVsSavingsData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS1.blue[index]} />
+                  <Cell key={`cell-${index}`} fill={COLORS[index+1]} />
                 ))}
               </Pie>
               <Tooltip />
