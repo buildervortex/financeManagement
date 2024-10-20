@@ -20,6 +20,9 @@ import {
   Line,
 } from "recharts";
 import { format, isAfter,  endOfMonth } from "date-fns";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import { FaDownload } from "react-icons/fa6";
 
 const History = () => {
   const [incomes, setIncomes] = useState<IncomeDto[]>([]);
@@ -185,72 +188,126 @@ const History = () => {
 
   const { totalIncome, totalExpenses, totalSubscriptions, totalGoalExpenses,savings } = calculateTotalsAndSavings();
 
+  const handleDownloadPDF = async () => {
+    const element = document.getElementById('report-content');
+    if (!element) return;
+  
+    try {
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        logging: false,
+        useCORS: true,
+      });
+  
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = pageWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  
+      pdf.setFontSize(16);
+      pdf.text(`Financial Report - ${format(selectedDate, "MMMM yyyy")}`, pageWidth / 2, 15, { align: 'center' });
+  
+      pdf.setFontSize(12);
+      const summaryText = [
+        `Total Income: $${totalIncome.toFixed(2)}`,
+        `Total Expenses: $${(totalExpenses + totalSubscriptions).toFixed(2)}`,
+        `Total Goal Allocation: $${totalGoalExpenses.toFixed(2)}`,
+        `Total Savings: $${savings.toFixed(2)}`
+      ];
+  
+      let yPos = 30;
+      summaryText.forEach(text => {
+        pdf.text(text, 20, yPos);
+        yPos += 8;
+      });
+  
+      pdf.addImage(imgData, 'PNG', 0, yPos, imgWidth, imgHeight);
+  
+      const fileName = `financial-report-${format(selectedDate, "MMM-yyyy")}.pdf`;
+      pdf.save(fileName);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
+  
   return (
     <>
-      <div className="mb-4">
-        <label htmlFor="month-picker" className="mr-2">
-          Select Month and Year:
-        </label>
-        <input
-          type="month"
-          id="month-picker"
-          value={format(selectedDate, "yyyy-MM")}
-          onChange={handleDateChange}
-          className="border rounded p-1"
-        />
+      <div className="flex justify-between items-center mb-4 ">
+        <div>
+          <label htmlFor="month-picker" className="mr-2">
+            Select Month and Year:
+          </label>
+          <input
+            type="month"
+            id="month-picker"
+            value={format(selectedDate, "yyyy-MM")}
+            onChange={handleDateChange}
+            className="border rounded p-1"
+          />
+        </div>
+        <button
+          onClick={handleDownloadPDF}
+          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+        >
+          <FaDownload /> Download Report
+        </button>
       </div>
 
-      {/* Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-light-blue shadow-md rounded-lg p-6 flex flex-col items-center justify-center">
-          <h3 className="text-lg font-semibold mb-2 text-dark-blue">
-            Total Income
-          </h3>
-          <p className="text-2xl font-bold">${totalIncome.toFixed(2)}</p>
+      <div id="report-content">
+        {/* Overview Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="bg-light-blue shadow-md rounded-lg p-6 flex flex-col items-center justify-center">
+            <h3 className="text-lg font-semibold mb-2 text-dark-blue">
+              Total Income
+            </h3>
+            <p className="text-2xl font-bold">${totalIncome.toFixed(2)}</p>
+          </div>
+          <div className="bg-light-orange shadow-md rounded-lg p-6 flex flex-col items-center justify-center">
+            <h3 className="text-lg font-semibold mb-2 text-dark-orange">
+              Total Expenses
+            </h3>
+            <p className="text-2xl font-bold">${(totalExpenses + totalSubscriptions).toFixed(2)}</p>
+          </div>
+          <div className="bg-light-orange shadow-md rounded-lg p-6 flex flex-col items-center justify-center">
+            <h3 className="text-lg font-semibold mb-2 text-dark-orange">
+              Total Goal Allocation
+            </h3>
+            <p className="text-2xl font-bold">${totalGoalExpenses.toFixed(2)}</p>
+          </div>
+          <div className="bg-light-blue shadow-md rounded-lg p-6 flex flex-col items-center justify-center">
+            <h3 className="text-lg font-semibold mb-2 text-dark-blue">
+              Total Saving
+            </h3>
+            <p className="text-2xl font-bold">${savings.toFixed(2)}</p>
+          </div>
         </div>
-        <div className="bg-light-orange shadow-md rounded-lg p-6 flex flex-col items-center justify-center">
-          <h3 className="text-lg font-semibold mb-2 text-dark-orange">
-            Total Expenses
-          </h3>
-          <p className="text-2xl font-bold">${(totalExpenses + totalSubscriptions).toFixed(2)}</p>
-        </div>
-        <div className="bg-light-orange shadow-md rounded-lg p-6 flex flex-col items-center justify-center">
-          <h3 className="text-lg font-semibold mb-2 text-dark-orange">
-            Total Goal Allocation
-          </h3>
-          <p className="text-2xl font-bold">${totalGoalExpenses.toFixed(2)}</p>
-        </div>
-        <div className="bg-light-blue shadow-md rounded-lg p-6 flex flex-col items-center justify-center">
-          <h3 className="text-lg font-semibold mb-2 text-dark-blue">
-            Total Saving
-          </h3>
-          <p className="text-2xl font-bold">${savings.toFixed(2)}</p>
-        </div>
-      </div>
 
-      {/* Line Chart */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 mb-2">
-        <div className="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800">
-            Financial Overview - {format(selectedDate, "MMMM yyyy")}
-          </h2>
-          <div className="relative">
-            <div className="pb-10">
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart
-                  data={chartData}
-                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="income" stroke="#007BFF" name="Income" />
-                  <Line type="monotone" dataKey="expense" stroke="#FFA500" name="Expense" />
-                  <Line type="monotone" dataKey="subscription" stroke="#0056b3" name="Subscription" />
-                </LineChart>
-              </ResponsiveContainer>
+        {/* Line Chart */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 mb-2">
+          <div className="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">
+              Financial Overview - {format(selectedDate, "MMMM yyyy")}
+            </h2>
+            <div className="relative">
+              <div className="pb-10">
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart
+                    data={chartData}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="income" stroke="#007BFF" name="Income" />
+                    <Line type="monotone" dataKey="expense" stroke="#FFA500" name="Expense" />
+                    <Line type="monotone" dataKey="subscription" stroke="#0056b3" name="Subscription" />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
         </div>
