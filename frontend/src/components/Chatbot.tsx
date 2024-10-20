@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from "react-markdown";
 import { FaRobot } from "react-icons/fa";
 import IncomeViewModel from "../viewModels/IncomeViewModel";
 import ExpenseViewModel from "../viewModels/ExpenseViewModel";
@@ -13,6 +13,7 @@ import IncomeDto from "../dtos/income/incomeDto";
 import ErrorMessage from "../viewModels/error";
 import { handleErrorResult } from "../utils/errorMessage";
 import Api from "../services/api";
+import FinancialCalendar from "./FinancialCalendar";
 
 interface AiResponse {
   message: string;
@@ -53,7 +54,10 @@ const Chatbot: React.FC = () => {
           setIncomes
         ),
         fetchAndSetData(() => new GoalViewModel().getGoals(), setGoals),
-        fetchAndSetData(() => new ExpenseViewModel().getExpenses(), setExpenses),
+        fetchAndSetData(
+          () => new ExpenseViewModel().getExpenses(),
+          setExpenses
+        ),
         fetchAndSetData(
           () => new SubscriptionViewModel().getSubscriptions(),
           setSubscriptions
@@ -129,11 +133,14 @@ const Chatbot: React.FC = () => {
         0
       );
 
-      const savings = totalIncome - totalExpenses - totalSubscriptions - totalGoalExpenses;
+      const savings =
+        totalIncome - totalExpenses - totalSubscriptions - totalGoalExpenses;
 
       const calculatedExpensePercentage =
         totalIncome > 0
-          ? ((totalExpenses + totalSubscriptions + totalGoalExpenses) / totalIncome) * 100
+          ? ((totalExpenses + totalSubscriptions + totalGoalExpenses) /
+              totalIncome) *
+            100
           : 0;
 
       setExpensePercentage(calculatedExpensePercentage);
@@ -154,15 +161,21 @@ const Chatbot: React.FC = () => {
   };
 
   const handleAskAi = async () => {
-    const totalIncome = incomes.reduce((total, income) => total + income.amount, 0);
+    const totalIncome = incomes.reduce(
+      (total, income) => total + income.amount,
+      0
+    );
     const totalExpenses = expenses.reduce((total, expense) => {
-      return total + (expense.paid ? (expense.amount ?? 0) : 0);
-    }, 0);      
+      return total + (expense.paid ? expense.amount ?? 0 : 0);
+    }, 0);
     const totalSubscriptions = subscriptions.reduce((total, subscription) => {
       return total + (subscription.amount ?? 0);
     }, 0);
-    const totalGoalExpenses = goals.reduce((total, goal) => total + (goal.currentAmount || 0), 0);
-    
+    const totalGoalExpenses = goals.reduce(
+      (total, goal) => total + (goal.currentAmount || 0),
+      0
+    );
+
     const prompt = `You are a personal financial advisor. Analyze the following financial data for your client:
 
     Total Income: $${totalIncome.toFixed(2)}
@@ -180,14 +193,16 @@ const Chatbot: React.FC = () => {
     Format your response in Markdown, using bullet points for clarity. Focus exclusively on insights derivable from the provided data, avoiding generic financial advice or assumptions about the client's situation beyond what's presented.`;
 
     try {
-      const response = await Api.post<AiResponse>('ai/suggestions', {
-        prompt: prompt
+      const response = await Api.post<AiResponse>("ai/suggestions", {
+        prompt: prompt,
       });
       setAiResponse(response.data.message || "No suggestions available");
       setModalVisible(true);
     } catch (error) {
       console.error("Error fetching AI suggestions:", error);
-      setAiResponse("There was an error fetching suggestions. Please try again.");
+      setAiResponse(
+        "There was an error fetching suggestions. Please try again."
+      );
       setModalVisible(true);
     }
   };
@@ -209,19 +224,26 @@ const Chatbot: React.FC = () => {
       <div className="relative">
         <div
           onMouseEnter={() => setTooltipVisible(true)}
-          onMouseLeave={handleMouseLeaveButton} 
+          onMouseLeave={handleMouseLeaveButton}
           className={`${getButtonColor()} text-white rounded-full p-3 shadow-lg focus:outline-none transition duration-300 hover:shadow-xl cursor-pointer`}
         >
           <FaRobot className="text-2xl" />
         </div>
 
         {tooltipVisible && (
-          <div 
-            onMouseEnter={handleMouseEnterTooltip} 
-            onMouseLeave={() => setTooltipVisible(false)} 
+          <div
+            onMouseEnter={handleMouseEnterTooltip}
+            onMouseLeave={() => setTooltipVisible(false)}
             className="absolute bottom-14 right-0 bg-white text-black rounded-lg p-3 shadow-lg transition-opacity duration-200 w-64"
           >
             <p className="font-semibold text-lg">{savingsMessage}</p>
+            <FinancialCalendar
+              goals={goals}
+              incomes={incomes}
+              subscriptions={subscriptions}
+              onAskAi={handleAskAi}
+              savingMessage={savingsMessage}
+            />
             <button
               onClick={handleAskAi}
               className="mt-2 w-full bg-gray-600 text-white rounded-md p-2 transition hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
@@ -236,16 +258,17 @@ const Chatbot: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
             <div className="flex justify-between items-center p-4 border-b">
-              <h2 className="text-xl font-semibold">AI Financial Suggestions</h2>
-              <button 
-                onClick={() => setModalVisible(false)} 
+              <h2 className="text-xl font-semibold">
+                AI Financial Suggestions
+              </h2>
+              <button
+                onClick={() => setModalVisible(false)}
                 className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
               >
                 &times;
               </button>
             </div>
             <div className="overflow-y-auto p-4 flex-grow">
-              
               <div className="mt-4 prose prose-sm max-w-none">
                 <ReactMarkdown>{aiResponse}</ReactMarkdown>
               </div>
