@@ -1,6 +1,10 @@
 # Finance Management System
 This Finance Management System is a web application designed to help users efficiently manage their finances, track expenses and income, set financial goals, and monitor subscriptions. Built with a modern tech stack including React, TypeScript, Tailwind CSS, and Express.js, this application provides an intuitive, responsive user experience with real-time data processing and visualizations for more informed financial decision-making.
 
+<div align="center">
+<img src="./sss.png" width="600px" ></img>
+</div>
+
 ## Features
 - Income & Expense Tracking: Log and categorize financial transactions.
 - Goal Setting: Define and monitor savings goals.
